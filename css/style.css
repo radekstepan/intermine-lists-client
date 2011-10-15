@@ -1,0 +1,21 @@
+html { background:#fff url('../img/bg.png') no-repeat top left; min-height:1000px; padding-top:122px; }
+body { width:980px; margin:0 auto; font-family:Helvetica,sans-serif; }
+
+h1 { font-size:24px; }
+
+div.toolbar { margin:20px 0; }
+div.toolbar div.btn { display:inline-block; border:1px solid gray; color:gray; padding:4px; }
+div.toolbar div.right { float:right; }
+
+table thead th { text-align:left; padding:2px 10px; text-transform:uppercase; color:gray; font-size:14px; }
+table tbody tr:hover { background:yellow; }
+table td { padding:10px; border-top:1px solid gray; }
+table td.datetime { white-space:nowrap; }
+
+table a { text-decoration:none; color:#000; display:inline; }
+table a:hover { text-decoration:underline; color:blue; }
+
+table h2, table p, table ul, table ul li { display:inline; }
+
+table div.tags { display:inline; white-space:nowrap; }
+table div.tags ul li { background:gray; color:white; font-size:12px; font-weight:bold; }
