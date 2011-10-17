@@ -188,6 +188,17 @@
         </tbody>
     </table>
 
+<!-- overlays -->
+<div id="body-overlay">
+    <div class="popup new-folder" style="width:300px">
+        <h2>Choose folder name</h2>
+        <input type="text" />
+        <p>Folders organize your lists, like on a PC.</p>
+        <div class="btn green">Save</div>
+        <div class="btn gray">Cancel</div>
+    </div>
+</div>
+
 <script type="text/javascript">
 (function() {
     // selected status
@@ -208,6 +219,16 @@
             if (! $(this).hasClass('selected')) {
                 $(this).addClass('selected').find('input[type="checkbox"]').attr('checked','checked');
             }
+        });
+    })();
+
+    // popup box
+    (function() {
+        $('div.toolbar div.btn').click(function() {
+            $('#body-overlay').show();
+            $('#body-overlay div.btn').click(function() {
+                $('#body-overlay').hide();
+            });
         });
     })();
 })();
