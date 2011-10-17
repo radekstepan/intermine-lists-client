@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.min.js"></script>
 </head>
 <body>
     <h1>Lists</h1>
@@ -93,5 +95,30 @@
             </tr>
         </tbody>
     </table>
+
+<script type="text/javascript">
+(function() {
+    // selected status
+    (function() {
+        // onload
+        $('table tbody tr input[type="checkbox"]:checked').closest('tr').addClass('selected');
+        // on checkbox click
+        $('table tbody tr input[type="checkbox"]').click(function(e) {
+            if (! $(this).is(':checked')) {
+                $(this).closest('tr').removeClass('selected');
+            } else {
+                $(this).closest('tr').addClass('selected');
+            }
+            e.stopPropagation();
+        });
+        // on row select
+        $('table tbody tr').click(function() {
+            if (! $(this).hasClass('selected')) {
+                $(this).addClass('selected').find('input[type="checkbox"]').attr('checked','checked');
+            }
+        });
+    })();
+})();
+</script>
 </body>
 </html>
