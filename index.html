@@ -11,7 +11,7 @@
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.min.js"></script>
 </head>
 <body>
-    <h1>Lists</h1>
+    <h1>Your Lists</h1>
     <div class="toolbar">
         <div class="btn folder">
             <span class="label"></span>
@@ -40,8 +40,8 @@
         <thead>
             <tr>
                 <th><input type="checkbox" /></th>
-                <th></th>
                 <th>Name</th>
+                <th></th>
                 <th>Type</th>
                 <th>Created</th>
             </tr>
@@ -49,49 +49,141 @@
         <tbody>
             <tr>
                 <td><input type="checkbox" /></td>
-                <td><span class="favorite active"><span class="title">Unfavorite this list</span></span></td>
                 <td class="list">
-                    <a href="#">
-                        <h2>Gene list with my rubbish features</h2>
-                        <p>Some description for my list here to say where it comes from etc.</p>
-                    </a>
+                    <span class="type"></span>
+                    <div class="name">
+                        <a href="#">
+                            <h2>Gene list with my rubbish features (26)</h2>
+                            <div class="description"><p><strong>Description:</strong> Some description for my list here
+                            to say where it comes from etc.</p></div>
+                        </a>
+                    </div>
                     <div class="tags">
                         <ul>
-                            <li>public</li>
-                            <li>frontpage</li>
+                            <li class="public"><span class="label">public</span></li>
+                            <li><span class="label">frontpage</span></li>
                         </ul>
                     </div>
                 </td>
-                <td>Genes</td>
+                <td><span class="favorite active"><span class="title">Unfavorite this list</span></span></td>
+                <td class="type">Genes</td>
                 <td class="datetime">6 Aug</td>
             </tr>
             <tr>
                 <td><input type="checkbox" /></td>
-                <td></td>
                 <td class="folder">
-                    <a href="#">
-                        <h2>Human cloning experiment</h2>
-                    </a>
+                    <span class="type"></span>
+                    <div class="name">
+                        <a href="#">
+                            <h2>Human cloning experiment (1765)</h2>
+                        </a>
+                    </div>
                 </td>
+                <td></td>
                 <td></td>
                 <td class="datetime">21:57</td>
             </tr>
             <tr>
                 <td><input type="checkbox" /></td>
-                <td><span class="favorite"><span class="title">Favorite this list</span></span></td>
-                <td class="list">
-                    <a href="#">
-                        <h2>Another list name this time with no description</h2>
-                    </a>
+                <td class="list expanded">
+                    <span class="type"></span>
+                    <div class="name">
+                        <a href="#">
+                            <h2>Another list name this time with no description (91)</h2>
+                        </a>
+                    </div>
                     <div class="tags">
                         <ul>
-                            <li>admin</li>
-                            <li>frontpage</li>
+                            <li class="private"><span class="label">admin</span></li>
+                            <li><span class="label">frontpage</span></li>
                         </ul>
                     </div>
                 </td>
-                <td>Proteins</td>
+                <td><span class="favorite"><span class="title">Favorite this list</span></span></td>
+                <td class="type">Proteins</td>
                 <td class="datetime">15:46</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td class="list expanded">
+                    <span class="type"></span>
+                    <div class="name">
+                        <a href="#">
+                            <h2>Gene list for all organisms 20 Sep 2011 10.45 (13,576)</h2>
+                        </a>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                            <li><span class="label">order 1</span></li>
+                        </ul>
+                    </div>
+                </td>
+                <td><span class="favorite"><span class="title">Favorite this list</span></span></td>
+                <td class="type">Genes</td>
+                <td class="datetime">20 Sep</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td class="list expanded">
+                    <span class="type"></span>
+                    <div class="name">
+                        <a href="#">
+                            <h2>Gene list for all organisms 20 Sep 2011 10.45dsds (13,575)</h2>
+                        </a>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                            <li class="organic"><span class="label">organic</span></li>
+                            <li><span class="label">order 3</span></li>
+                        </ul>
+                    </div>
+                </td>
+                <td><span class="favorite"><span class="title">Favorite this list</span></span></td>
+                <td class="type">Genes</td>
+                <td class="datetime">20 Sep</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td class="list">
+                    <span class="type"></span>
+                    <div class="name">
+                        <a href="#">
+                            <h2>FlyTF_site_specific (42)</h2>
+                            <div class="description"><p><strong>Description:</strong> Experimentally verified site-specific
+                            TFs: Transcription factors with experimental evidence for both DNA-binding and transcriptional
+                            regulatory function.</p></div>
+                        </a>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                            <li class="public"><span class="label">public</span></li>
+                        </ul>
+                    </div>
+                </td>
+                <td><span class="favorite active"><span class="title">Favorite this list</span></span></td>
+                <td class="type">TFs</td>
+                <td class="datetime">13:25</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td class="list">
+                    <span class="type"></span>
+                    <div class="name">
+                        <a href="#">
+                            <h2>PL sperm_proteome_genes (365)</h2>
+                            <div class="description"><p><strong>Description:</strong> Genes encoding the D. melanogaster sperm
+                            proteome (Source: Dorus et al 2006 - PubMed: 17099233).</p></div>
+                        </a>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                            <li class="public"><span class="label">public</span></li>
+                        </ul>
+                    </div>
+                </td>
+                <td><span class="favorite"><span class="title">Favorite this list</span></span></td>
+                <td class="type">Genes</td>
+                <td class="datetime">19 May</td>
             </tr>
         </tbody>
     </table>
