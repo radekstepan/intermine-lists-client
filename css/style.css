@@ -34,11 +34,23 @@ div.toolbar div.btn.maths:hover span.label { background-image:url('../img/maths-
 div.toolbar div.right { float:right; }
 div.toolbar:after { content:""; display:block; height:0; clear:both; visibility:hidden; }
 
+table { border-bottom:1px solid #E5E5E5; }
 table thead th { text-align:left; padding:2px 10px; text-transform:uppercase; color:gray; font-size:14px; }
 table tbody tr:hover { background:#FFFFE6; }
 table tbody tr.selected { background:#FFFFCC; }
-table td { padding:10px; border-top:1px solid gray; }
+table td { padding:10px; border-top:1px solid #E5E5E5; }
 table td.datetime { white-space:nowrap; }
+
+table tbody tr span.favorite { display:block; background:url('../img/favorite.png') no-repeat center; width:16px;
+	height:16px; position:relative; cursor:pointer; }
+table tbody tr span.favorite.active { background-image:url('../img/favorite-active.png'); }
+table tbody tr span.favorite span.title { display:none; font-weight:bold; }
+table tbody tr span.favorite:hover span.title { display:block; position:absolute; top:26px; left:-4px; white-space:nowrap;
+	font-size:12px; background:#484848; color:#FFF; text-shadow:none; padding:0 5px; letter-spacing:0.5px;
+	line-height:20px; height:20px; border-radius:4px; }
+table tbody tr span.favorite span.title:before { content:""; display:inline-block; width:0; height:0; border-left:10px solid transparent;
+	border-right:10px solid transparent; border-bottom:10px solid #484848; position:absolute; top:-5px; left:4px;
+	border-radius:2px; }
 
 table a { text-decoration:none; color:#000; display:inline; }
 table a:hover { text-decoration:underline; color:blue; }
