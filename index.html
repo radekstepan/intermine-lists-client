@@ -12,7 +12,7 @@
 </head>
 <body>
     <h1>Your Lists</h1>
-    <div class="toolbar">
+    <div class="toolbar clearafter">
         <div class="btn folder">
             <span class="label"></span>
             <span class="title">Create a folder</span>
@@ -79,7 +79,7 @@
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
-                            <h2>Human cloning experiment (1765)</h2>
+                            <h2>Human cloning experiment</h2>
                         </a>
                     </div>
                 </td>
@@ -194,10 +194,114 @@
 
     <!-- overlays -->
     <div id="body-overlay">
-        <div class="popup new-folder" style="width:300px">
+        <div class="popup folder" style="width:300px">
             <h2>Choose folder name</h2>
             <input type="text" />
             <p>Folders organize your lists, like on a PC.</p>
+            <div class="btn green">Save</div>
+            <div class="btn gray">Cancel</div>
+        </div>
+
+        <div class="popup trash" style="width:300px">
+            <h2>List trashed</h2>
+            <p>If you ever need to restore your list, click on the <strong>restore</strong> button icon:</p>
+            <img src="img/restore-list.png" style="display:block;margin:0 auto; margin-top:-10px; margin-bottom:10px;"/>
+            <div class="btn gray">OK, go away</div>
+        </div>
+
+        <div class="popup restore" style="width:700px">
+            <h2>Restore lists</h2>
+            <p>Select any lists you would like to restore.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" /></th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" /></td>
+                        <td class="list">
+                            <span class="type"></span>
+                            <div class="name">
+                                <a href="#">
+                                    <h2>Another list name this time with no description (91)</h2>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="type">Proteins</td>
+                        <td class="datetime">15:46</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" /></td>
+                        <td class="list">
+                            <span class="type"></span>
+                            <div class="name">
+                                <a href="#">
+                                    <h2>Gene list for all organisms 20 Sep 2011 10.45 (13,576)</h2>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="type">Genes</td>
+                        <td class="datetime">20 Sep</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" /></td>
+                        <td class="list">
+                            <div class="name">
+                                <a href="#">
+                                    <h2>Gene list with my rubbish features (26)</h2>
+                                    <div class="description"><p><strong>Description:</strong> Some description for my list here
+                                    to say where it comes from etc.</p></div>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="type">Genes</td>
+                        <td class="datetime">6 Aug</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="btn green">Restore</div>
+            <div class="btn gray">Cancel</div>
+        </div>
+
+        <div class="popup tags" style="width:700px">
+            <h2>Choose tags for "Gene list for D. melanogaster from 15 Nov 2012 11:27"</h2>
+            <p>Drag &amp; drop the tags to apply them to the list.</p>
+
+            <div class="box first clearafter">
+                <div class="fifty">
+                    <h3>Available tags</h3>
+
+                    <div class="tags clearafter">
+                        <ul>
+                            <li class="public"><span class="label">public</span></li>
+                            <li class="organic"><span class="label">organic</span></li>
+                            <li><span class="label">order 3</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="fifty">
+                    <div class="dropzone" style="width:312px;">
+                        <span class="nfo">Drop tags here</span>
+
+                        <div class="tags">
+                            <ul>
+                                <li class="private"><span class="label">admin</span></li>
+                                <li><span class="label">frontpage</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>Add a new tag</h3>
+            </div>
+
             <div class="btn green">Save</div>
             <div class="btn gray">Cancel</div>
         </div>
@@ -226,12 +330,21 @@
             });
         })();
 
-        // popup box
+        // popup boxes
         (function() {
             $('div.toolbar div.btn').click(function() {
                 $('#body-overlay').show();
+                $('#body-overlay div.popup.' + $(this).attr('class').split(/\s+/)[1]).show();
+
+                // close button
                 $('#body-overlay div.btn').click(function() {
-                    $('#body-overlay').hide();
+                    $('#body-overlay').hide().find('div.popup').hide();
+                });
+                // esc keypress
+                $(document).keyup(function(e) {
+                    if (e.keyCode == 27) {
+                        $('#body-overlay').hide().find('div.popup').hide();
+                    }
                 });
             });
         })();
