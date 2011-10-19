@@ -2,6 +2,7 @@ html { background:#fff url('../img/bg.png') no-repeat top left; min-height:1000p
 body { width:980px; margin:0 auto; font-family:"Myriad Pro",Arial,Garuda,Helvetica,Tahoma,sans-serif; }
 
 h1 { font-size:24px; font-weight:normal; color:#5C0075; margin-top:14px; }
+h2 { font-size:20px; font-weight:normal; color:#5C0075; }
 
 div.toolbar { margin:20px 0; background:#FCFCFC; border:1px solid #F4F4F4; border-width:1px 0; padding:6px;
 	font-size:12px; }
@@ -12,9 +13,8 @@ div.toolbar div.btn { float:left; display:block; line-height:24px; height:24px; 
     background:-ms-linear-gradient(top, #f7f7f7, #DEDEDE); background:-o-linear-gradient(top, #f7f7f7, #DEDEDE);
     -moz-transition:border 0.4s ease 0s; -webkit-transition:border 0.4s ease 0s; }
 div.toolbar div.btn span.title { display:none; z-index:2; }
-div.toolbar div.btn span.title:before { content:""; display:inline-block; width:0; height:0; border-left:10px solid transparent;
-	border-right:10px solid transparent; border-bottom:10px solid #484848; position:absolute; top:-5px; left:4px;
-	border-radius:2px; }
+div.toolbar div.btn span.title:before { content:""; display:inline-block; width:0; height:0; border-left:5px solid transparent;
+	border-right:5px solid transparent; border-bottom:5px solid #484848; position:absolute; top:-5px; left:7px; }
 div.toolbar div.btn:hover { border-color:#555; box-shadow:0 1px 2px rgba(80, 80, 80, 0.25); color:#282828;
 	background:#dfdfdf;
 	background:-moz-linear-gradient(top, #fff, #dfdfdf); background:-webkit-linear-gradient(top, #fff, #dfdfdf);
@@ -28,14 +28,16 @@ div.toolbar div.btn.folder span.label { background-image:url('../img/add-folder.
 div.toolbar div.btn.folder:hover span.label { background-image:url('../img/add-folder-dark.png'); }
 div.toolbar div.btn.tags span.label { background-image:url('../img/tags.png'); }
 div.toolbar div.btn.tags:hover span.label { background-image:url('../img/tags-dark.png'); }
-div.toolbar div.btn.trash span.label { background-image:url('../img/trash.png'); }
-div.toolbar div.btn.trash:hover span.label { background-image:url('../img/trash-dark.png'); }
+div.toolbar div.btn.trash span.label { background-image:url('../img/add-to-trash.png'); }
+div.toolbar div.btn.trash:hover span.label { background-image:url('../img/add-to-trash-dark.png'); }
 div.toolbar div.btn.maths span.label { background-image:url('../img/maths.png'); }
 div.toolbar div.btn.maths:hover span.label { background-image:url('../img/maths-dark.png'); }
+div.toolbar div.btn.restore span.label { background-image:url('../img/restore-list.png'); }
+div.toolbar div.btn.restore:hover span.label { background-image:url('../img/restore-list-dark.png'); }
 div.toolbar div.right { float:right; }
 div.toolbar:after { content:""; display:block; height:0; clear:both; visibility:hidden; }
 
-table { border-bottom:1px solid #DCC8E2; width:100%; }
+table { border-bottom:1px solid #DCC8E2; width:100%; margin-bottom:40px; }
 table thead th { text-align:left; padding:2px 10px; text-transform:uppercase; color:gray; font-size:14px; }
 table tbody tr:nth-child(2n) { background:#FCFAFD; }
 table tbody tr:hover { background:#FFFFE6; -moz-transition:background 0.4s ease 0s; -webkit-transition:background 0.4s ease 0s; }
@@ -49,15 +51,15 @@ table tbody tr span.favorite span.title { display:none; font-weight:bold; z-inde
 table tbody tr span.favorite:hover span.title { display:block; position:absolute; top:26px; left:-4px; white-space:nowrap;
 	font-size:12px; background:#484848; color:#FFF; text-shadow:none; padding:0 5px; letter-spacing:0.5px;
 	line-height:20px; height:20px; border-radius:4px; }
-table tbody tr span.favorite span.title:before { content:""; display:inline-block; width:0; height:0; border-left:10px solid transparent;
-	border-right:10px solid transparent; border-bottom:10px solid #484848; position:absolute; top:-5px; left:4px;
-	border-radius:2px; }
+table tbody tr span.favorite span.title:before { content:""; display:inline-block; width:0; height:0; border-left:5px solid transparent;
+	border-right:5px solid transparent; border-bottom:5px solid #484848; position:absolute; top:-5px; left:7px; }
 
-table tbody td span.type { background-repeat:no-repeat; background-position:center; display:block; width:20px; height:16px;
-	float:left; margin-right:6px; }
-table tbody td.folder span.type { background-image:url('../img/folder.png'); width:15px; height:14px; }
-table tbody td.list span.type { background-image:url('../img/list.png'); width:12px; height:14px; }
-table tbody td.list.expanded { padding-left:31px; }
+table tbody td span.type { background-repeat:no-repeat; background-position:center; display:block; /*width:20px;*/ height:16px;
+	float:left; }
+table tbody td.list.foldered { padding-left:36px; }
+table tbody td.folder span.type { background-image:url('../img/folder.png'); width:19px; height:14px; margin-right:6px; }
+/*table tbody td.folder.expanded span.type { background-image:url('../img/collapse.png'); width:9px; height:13px; }
+table tbody td.folder.collapses span.type { background-image:url('../img/expand.png'); width:9px; height:13px; }*/
 
 table div.name { float:left; }
 table div.name a { -moz-transition:color 0.3s ease 0s; -webkit-transition:color 0.3s ease 0s; text-decoration:none; color:#282828;
@@ -69,9 +71,8 @@ table div.name div.description { display:none; position:absolute; top:26px; left
 	background:#484848; color:#FFF; text-shadow:none; padding:0 5px; letter-spacing:0.5px; line-height:20px;
 	border-radius:4px; z-index:2; min-width:300px; }
 table div.name div.description p { white-space:normal; }
-table div.name div.description:before { content:""; display:inline-block; width:0; height:0; border-left:10px solid transparent;
-	border-right:10px solid transparent; border-bottom:10px solid #484848; position:absolute; top:-5px; left:4px;
-	border-radius:2px; }
+table div.name div.description:before { content:""; display:inline-block; width:0; height:0; border-left:5px solid transparent;
+	border-right:5px solid transparent; border-bottom:5px solid #484848; position:absolute; top:-5px; left:7px; }
 table div.name a:hover div.description { display:block; }
 
 table div.tags { display:block; float:left; white-space:nowrap;}

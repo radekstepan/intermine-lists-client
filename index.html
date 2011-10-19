@@ -21,6 +21,10 @@
             <span class="label"></span>
             <span class="title">Trash lists</span>
         </div>
+        <div class="btn restore">
+            <span class="label"></span>
+            <span class="title">Restore trashed lists</span>
+        </div>
         <div class="btn tags">
             <span class="label"></span>
             <span class="title">Edit list tags</span>
@@ -71,7 +75,7 @@
             </tr>
             <tr>
                 <td><input type="checkbox" /></td>
-                <td class="folder">
+                <td class="folder expanded">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -85,7 +89,7 @@
             </tr>
             <tr>
                 <td><input type="checkbox" /></td>
-                <td class="list expanded">
+                <td class="list foldered">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -105,7 +109,7 @@
             </tr>
             <tr>
                 <td><input type="checkbox" /></td>
-                <td class="list expanded">
+                <td class="list foldered">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -124,7 +128,7 @@
             </tr>
             <tr>
                 <td><input type="checkbox" /></td>
-                <td class="list expanded">
+                <td class="list foldered">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -188,50 +192,50 @@
         </tbody>
     </table>
 
-<!-- overlays -->
-<div id="body-overlay">
-    <div class="popup new-folder" style="width:300px">
-        <h2>Choose folder name</h2>
-        <input type="text" />
-        <p>Folders organize your lists, like on a PC.</p>
-        <div class="btn green">Save</div>
-        <div class="btn gray">Cancel</div>
+    <!-- overlays -->
+    <div id="body-overlay">
+        <div class="popup new-folder" style="width:300px">
+            <h2>Choose folder name</h2>
+            <input type="text" />
+            <p>Folders organize your lists, like on a PC.</p>
+            <div class="btn green">Save</div>
+            <div class="btn gray">Cancel</div>
+        </div>
     </div>
-</div>
 
-<script type="text/javascript">
-(function() {
-    // selected status
+    <script type="text/javascript">
     (function() {
-        // onload
-        $('table tbody tr input[type="checkbox"]:checked').closest('tr').addClass('selected');
-        // on checkbox click
-        $('table tbody tr input[type="checkbox"]').click(function(e) {
-            if (! $(this).is(':checked')) {
-                $(this).closest('tr').removeClass('selected');
-            } else {
-                $(this).closest('tr').addClass('selected');
-            }
-            e.stopPropagation();
-        });
-        // on row select
-        $('table tbody tr').click(function() {
-            if (! $(this).hasClass('selected')) {
-                $(this).addClass('selected').find('input[type="checkbox"]').attr('checked','checked');
-            }
-        });
-    })();
-
-    // popup box
-    (function() {
-        $('div.toolbar div.btn').click(function() {
-            $('#body-overlay').show();
-            $('#body-overlay div.btn').click(function() {
-                $('#body-overlay').hide();
+        // selected status
+        (function() {
+            // onload
+            $('table tbody tr input[type="checkbox"]:checked').closest('tr').addClass('selected');
+            // on checkbox click
+            $('table tbody tr input[type="checkbox"]').click(function(e) {
+                if (! $(this).is(':checked')) {
+                    $(this).closest('tr').removeClass('selected');
+                } else {
+                    $(this).closest('tr').addClass('selected');
+                }
+                e.stopPropagation();
             });
-        });
+            // on row select
+            $('table tbody tr').click(function() {
+                if (! $(this).hasClass('selected')) {
+                    $(this).addClass('selected').find('input[type="checkbox"]').attr('checked','checked');
+                }
+            });
+        })();
+
+        // popup box
+        (function() {
+            $('div.toolbar div.btn').click(function() {
+                $('#body-overlay').show();
+                $('#body-overlay div.btn').click(function() {
+                    $('#body-overlay').hide();
+                });
+            });
+        })();
     })();
-})();
-</script>
+    </script>
 </body>
 </html>
