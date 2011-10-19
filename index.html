@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 </head>
 <body>
     <h1>Your Lists</h1>
@@ -64,8 +65,8 @@
                     </div>
                     <div class="tags">
                         <ul>
-                            <li class="public"><span class="label">public</span></li>
-                            <li><span class="label">frontpage</span></li>
+                            <li><a class="public"><span class="label">public</span></a></li>
+                            <li><a><span class="label">frontpage</span></a></li>
                         </ul>
                     </div>
                 </td>
@@ -98,8 +99,8 @@
                     </div>
                     <div class="tags">
                         <ul>
-                            <li class="private"><span class="label">admin</span></li>
-                            <li><span class="label">frontpage</span></li>
+                            <li><a class="private"><span class="label">admin</span></a></li>
+                            <li><a><span class="label">frontpage</span></a></li>
                         </ul>
                     </div>
                 </td>
@@ -118,7 +119,7 @@
                     </div>
                     <div class="tags">
                         <ul>
-                            <li><span class="label">order 1</span></li>
+                            <li><a><span class="label">order 1</span></a></li>
                         </ul>
                     </div>
                 </td>
@@ -137,8 +138,8 @@
                     </div>
                     <div class="tags">
                         <ul>
-                            <li class="organic"><span class="label">organic</span></li>
-                            <li><span class="label">order 3</span></li>
+                            <li><a class="organic"><span class="label">organic</span></a></li>
+                            <li><a><span class="label">order 3</span></a></li>
                         </ul>
                     </div>
                 </td>
@@ -160,7 +161,7 @@
                     </div>
                     <div class="tags">
                         <ul>
-                            <li class="public"><span class="label">public</span></li>
+                            <li><a class="public"><span class="label">public</span></a></li>
                         </ul>
                     </div>
                 </td>
@@ -181,7 +182,7 @@
                     </div>
                     <div class="tags">
                         <ul>
-                            <li class="public"><span class="label">public</span></li>
+                            <li><a class="public"><span class="label">public</span></a></li>
                         </ul>
                     </div>
                 </td>
@@ -272,26 +273,26 @@
             <h2>Choose tags for "Gene list for D. melanogaster from 15 Nov 2012 11:27"</h2>
             <p>Drag &amp; drop the tags to apply them to the list.</p>
 
-            <div class="box first clearafter">
+            <div class="box first clearafter dragdrop area">
                 <div class="fifty">
                     <h3>Available tags</h3>
 
                     <div class="tags clearafter">
-                        <ul>
-                            <li class="public"><span class="label">public</span></li>
-                            <li class="organic"><span class="label">organic</span></li>
-                            <li><span class="label">order 3</span></li>
+                        <ul class="dragdrop drag drop snap">
+                            <li><a class="public"><span class="label">public</span></a></li>
+                            <li><a><span class="label">im:special</span></a></li>
+                            <li><a><span class="label">order 3</span></a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="fifty">
-                    <div class="dropzone" style="width:312px;">
+                    <div class="dropzone dragdrop drop" style="width:312px;">
                         <span class="nfo">Drop tags here</span>
 
                         <div class="tags">
-                            <ul>
-                                <li class="private"><span class="label">admin</span></li>
-                                <li><span class="label">frontpage</span></li>
+                            <ul class="dragdrop snap">
+                                <li><a class="private"><span class="label">admin</span></a></li>
+                                <li><a><span class="label">frontpage</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -300,6 +301,8 @@
 
             <div class="box">
                 <h3>Add a new tag</h3>
+                <input type="text" style="display:inline;" />
+                <div class="btn gray">Add</div>
             </div>
 
             <div class="btn green">Save</div>
@@ -347,6 +350,29 @@
                     }
                 });
             });
+
+            // drag & drop of tags
+            (function() {
+                var x = $('ul.dragdrop.drag li').draggable({
+                    'containment': 'div.dragdrop.area',
+                    'snap': 'ul.dragdrop.snap',
+                    'cursor': 'move',
+                    'opacity': 0.5,
+                    'start': function() {
+                        $('div.dropzone').addClass('active');
+                    },
+                    'stop': function() {
+                        $('div.dropzone').removeClass('active');
+                    }
+                });
+                $('div.dragdrop.drop').droppable({
+                    'accept': 'ul.dragdrop.drag li',
+                    'drop': function() {
+                        alert('dropped');
+                    }
+                });
+                x.position( { of: $(this), my: 'left top', at: 'left top' } );
+            })();
         })();
     })();
     </script>
