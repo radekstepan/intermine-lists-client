@@ -278,7 +278,7 @@
                     <h3>Available tags</h3>
 
                     <div class="tags clearafter">
-                        <ul class="dragdrop drag drop snap">
+                        <ul class="dragdrop drag">
                             <li><a class="public"><span class="label">public</span></a></li>
                             <li><a><span class="label">im:special</span></a></li>
                             <li><a><span class="label">order 3</span></a></li>
@@ -290,7 +290,7 @@
                         <span class="nfo">Drop tags here</span>
 
                         <div class="tags">
-                            <ul class="dragdrop snap">
+                            <ul>
                                 <li><a class="private"><span class="label">admin</span></a></li>
                                 <li><a><span class="label">frontpage</span></a></li>
                             </ul>
@@ -354,21 +354,19 @@
             // drag & drop of tags
             (function() {
                 var x = $('ul.dragdrop.drag li').draggable({
-                    'containment': 'div.dragdrop.area',
-                    'snap': 'ul.dragdrop.snap',
                     'cursor': 'move',
-                    'opacity': 0.5,
-                    'start': function() {
-                        $('div.dropzone').addClass('active');
-                    },
-                    'stop': function() {
-                        $('div.dropzone').removeClass('active');
-                    }
+                    'opacity': 0.5
                 });
                 $('div.dragdrop.drop').droppable({
                     'accept': 'ul.dragdrop.drag li',
-                    'drop': function() {
-                        alert('dropped');
+                    'drop': function(event, ui) {
+                        $('<li/>', {
+                            'class': 'ui-draggable'
+                        })
+                        .append(ui.draggable.find('a'))
+                        .appendTo('div.dropzone ul');
+                        
+                        ui.draggable.remove();
                     }
                 });
                 x.position( { of: $(this), my: 'left top', at: 'left top' } );
