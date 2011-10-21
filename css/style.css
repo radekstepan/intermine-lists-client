@@ -63,8 +63,8 @@ table tbody tr span.favorite span.description:before { content:""; display:inlin
 
 table tbody td span.type { background-repeat:no-repeat; background-position:center; display:block; /*width:20px;*/ height:16px;
 	float:left; }
-table tbody tr.list td.foldered { padding-left:36px; }
-table tbody tr.folder td span.type { background-image:url('../img/folder.png'); width:18px; height:17px; margin-right:6px; }
+table tbody tr.list.foldered td.main { padding-left:40px; }
+table tbody tr.folder td span.type { background-image:url('../img/folder.png'); width:18px; height:17px; margin-right:11px; }
 /*table tbody td.folder.expanded span.type { background-image:url('../img/collapse.png'); width:9px; height:13px; }
 table tbody td.folder.collapses span.type { background-image:url('../img/expand.png'); width:9px; height:13px; }*/
 

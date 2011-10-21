@@ -57,7 +57,7 @@
         </thead>
         <tbody>
             <tr class="list">
-                <td><input type="checkbox" /></td>
+                <td class="check"><input type="checkbox" /></td>
                 <td>
                     <span class="type"></span>
                     <div class="name">
@@ -79,7 +79,7 @@
                 <td class="datetime">6 Aug</td>
             </tr>
             <tr class="folder">
-                <td><input type="checkbox" /></td>
+                <td class="check"><input type="checkbox" /></td>
                 <td>
                     <span class="type"></span>
                     <div class="name">
@@ -92,9 +92,9 @@
                 <td></td>
                 <td class="datetime">21:57</td>
             </tr>
-            <tr class="list">
-                <td><input type="checkbox" /></td>
-                <td class="foldered">
+            <tr class="list foldered">
+                <td class="check"><input type="checkbox" /></td>
+                <td class="main">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -112,9 +112,9 @@
                 <td class="type">Proteins</td>
                 <td class="datetime">15:46</td>
             </tr>
-            <tr class="list">
-                <td><input type="checkbox" /></td>
-                <td class="foldered">
+            <tr class="list foldered">
+                <td class="check"><input type="checkbox" /></td>
+                <td class="main">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -131,9 +131,9 @@
                 <td class="type">Genes</td>
                 <td class="datetime">20 Sep</td>
             </tr>
-            <tr class="list">
-                <td><input type="checkbox" /></td>
-                <td class="foldered">
+            <tr class="list foldered">
+                <td class="check"><input type="checkbox" /></td>
+                <td class="main">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -152,7 +152,7 @@
                 <td class="datetime">20 Sep</td>
             </tr>
             <tr class="list">
-                <td><input type="checkbox" /></td>
+                <td class="check"><input type="checkbox" /></td>
                 <td>
                     <span class="type"></span>
                     <div class="name">
@@ -174,7 +174,7 @@
                 <td class="datetime">13:25</td>
             </tr>
             <tr class="list">
-                <td><input type="checkbox" /></td>
+                <td class="check"><input type="checkbox" /></td>
                 <td>
                     <span class="type"></span>
                     <div class="name">
@@ -349,29 +349,72 @@
         // selected status
         (function() {
             // onload
-            $('table tbody tr input[type="checkbox"]:checked').closest('tr').addClass('selected');
+            $('table tbody tr td.check input[type="checkbox"]:checked').closest('tr').addClass('selected');
             // how many lists are already selected
             var selected = $('table tbody tr.selected').length;
             updateToolbar();
-            // on checkbox click
-            $('table tbody tr input[type="checkbox"]').click(function(e) {
-                if (! $(this).is(':checked')) {
-                    $(this).closest('tr').removeClass('selected');
-                    selected--;
+            
+            // launch on checkbox click
+            function selectRows(e, element) {
+                var row = $(element).closest('tr');
+                // folder?
+                if (row.hasClass('folder')) {
+                    var inFolder = true;
+                    if ($(element).is(':checked')) {
+                        while (inFolder) {
+                            row = row.next();
+                            if (row.hasClass('list') && row.hasClass('foldered')) {
+                                if (!row.hasClass('selected')) {
+                                    row.addClass('selected');
+                                    row.find('td.check input[type="checkbox"]').attr('checked', 'checked');
+                                    selected++;
+                                }
+                            } else {
+                                inFolder = false;
+                            }
+                        }
+                    } else {
+                        while (inFolder) {
+                            row = row.next();
+                            if (row.hasClass('list') && row.hasClass('foldered')) {
+                                if (row.hasClass('selected')) {
+                                    row.removeClass('selected');
+                                    row.find('td.check input[type="checkbox"]').attr('checked', false);
+                                    selected--;
+                                }
+                            } else {
+                                inFolder = false;
+                            }
+                        }
+                    }
                 } else {
-                    $(this).closest('tr').addClass('selected');
-                    selected++;
+                    if (! $(element).is(':checked')) {
+                        row.removeClass('selected');
+                        selected--;
+                    } else {
+                        row.addClass('selected');
+                        selected++;
+                    }
                 }
+
                 updateToolbar();
                 e.stopPropagation();
+            }
+
+            // on checkbox click
+            $('table tbody tr td.check input[type="checkbox"]').click(function(e) {
+                selectRows(e, this);
             });
             // on row select
-            $('table tbody tr').click(function() {
-                if (! $(this).hasClass('selected')) {
-                    $(this).addClass('selected').find('input[type="checkbox"]').attr('checked','checked');
-                    selected++;
-                    updateToolbar();
+            $('table tbody tr').click(function(e) {
+                var checkbox = $(this).find('td.check input[type="checkbox"]');
+                // first tick the checkbox
+                if (checkbox.attr('checked')) {
+                    checkbox.attr('checked', false);
+                } else {
+                    checkbox.attr('checked', 'checked');
                 }
+                selectRows(e, checkbox);
             });
 
             // create folder/organize switch
@@ -392,11 +435,11 @@
                 var table = $(this).closest('table');
                 if ($(this).attr('checked')) {
                     table.find('tbody tr').each(function() {
-                        $(this).addClass('selected').find('input[type="checkbox"]').attr('checked', 'checked');
+                        $(this).addClass('selected').find('td.check input[type="checkbox"]').attr('checked', 'checked');
                     });
                 } else {
                     table.find('tbody tr.selected').each(function() {
-                        $(this).removeClass('selected').find('input[type="checkbox"]').attr('checked', false);
+                        $(this).removeClass('selected').find('td.check input[type="checkbox"]').attr('checked', false);
                     });
                 }
             })
