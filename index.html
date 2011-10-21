@@ -273,26 +273,81 @@
             <h2>Choose tags for "Gene list for D. melanogaster from 15 Nov 2012 11:27"</h2>
             <p>Drag &amp; drop the tags to apply them to the list.</p>
 
-            <div class="box first clearafter dragdrop area">
+            <div class="box first clearafter">
                 <div class="fifty">
                     <h3>Available tags</h3>
 
-                    <div class="tags clearafter">
-                        <ul class="dragdrop drag">
-                            <li><a class="public"><span class="label">public</span></a></li>
-                            <li><a><span class="label">im:special</span></a></li>
-                            <li><a><span class="label">order 3</span></a></li>
+                    <div class="tags available clearafter">
+                        <ul class="drag">
+                            <li class="active">
+                                <a class="private">
+                                    <span class="label">admin</span>
+                                    <span class="remove">x</span>
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a>
+                                    <span class="label">frontpage</span>
+                                    <span class="remove">x</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="public">
+                                    <span class="label">public</span>
+                                    <span class="remove">x</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span class="label">im:special</span>
+                                    <span class="remove">x</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span class="label">order 3</span>
+                                    <span class="remove">x</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="fifty">
-                    <div class="dropzone dragdrop drop" style="width:312px;">
+                    <div class="dropzone drop" style="width:312px;">
                         <span class="nfo">Drop tags here</span>
 
                         <div class="tags">
                             <ul>
-                                <li><a class="private"><span class="label">admin</span></a></li>
-                                <li><a><span class="label">frontpage</span></a></li>
+                                <li class="active">
+                                    <a class="private">
+                                        <span class="label">admin</span>
+                                        <span class="remove">x</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a>
+                                        <span class="label">frontpage</span>
+                                        <span class="remove">x</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="public">
+                                        <span class="label">public</span>
+                                        <span class="remove">x</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="label">im:special</span>
+                                        <span class="remove">x</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="label">order 3</span>
+                                        <span class="remove">x</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -353,23 +408,38 @@
 
             // drag & drop of tags
             (function() {
-                var x = $('ul.dragdrop.drag li').draggable({
+                var x = $('ul.drag li').draggable({
                     'cursor': 'move',
-                    'opacity': 0.5
+                    'opacity': 0.5,
+                    'revert': true
                 });
-                $('div.dragdrop.drop').droppable({
-                    'accept': 'ul.dragdrop.drag li',
+                $('div.drop').droppable({
+                    'accept': 'ul.drag li',
                     'drop': function(event, ui) {
-                        $('<li/>', {
-                            'class': 'ui-draggable'
-                        })
-                        .append(ui.draggable.find('a'))
-                        .appendTo('div.dropzone ul');
-                        
-                        ui.draggable.remove();
+                        ui.draggable.addClass('active');
+                        var text = ui.draggable.find('span.label').text();
+                        $('div.dropzone div.tags ul li').each(function() {
+                            if ($(this).find('span.label').text() == text) {
+                                $(this).addClass('active');
+                            }
+                        });
                     }
                 });
-                x.position( { of: $(this), my: 'left top', at: 'left top' } );
+                x.position( { 'of': $(this), 'my': 'left top', 'at': 'left top' } );
+            })();
+
+            // removal of tags
+            (function() {
+                $('div.tags ul li a span.remove').click(function() {
+                    var li   = $(this).closest('li'),
+                        text = li.find('span.label').text();
+                    li.removeClass('active')
+                    $('div.tags.available ul li').each(function() {
+                        if ($(this).find('span.label').text() == text) {
+                            $(this).removeClass('active');
+                        }
+                    });
+                });
             })();
         })();
     })();

@@ -87,22 +87,21 @@ div.tags { display:block; float:left; white-space:nowrap;}
 div.tags ul { margin-left:10px; float:left; }
 div.tags ul li { display:block; float:left; }
 div.tags ul li a { background:#DEDEDE; font-size:12px; font-weight:bold; border-radius:4px; line-height:18px; height:18px;
-	padding:0 8px; margin-right:6px; text-decoration:none; cursor:default; display:block;
+	color:#626262; padding:0 8px; margin-right:6px; text-decoration:none; cursor:default; display:block;
 	background:-moz-linear-gradient(top, #F7F7F7, #DEDEDE); background:-webkit-linear-gradient(top, #F7F7F7, #282828);
     background:-ms-linear-gradient(top, #F7F7F7, #DEDEDE); background:-o-linear-gradient(top, #F7F7F7, #DEDEDE); }
-div.tags ul li a span.label { background-repeat:no-repeat; background-position:0 1px; color:#626262; }
-div.tags ul li a.organic { background:#35C53D;
+div.tags ul li a span.label { background-repeat:no-repeat; background-position:0 1px; }
+div.tags ul li a.organic { color:#FFF; background:#35C53D;
 	background:-moz-linear-gradient(top, #35C53D, #2DA633); background:-webkit-linear-gradient(top, #35C53D, #2DA633);
     background:-ms-linear-gradient(top, #35C53D, #2DA633); background:-o-linear-gradient(top, #35C53D, #2DA633); }
-div.tags ul li a.organic span.label { color:#FFF; }
-div.tags ul li a.public { background:#3D6AF0;
+div.tags ul li a.public { color:#FFF; background:#3D6AF0;
 	background:-moz-linear-gradient(top, #3D6AF0, #3359C9); background:-webkit-linear-gradient(top, #3D6AF0, #3359C9);
     background:-ms-linear-gradient(top, #3D6AF0, #3359C9); background:-o-linear-gradient(top, #3D6AF0, #3359C9); }
-div.tags ul li a.public span.label { color:#FFF; background-image:url('../img/public.png'); padding-left:18px; }
-div.tags ul li a.private { background:#C93E3E;
+div.tags ul li a.public span.label { background-image:url('../img/public.png'); padding-left:18px; }
+div.tags ul li a.private { color:#FFF; background:#C93E3E;
 	background:-moz-linear-gradient(top, #C93E3E, #AB3535); background:-webkit-linear-gradient(top, #C93E3E, #AB3535);
     background:-ms-linear-gradient(top, #C93E3E, #AB3535); background:-o-linear-gradient(top, #C93E3E, #AB3535); }
-div.tags ul li a.private span.label { color:#FFF; background-image:url('../img/private.gif'); padding-left:16px; }
+div.tags ul li a.private span.label { background-image:url('../img/private.gif'); padding-left:16px; }
 
 #body-overlay { display:none; z-index:9; background:#FFF; background:rgba(255, 255, 255, 0.8); position:absolute; top:0; left:0;
 	width:100%; height:100%; }
@@ -130,6 +129,13 @@ div.tags ul li a.private span.label { color:#FFF; background-image:url('../img/p
 #body-overlay div.tags ul { margin-left:0; }
 #body-overlay div.tags ul li { margin-bottom:5px; }
 #body-overlay div.tags ul li a { cursor:move; }
+#body-overlay div.dropzone div.tags ul li a { cursor:default; }
+#body-overlay div.tags ul li a span.remove { display:none; border-left-width:1px; border-left-style:solid; padding:0 0 0 7px;
+	margin-left:4px; cursor:pointer; font-weight:normal; }
+#body-overlay div.tags ul li.active a span.remove { display:inline-block; }
+#body-overlay div.tags.available li.active { display:none; }
+#body-overlay div.dropzone li { display:none; }
+#body-overlay div.dropzone li.active { display:block; }
 
 #body-overlay div.btn { line-height:24px; height:24px; padding:0 10px; font-weight:bold; margin-right:10px; border-radius:4px;
 	text-shadow:0 1px 0 #FFF; cursor:pointer; position:relative; -moz-transition:border 0.4s ease 0s;
