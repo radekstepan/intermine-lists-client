@@ -48,7 +48,7 @@
     <table>
         <thead>
             <tr>
-                <th><input type="checkbox" /></th>
+                <th><input class="select-all" type="checkbox" /></th>
                 <th>Name</th>
                 <th></th>
                 <th>Type</th>
@@ -386,6 +386,20 @@
                     $('div.toolbar div.btn.organize').hide();
                 }
             }
+
+            // select all
+            $('input[type="checkbox"].select-all').click(function() {
+                var table = $(this).closest('table');
+                if ($(this).attr('checked')) {
+                    table.find('tbody tr').each(function() {
+                        $(this).addClass('selected').find('input[type="checkbox"]').attr('checked', 'checked');
+                    });
+                } else {
+                    table.find('tbody tr.selected').each(function() {
+                        $(this).removeClass('selected').find('input[type="checkbox"]').attr('checked', false);
+                    });
+                }
+            })
         })();
 
         // popup boxes
