@@ -199,15 +199,15 @@
             <h2>Choose folder name</h2>
             <input type="text" />
             <p>Folders organize your lists, like on a PC.</p>
-            <div class="btn green">Save</div>
-            <div class="btn gray">Cancel</div>
+            <div class="btn close green">Save</div>
+            <div class="btn close gray">Cancel</div>
         </div>
 
         <div class="popup trash" style="width:300px">
             <h2>List trashed</h2>
             <p>If you ever need to restore your list, click on the <strong>restore</strong> button icon:</p>
             <img src="img/restore-list.png" style="display:block;margin:0 auto; margin-top:-10px; margin-bottom:10px;"/>
-            <div class="btn gray">OK, go away</div>
+            <div class="btn close gray">OK, go away</div>
         </div>
 
         <div class="popup restore" style="width:700px">
@@ -265,8 +265,8 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="btn green">Restore</div>
-            <div class="btn gray">Cancel</div>
+            <div class="btn close green">Restore</div>
+            <div class="btn close gray">Cancel</div>
         </div>
 
         <div class="popup tags" style="width:700px">
@@ -279,18 +279,6 @@
 
                     <div class="tags available clearafter">
                         <ul class="drag">
-                            <li class="active">
-                                <a class="private">
-                                    <span class="label">admin</span>
-                                    <span class="remove">x</span>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a>
-                                    <span class="label">frontpage</span>
-                                    <span class="remove">x</span>
-                                </a>
-                            </li>
                             <li>
                                 <a class="public">
                                     <span class="label">public</span>
@@ -318,33 +306,15 @@
 
                         <div class="tags">
                             <ul>
-                                <li class="active">
+                                <li>
                                     <a class="private">
                                         <span class="label">admin</span>
                                         <span class="remove">x</span>
                                     </a>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <a>
                                         <span class="label">frontpage</span>
-                                        <span class="remove">x</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="public">
-                                        <span class="label">public</span>
-                                        <span class="remove">x</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span class="label">im:special</span>
-                                        <span class="remove">x</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span class="label">order 3</span>
                                         <span class="remove">x</span>
                                     </a>
                                 </li>
@@ -360,8 +330,8 @@
                 <div class="btn gray">Add</div>
             </div>
 
-            <div class="btn green">Save</div>
-            <div class="btn gray">Cancel</div>
+            <div class="btn close green">Save</div>
+            <div class="btn close gray">Cancel</div>
         </div>
     </div>
 
@@ -395,7 +365,7 @@
                 $('#body-overlay div.popup.' + $(this).attr('class').split(/\s+/)[1]).show();
 
                 // close button
-                $('#body-overlay div.btn').click(function() {
+                $('#body-overlay div.btn.close').click(function() {
                     $('#body-overlay').hide().find('div.popup').hide();
                 });
                 // esc keypress
@@ -410,35 +380,28 @@
             (function() {
                 var x = $('ul.drag li').draggable({
                     'cursor': 'move',
-                    'opacity': 0.5,
-                    'revert': true
+                    'opacity': 0.5
                 });
                 $('div.drop').droppable({
                     'accept': 'ul.drag li',
                     'drop': function(event, ui) {
-                        ui.draggable.addClass('active');
-                        var text = ui.draggable.find('span.label').text();
-                        $('div.dropzone div.tags ul li').each(function() {
-                            if ($(this).find('span.label').text() == text) {
-                                $(this).addClass('active');
-                            }
-                        });
+                        ui.draggable.appendTo('div.dropzone div.tags ul').draggable('disable')
+                        .attr('style', 'left:0;top:0;');
                     }
                 });
-                x.position( { 'of': $(this), 'my': 'left top', 'at': 'left top' } );
+                //x.position( { 'of': $(this), 'my': 'left top', 'at': 'left top' } );
             })();
 
             // removal of tags
             (function() {
                 $('div.tags ul li a span.remove').click(function() {
-                    var li   = $(this).closest('li'),
-                        text = li.find('span.label').text();
-                    li.removeClass('active')
-                    $('div.tags.available ul li').each(function() {
-                        if ($(this).find('span.label').text() == text) {
-                            $(this).removeClass('active');
-                        }
-                    });
+                    $(this).closest('li').appendTo('div.tags.available ul')
+                    .attr('style', 'position:relative')
+                    .draggable({
+                        'cursor': 'move',
+                        'opacity': 0.5
+                    })
+                    .draggable('option', 'disabled', false);
                 });
             })();
         })();

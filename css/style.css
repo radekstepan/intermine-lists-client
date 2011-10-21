@@ -132,10 +132,8 @@ div.tags ul li a.private span.label { background-image:url('../img/private.gif')
 #body-overlay div.dropzone div.tags ul li a { cursor:default; }
 #body-overlay div.tags ul li a span.remove { display:none; border-left-width:1px; border-left-style:solid; padding:0 0 0 7px;
 	margin-left:4px; cursor:pointer; font-weight:normal; }
-#body-overlay div.tags ul li.active a span.remove { display:inline-block; }
+#body-overlay div.dropzone div.tags ul li a span.remove { display:inline-block; }
 #body-overlay div.tags.available li.active { display:none; }
-#body-overlay div.dropzone li { display:none; }
-#body-overlay div.dropzone li.active { display:block; }
 
 #body-overlay div.btn { line-height:24px; height:24px; padding:0 10px; font-weight:bold; margin-right:10px; border-radius:4px;
 	text-shadow:0 1px 0 #FFF; cursor:pointer; position:relative; -moz-transition:border 0.4s ease 0s;
