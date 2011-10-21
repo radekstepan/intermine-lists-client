@@ -17,14 +17,14 @@ div.toolbar div.btn { float:left; display:block; line-height:24px; height:24px; 
 	background:-moz-linear-gradient(top, #f7f7f7, #DEDEDE); background:-webkit-linear-gradient(top, #f7f7f7, #DEDEDE);
     background:-ms-linear-gradient(top, #f7f7f7, #DEDEDE); background:-o-linear-gradient(top, #f7f7f7, #DEDEDE);
     -moz-transition:border 0.4s ease 0s; -webkit-transition:border 0.4s ease 0s; }
-div.toolbar div.btn span.title { display:none; z-index:2; }
-div.toolbar div.btn span.title:before { content:""; display:inline-block; width:0; height:0; border-left:5px solid transparent;
+div.toolbar div.btn span.description { display:none; z-index:2; }
+div.toolbar div.btn span.description:before { content:""; display:inline-block; width:0; height:0; border-left:5px solid transparent;
 	border-right:5px solid transparent; border-bottom:5px solid #484848; position:absolute; top:-5px; left:7px; }
 div.toolbar div.btn:hover { border-color:#555; box-shadow:0 1px 2px rgba(80, 80, 80, 0.25); color:#282828;
 	background:#dfdfdf;
 	background:-moz-linear-gradient(top, #fff, #dfdfdf); background:-webkit-linear-gradient(top, #fff, #dfdfdf);
     background:-ms-linear-gradient(top, #fff, #dfdfdf); background:-o-linear-gradient(top, #fff, #dfdfdf); }
-div.toolbar div.btn:hover span.title { display:block; position:absolute; top:32px; left:6px; white-space:nowrap;
+div.toolbar div.btn:hover span.description { display:block; position:absolute; top:32px; left:6px; white-space:nowrap;
 	font-size:12px; background:#484848; color:#FFF; text-shadow:none; padding:0 5px; letter-spacing:0.5px;
 	line-height:20px; height:20px; border-radius:4px; }
 div.toolbar div.btn span.label { display:block; background-position:center; background-repeat:no-repeat; width:20px;
@@ -52,11 +52,11 @@ table td { padding:10px; border-top:1px solid #DCC8E2; vertical-align:middle; }
 table tbody tr span.favorite { display:block; background:url('../img/favorite.png') no-repeat center; width:16px;
 	height:16px; position:relative; cursor:pointer; }
 table tbody tr span.favorite.active { background-image:url('../img/favorite-active.png'); }
-table tbody tr span.favorite span.title { display:none; font-weight:bold; z-index:2; }
-table tbody tr span.favorite:hover span.title { display:block; position:absolute; top:26px; left:-4px; white-space:nowrap;
+table tbody tr span.favorite span.description { display:none; font-weight:bold; z-index:2; }
+table tbody tr span.favorite:hover span.description { display:block; position:absolute; top:26px; left:-4px; white-space:nowrap;
 	font-size:12px; background:#484848; color:#FFF; text-shadow:none; padding:0 5px; letter-spacing:0.5px;
 	line-height:20px; height:20px; border-radius:4px; }
-table tbody tr span.favorite span.title:before { content:""; display:inline-block; width:0; height:0; border-left:5px solid transparent;
+table tbody tr span.favorite span.description:before { content:""; display:inline-block; width:0; height:0; border-left:5px solid transparent;
 	border-right:5px solid transparent; border-bottom:5px solid #484848; position:absolute; top:-5px; left:7px; }
 
 table tbody td span.type { background-repeat:no-repeat; background-position:center; display:block; /*width:20px;*/ height:16px;
@@ -129,12 +129,19 @@ div.tags ul li a.private span.label { background-image:url('../img/private.gif')
 #body-overlay div.tags { float:none; }
 #body-overlay div.tags ul { margin-left:0; }
 #body-overlay div.tags ul li { margin-bottom:5px; }
-#body-overlay div.tags ul li a { cursor:move; }
+#body-overlay div.tags ul li a { cursor:move; position:relative; }
 #body-overlay div.dropzone div.tags ul li a { cursor:default; }
 #body-overlay div.tags ul li a span.remove { display:none; border-left-width:1px; border-left-style:solid; padding:0 0 0 7px;
 	margin-left:4px; cursor:pointer; font-weight:normal; }
 #body-overlay div.dropzone div.tags ul li a span.remove { display:inline-block; }
 #body-overlay div.tags.available li.active { display:none; }
+#body-overlay div.tags ul li a span.description { display:none; position:absolute; top:26px; left:-4px; font-size:12px;
+	background:#484848; color:#FFF; text-shadow:none; padding:0 5px; letter-spacing:0.5px; line-height:20px;
+	border-radius:4px; z-index:2; }
+#body-overlay div.tags ul li a span.description:before { content:""; display:inline-block; width:0; height:0;
+	border-left:5px solid transparent; border-right:5px solid transparent; border-bottom:5px solid #484848; position:absolute;
+	top:-5px; left:13px; }
+#body-overlay div.tags ul li a:hover span.description { display:block; }
 
 #body-overlay div.btn { line-height:24px; height:24px; padding:0 10px; font-weight:bold; margin-right:10px; border-radius:4px;
 	text-shadow:0 1px 0 #FFF; cursor:pointer; position:relative; -moz-transition:border 0.4s ease 0s;
