@@ -18,6 +18,10 @@
             <span class="label"></span>
             <span class="description">Create a folder</span>
         </div>
+        <div class="btn organize" style="display:none;">
+            <span class="label"></span>
+            <span class="description">Organize lists into a folder</span>
+        </div>
         <div class="btn trash">
             <span class="label"></span>
             <span class="description">Trash lists</span>
@@ -52,9 +56,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr class="list">
                 <td><input type="checkbox" /></td>
-                <td class="list">
+                <td>
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -74,9 +78,9 @@
                 <td class="type">Genes</td>
                 <td class="datetime">6 Aug</td>
             </tr>
-            <tr>
+            <tr class="folder">
                 <td><input type="checkbox" /></td>
-                <td class="folder expanded">
+                <td>
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -88,9 +92,9 @@
                 <td></td>
                 <td class="datetime">21:57</td>
             </tr>
-            <tr>
+            <tr class="list">
                 <td><input type="checkbox" /></td>
-                <td class="list foldered">
+                <td class="foldered">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -108,9 +112,9 @@
                 <td class="type">Proteins</td>
                 <td class="datetime">15:46</td>
             </tr>
-            <tr>
+            <tr class="list">
                 <td><input type="checkbox" /></td>
-                <td class="list foldered">
+                <td class="foldered">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -127,9 +131,9 @@
                 <td class="type">Genes</td>
                 <td class="datetime">20 Sep</td>
             </tr>
-            <tr>
+            <tr class="list">
                 <td><input type="checkbox" /></td>
-                <td class="list foldered">
+                <td class="foldered">
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -147,9 +151,9 @@
                 <td class="type">Genes</td>
                 <td class="datetime">20 Sep</td>
             </tr>
-            <tr>
+            <tr class="list">
                 <td><input type="checkbox" /></td>
-                <td class="list">
+                <td>
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -169,9 +173,9 @@
                 <td class="type">TFs</td>
                 <td class="datetime">13:25</td>
             </tr>
-            <tr>
+            <tr class="list">
                 <td><input type="checkbox" /></td>
-                <td class="list">
+                <td>
                     <span class="type"></span>
                     <div class="name">
                         <a href="#">
@@ -303,7 +307,7 @@
                     </div>
                 </div>
                 <div class="fifty">
-                    <div class="dropzone drop" style="width:312px;">
+                    <div class="dropzone" style="width:312px;">
                         <span class="nfo">Drop tags here</span>
 
                         <div class="tags">
@@ -346,21 +350,42 @@
         (function() {
             // onload
             $('table tbody tr input[type="checkbox"]:checked').closest('tr').addClass('selected');
+            // how many lists are already selected
+            var selected = $('table tbody tr.selected').length;
+            updateToolbar();
             // on checkbox click
             $('table tbody tr input[type="checkbox"]').click(function(e) {
                 if (! $(this).is(':checked')) {
                     $(this).closest('tr').removeClass('selected');
+                    selected--;
                 } else {
                     $(this).closest('tr').addClass('selected');
+                    selected++;
                 }
+                updateToolbar();
                 e.stopPropagation();
             });
             // on row select
             $('table tbody tr').click(function() {
                 if (! $(this).hasClass('selected')) {
                     $(this).addClass('selected').find('input[type="checkbox"]').attr('checked','checked');
+                    selected++;
+                    updateToolbar();
                 }
             });
+
+            // create folder/organize switch
+            function updateToolbar() {
+                if (selected > 0) {
+                    // organize lists
+                    $('div.toolbar div.btn.folder').hide();
+                    $('div.toolbar div.btn.organize').show();
+                } else {
+                    // create folder
+                    $('div.toolbar div.btn.folder').show();
+                    $('div.toolbar div.btn.organize').hide();
+                }
+            }
         })();
 
         // popup boxes
@@ -401,7 +426,7 @@
 
                 // drag & drop of tags
                 $('ul.drag li').draggable(settings);
-                $('div.drop').droppable({
+                $('div.dropzone').droppable({
                     'accept': 'ul.drag li',
                     'drop': function(event, ui) {
                         ui.draggable.appendTo('div.dropzone div.tags ul')
