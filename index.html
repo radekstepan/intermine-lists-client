@@ -470,6 +470,9 @@
                                 removeTag(this);
                             });
 
+                            availableTags[label] = true;
+                            $('#add-new-tag p.warning').html('');
+
                             $('#add-new-tag input').val('')
                         } else {
                             $('#add-new-tag p.warning').text('Wowza! That one already exists.')
