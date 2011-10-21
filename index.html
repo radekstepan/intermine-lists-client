@@ -326,6 +326,7 @@
 
             <div id="add-new-tag" class="box">
                 <h3>Add a new tag</h3>
+                <p class="warning"></p>
                 <input type="text" style="display:inline;" />
                 <div class="btn add gray">Add</div>
             </div>
@@ -418,7 +419,7 @@
                 });
 
                 // create a new tag
-                $('#add-new-tag div.btn.add').click(function() {
+                function addNewTag() {
                     var label = $('#add-new-tag input').val();
                     if (label) {
                         if (!availableTags[label]) {
@@ -442,9 +443,17 @@
 
                             $('#add-new-tag input').val('')
                         } else {
-                            alert('already exists dood');
+                            $('#add-new-tag p.warning').text('Wowza! That one already exists.')
                         }
+                    }                    
+                }
+                $('#add-new-tag input').keydown(function(e) {
+                    if (e.keyCode == 13) {
+                        addNewTag();
                     }
+                });
+                $('#add-new-tag div.btn.add').click(function() {
+                    addNewTag();
                 });
             })();
         })();
