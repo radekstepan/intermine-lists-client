@@ -50,6 +50,10 @@ table tbody tr:nth-child(2n) { background:#FCFAFD; }
 table tbody tr:hover { background:#FFFFE6; -moz-transition:background 0.4s ease 0s; -webkit-transition:background 0.4s ease 0s; }
 table tbody tr.selected { background:#FFFFCC; }
 table tbody td { padding:10px; vertical-align:middle; border-top:1px solid #DCC8E2; }
+table th.first,
+table td.first { padding:10px 0 10px 10px; }
+table th.second,
+table td.second { padding:10px 5px; }
 
 table tbody tr span.favorite { display:block; background:url('../img/favorite.png') no-repeat center; width:16px;
 	height:16px; position:relative; cursor:pointer; }
@@ -61,12 +65,9 @@ table tbody tr span.favorite:hover span.description { display:block; position:ab
 table tbody tr span.favorite span.description:before { content:""; display:inline-block; width:0; height:0; border-left:5px solid transparent;
 	border-right:5px solid transparent; border-bottom:5px solid #484848; position:absolute; top:-5px; left:7px; }
 
-table tbody td span.type { background-repeat:no-repeat; background-position:center; display:block; /*width:20px;*/ height:16px;
-	float:left; }
-table tbody tr.list.foldered td.main { padding-left:40px; }
-table tbody tr.folder td span.type { background-image:url('../img/folder.png'); width:18px; height:17px; margin-right:11px; }
-/*table tbody td.folder.expanded span.type { background-image:url('../img/collapse.png'); width:9px; height:13px; }
-table tbody td.folder.collapses span.type { background-image:url('../img/expand.png'); width:9px; height:13px; }*/
+table tbody tr td.second { background-repeat:no-repeat; background-position:center; }
+table tbody tr.list.foldered { padding-left:40px; }
+table tbody tr.folder td.second { background-image:url('../img/folder.png'); width:18px; height:17px; margin-right:11px; }
 
 table div.name { float:left; }
 table div.name a { -moz-transition:color 0.3s ease 0s; -webkit-transition:color 0.3s ease 0s; text-decoration:none; color:#282828;
