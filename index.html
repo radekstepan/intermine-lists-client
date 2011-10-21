@@ -273,7 +273,7 @@
             <h2>Choose tags for "Gene list for D. melanogaster from 15 Nov 2012 11:27"</h2>
             <p>Drag &amp; drop the tags to apply them to the list.</p>
 
-            <div class="box first clearafter">
+            <div id="set-tags" class="box first clearafter">
                 <div class="fifty">
                     <h3>Available tags</h3>
 
@@ -324,10 +324,10 @@
                 </div>
             </div>
 
-            <div class="box">
+            <div id="add-new-tag" class="box">
                 <h3>Add a new tag</h3>
                 <input type="text" style="display:inline;" />
-                <div class="btn gray">Add</div>
+                <div class="btn add gray">Add</div>
             </div>
 
             <div class="btn close green">Save</div>
@@ -376,11 +376,22 @@
                 });
             });
 
+            // tagging
             (function() {
+                // grab tags in the "system"
+                var availableTags = {};
+                $('#set-tags div.tags ul li').each(function() {
+                    var text = $(this).find('span.label').text();
+                    if (text && !availableTags[text]) {
+                        availableTags[text] = true;
+                    }
+                })
+
                 var settings = {
                     'cursor': 'move',
                     'opacity': 0.5,
-                    'revert': true
+                    'revert': true,
+                    'containment': '#set-tags'
                 }
 
                 // drag & drop of tags
@@ -396,11 +407,44 @@
                 });
 
                 // removal of tags
-                $('div.tags ul li a span.remove').click(function() {
-                    $(this).closest('li').appendTo('div.tags.available ul')
+                function removeTag(element) {
+                    $(element).closest('li').appendTo('div.tags.available ul')
                     .attr('style', 'position:relative')
                     .draggable(settings)
                     .draggable('option', 'disabled', false);
+                }
+                $('div.tags ul li a span.remove').click(function() {
+                    removeTag(this);
+                });
+
+                // create a new tag
+                $('#add-new-tag div.btn.add').click(function() {
+                    var label = $('#add-new-tag input').val();
+                    if (label) {
+                        if (!availableTags[label]) {
+                            $('<li/>', {
+                                'html': function() {
+                                   return $('<a/>')
+                                   .append($('<span/>', {
+                                       'class': 'label',
+                                       'text': label
+                                   }))
+                                   .append($('<span/>', {
+                                       'class': 'remove',
+                                       'text': 'x'
+                                   }))
+                                }
+                            })
+                            .appendTo('#set-tags div.dropzone div.tags ul')
+                            .click(function() {
+                                removeTag(this);
+                            });
+
+                            $('#add-new-tag input').val('')
+                        } else {
+                            alert('already exists dood');
+                        }
+                    }
                 });
             })();
         })();
