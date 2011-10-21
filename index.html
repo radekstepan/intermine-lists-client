@@ -376,31 +376,30 @@
                 });
             });
 
-            // drag & drop of tags
             (function() {
-                var x = $('ul.drag li').draggable({
+                var settings = {
                     'cursor': 'move',
-                    'opacity': 0.5
-                });
+                    'opacity': 0.5,
+                    'revert': true
+                }
+
+                // drag & drop of tags
+                $('ul.drag li').draggable(settings);
                 $('div.drop').droppable({
                     'accept': 'ul.drag li',
                     'drop': function(event, ui) {
-                        ui.draggable.appendTo('div.dropzone div.tags ul').draggable('disable')
-                        .attr('style', 'left:0;top:0;');
+                        ui.draggable.appendTo('div.dropzone div.tags ul')
+                        .attr('style', 'left:0;top:0;')
+                        .draggable('option', 'disabled', true)
+                        .draggable('option', 'revert', false);
                     }
                 });
-                //x.position( { 'of': $(this), 'my': 'left top', 'at': 'left top' } );
-            })();
 
-            // removal of tags
-            (function() {
+                // removal of tags
                 $('div.tags ul li a span.remove').click(function() {
                     $(this).closest('li').appendTo('div.tags.available ul')
                     .attr('style', 'position:relative')
-                    .draggable({
-                        'cursor': 'move',
-                        'opacity': 0.5
-                    })
+                    .draggable(settings)
                     .draggable('option', 'disabled', false);
                 });
             })();
