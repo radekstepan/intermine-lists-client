@@ -362,31 +362,6 @@
         // selected status
         (function() {
 
-            // expand/collapse folders
-            $('table tbody tr.folder td.main div.name a').click(function(e) {
-                var next = $(this).closest('tr').next();
-                if (next.hasClass('list') && next.hasClass('foldered')) {
-                    // has children
-                    var loop   = true,
-                        hidden = next.is(':hidden');
-                    // collapse
-                    while (loop) {
-                        if (hidden) {
-                            next.show();
-                        } else {
-                            next.hide();
-                        }
-
-                        next = next.next();
-                        if (!next.hasClass('list') || !next.hasClass('foldered')) {
-                            loop = false;
-                        }
-                    }
-                }
-                e.stopPropagation();
-                e.preventDefault();
-            })
-
             // select all
             $('input[type="checkbox"].select-all').click(function() {
                 var table = $(this).closest('table');

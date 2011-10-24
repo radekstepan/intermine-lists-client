@@ -112,7 +112,9 @@ var MyMine = (function() {
             /** @string selector for all main table rows */
                 selectAllRows    = 'table#lists tbody tr',
             /** @string selector for row checkbox from main table row */
-                selectRowToCheckbox = 'input[type="checkbox"].check';
+                selectRowToCheckbox = 'input[type="checkbox"].check',
+            /** @string selector for all folder name links in the main table */
+                selectAllFolderLinks = 'table#lists tbody tr.folder td.main div.name a';
 
             /** @dict selected item's name => type in the main table */
             var selected      = {},
@@ -126,7 +128,8 @@ var MyMine = (function() {
             function initializeSelectItemHandlers() {
                 // on checkbox click
                 $(selectAllCheckboxes).click(function(e) {
-                    MyMine.presenter.selectRow(e, this);
+                    MyMine.presenter.selectRow(this);
+                    e.stopPropagation();
                 });
 
                 // on row select
@@ -138,8 +141,21 @@ var MyMine = (function() {
                     } else {
                         checkbox.attr('checked', 'checked');
                     }
-                    MyMine.presenter.selectRow(e, checkbox);
+                    MyMine.presenter.selectRow(checkbox);
+                    e.stopPropagation();
                 });
+            }
+
+            /**
+             * Initialize handlers for expanding/collapsing of items
+             */
+            function initializeExpandCollapseHandlers() {
+                // items
+                $(selectAllFolderLinks).click(function(e) {
+                    MyMine.presenter.expandCollapseFolders(this);
+                    e.stopPropagation();
+                    e.preventDefault();
+                })
             }
 
             return {
@@ -149,6 +165,7 @@ var MyMine = (function() {
                  */
                 initializeHandlers: function() {
                     initializeSelectItemHandlers();
+                    initializeExpandCollapseHandlers();
                 },
 
                 /**
@@ -177,7 +194,7 @@ var MyMine = (function() {
                 /**
                  * Select row on checkbox or row click
                  */
-                selectRow: function(e, element) {
+                selectRow: function(element) {
                     var row = $(element).closest('tr');
                     // folder?
                     if (row.hasClass('folder')) {
@@ -220,7 +237,31 @@ var MyMine = (function() {
                     }
 
                     MyMine.presenter.updateToolbar();
-                    e.stopPropagation();
+                },
+
+                /**
+                 * Expand/collapse folders
+                 */
+                expandCollapseFolders: function(element) {
+                    var next = $(element).closest('tr').next();
+                    if (next.hasClass('list') && next.hasClass('foldered')) {
+                        // has children
+                        var loop   = true,
+                            hidden = next.is(':hidden');
+                        // collapse
+                        while (loop) {
+                            if (hidden) {
+                                next.show();
+                            } else {
+                                next.hide();
+                            }
+
+                            next = next.next();
+                            if (! next.hasClass('list') || ! next.hasClass('foldered')) {
+                                loop = false;
+                            }
+                        }
+                    }
                 }
             };
         })()
