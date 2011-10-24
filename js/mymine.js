@@ -105,12 +105,14 @@ var MyMine = (function() {
 
         'presenter': (function() {
 
-            /** @string selector for toolbar buttons */
-            var selectToolbarButtons   = 'div#toolbar div.btn',
+            /** @string selector for main table */
+            var selectMainTable        = 'table#lists',
             /** @string selector for all main table checkboxes */
                 selectAllCheckboxes    = 'table#lists tbody tr input[type="checkbox"].check',
             /** @string selector for all main table rows */
                 selectAllRows          = 'table#lists tbody tr',
+            /** @string selector for toolbar buttons */
+                selectToolbarButtons   = 'div#toolbar div.btn',
             /** @string selector for row checkbox from main table row */
                 selectRowToCheckbox    = 'input[type="checkbox"].check',
             /** @string selector for all folder name links in the main table */
@@ -177,6 +179,9 @@ var MyMine = (function() {
                 })
             }
 
+            /**
+             * Popup open/close handlers
+             */
             function initializePopupHandlers() {
                 // open on toolbar click
                 $(selectToolbarButtons).click(function() {
@@ -196,6 +201,20 @@ var MyMine = (function() {
                 });
             }
 
+            /**
+             * Add folder
+             */
+            function initializeAddFolder() {
+                $(selectPopupWindow + '.folder input').keydown(function(e) {
+                    if (e.keyCode == 13) {
+                        MyMine.presenter.addFolder();
+                    }
+                });
+                $(selectPopupWindow + '.folder div.btn.add').click(function() {
+                    MyMine.presenter.addFolder();
+                });
+            }
+
             return {
 
                 /**
@@ -205,7 +224,10 @@ var MyMine = (function() {
                     initializeSelectItemHandlers();
                     initializeExpandCollapseHandlers();
                     initializeSelectAllHandler();
+                    
+                    // popups
                     initializePopupHandlers();
+                    initializeAddFolder();
                 },
 
                 /**
@@ -329,6 +351,58 @@ var MyMine = (function() {
                  */
                 closePopup: function() {
                     $(selectPopupOverlay).hide().find(selectPopupOverlayToWindow).hide();
+                },
+
+                // create a new folder
+                addFolder: function() {
+                    var name = $(selectPopupOverlayToWindow + '.folder input').val();
+                    
+                    if (name) {
+                        try {
+                            // call to model
+                            MyMine.model.addFolder(name);
+
+                            // add the new row
+                            $('<tr/>', {
+                                'class': 'folder'
+                            })
+                            .append($('<td/>', {
+                                'class': 'first',
+                                'html': $('<input/>', {
+                                    'type': 'checkbox',
+                                    'class': 'check'
+                                })
+                            }))
+                            .append($('<td/>', {
+                                'class': 'second'
+                            }))
+                            .append($('<td/>', {
+                                'class': 'main',
+                                'html': $('<div/>', {
+                                    'class': 'name',
+                                    'html': $('<a/>', {
+                                        'href': '#',
+                                        'html': $('<h2/>', {
+                                            'text': name
+                                        })
+                                    })
+                                })
+                            }))
+                            .append($('<td/>'))
+                            .append($('<td/>'))
+                            .append($('<td/>', {
+                                'class': 'datetime'
+                            }))
+                            .appendTo(selectMainTable);
+                            
+                            $(selectPopupOverlayToWindow + '.folder p.warning').text('');
+                            $(selectPopupOverlayToWindow + '.folder input').val('')
+
+                            $(selectPopupOverlay).hide().find('div.popup').hide();
+                        } catch(message) {
+                            $(selectPopupOverlayToWindow + '.folder p.warning').text(message);
+                        }
+                    }                    
                 }
             };
         })()
