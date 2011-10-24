@@ -10,12 +10,44 @@
 
 var MyMine = (function() {
 
+
+    /********************* Selectors *********************/
+
+
     /** @string selector for all folder names in the main table */
     var selectAllFolderNames  = 'table#lists tbody tr.folder h2.name',
     /** @string selector for all checked checkboxes in the main table */
         selectAllCheckedItems = 'table#lists tbody tr input[type="checkbox"].check:checked',
     /** @string selector for item name from main table row */
         selectRowToItemName   = 'h2.name';
+
+    /** @string selector for main table */
+    var selectMainTable        = 'table#lists',
+    /** @string selector for all main table checkboxes */
+        selectAllCheckboxes    = 'table#lists tbody tr input[type="checkbox"].check',
+    /** @string selector for all main table rows */
+        selectAllRows          = 'table#lists tbody tr',
+    /** @string selector for toolbar buttons */
+        selectToolbarButtons   = 'div#toolbar div.btn',
+    /** @string selector for row checkbox from main table row */
+        selectRowToCheckbox    = 'input[type="checkbox"].check',
+    /** @string selector for all folder name links in the main table */
+        selectAllFolderLinks   = 'table#lists tbody tr.folder td.main div.name a',
+    /** @string selector for select all checkbox */
+        selectSelectAll        = 'input[type="checkbox"].select-all';
+    
+    /** @string selector for popup overlay */
+    var selectPopupOverlay         = '#body-overlay',
+    /** @string selector for popup window from overlay */
+        selectPopupOverlayToWindow = 'div.popup',
+    /** @string selector for popup window */
+        selectPopupWindow          = '#body-overlay div.popup',
+    /** @string selector for overlay popup close button */
+        selectPopupCloseButton     = '#body-overlay div.btn.close';
+
+
+    /********************* Initialize *********************/
+
 
     /**
      * Get all folders from the table after it was initialized
@@ -37,13 +69,13 @@ var MyMine = (function() {
             // set selected class
             row.addClass('selected');
             // set the item as selected internally
-            MyMine.presenter.setAsSelectedItem(
+            MyMine.presenters.table.setAsSelectedItem(
                 row.find(selectRowToItemName).text(),
                 (row.hasClass('list')) ? 'list' : 'folder');
         });
 
         // based on selected items, update toolbar
-        MyMine.presenter.updateToolbar();
+        MyMine.presenters.table.updateToolbar();
     }
 
     /**
@@ -71,14 +103,22 @@ var MyMine = (function() {
             // initialize selected items
             initializeSelectedItems();
 
-            // initialize item selection handlers
-            MyMine.presenter.initializeHandlers();
-
             // initialize available tags
             initializeTags();
+
+            // initialize presenters handlers
+            MyMine.presenters.table.initializeHandlers();
+            MyMine.presenters.folders.initializeHandlers();
+            MyMine.presenters.tags.initializeHandlers();
         },
         
+
+
+
         /********************* Model *********************/
+
+
+
 
         'model': (function() {
 
@@ -91,7 +131,7 @@ var MyMine = (function() {
 
             /** @string messages */
             var messageListExists = "Wowza! This list already exists.",
-                messageTagExists  = "Wowza! That one already exists.";
+                messageTagExists  = "Wowza! That tag already exists.";
 
             return {
 
@@ -138,415 +178,437 @@ var MyMine = (function() {
         })(),
 
 
-        /********************* Presenter *********************/
+        'presenters': {
 
 
-        'presenter': (function() {
 
-            /** @string selector for main table */
-            var selectMainTable        = 'table#lists',
-            /** @string selector for all main table checkboxes */
-                selectAllCheckboxes    = 'table#lists tbody tr input[type="checkbox"].check',
-            /** @string selector for all main table rows */
-                selectAllRows          = 'table#lists tbody tr',
-            /** @string selector for toolbar buttons */
-                selectToolbarButtons   = 'div#toolbar div.btn',
-            /** @string selector for row checkbox from main table row */
-                selectRowToCheckbox    = 'input[type="checkbox"].check',
-            /** @string selector for all folder name links in the main table */
-                selectAllFolderLinks   = 'table#lists tbody tr.folder td.main div.name a',
-            /** @string selector for select all checkbox */
-                selectSelectAll        = 'input[type="checkbox"].select-all';
+
+            /********************* Table Presenter *********************/
             
-            /** @string selector for popup overlay */
-            var selectPopupOverlay         = '#body-overlay',
-            /** @string selector for popup window from overlay */
-                selectPopupOverlayToWindow = 'div.popup',
-            /** @string selector for popup window */
-                selectPopupWindow          = '#body-overlay div.popup',
-            /** @string selector for overlay popup close button */
-                selectPopupCloseButton     = '#body-overlay div.btn.close';
-
-            /** @dict settings for jQuery UI Drag & Drop */
-            var tagsDragDropSettings = {
-                'cursor': 'move',
-                'opacity': 0.5,
-                'revert': true,
-                'containment': '#set-tags'
-            }
-
-            /** @dict selected item's name => type in the main table */
-            var selected      = {},
-            /** @int number of selected items in the main table */
-                selectedCount = 0;
-
-            /**
-             * Initialize handlers for selecting items in the main table
-             */
-            function initializeSelectItemHandlers() {
-                // on checkbox click
-                $(selectAllCheckboxes).click(function(e) {
-                    MyMine.presenter.selectRow(this);
-                    e.stopPropagation();
-                });
-
-                // on row select
-                $(selectAllRows).click(function(e) {
-                    var checkbox = $(this).find(selectRowToCheckbox);
-                    // first tick the checkbox
-                    if (checkbox.attr('checked')) {
-                        checkbox.attr('checked', false);
-                    } else {
-                        checkbox.attr('checked', 'checked');
-                    }
-                    MyMine.presenter.selectRow(checkbox);
-                    e.stopPropagation();
-                });
-            }
-
-            /**
-             * Initialize handlers for expanding/collapsing of items
-             */
-            function initializeExpandCollapseHandlers() {
-                // items
-                $(selectAllFolderLinks).click(function(e) {
-                    MyMine.presenter.expandCollapseFolders(this);
-                    e.stopPropagation();
-                    e.preventDefault();
-                })
-            }
-
-            /**
-             * Select all handler
-             */
-            function initializeSelectAllHandler() {
-                $(selectSelectAll).click(function() {
-                    MyMine.presenter.selectAll(this);
-                })
-            }
-
-            /**
-             * Popup open/close handlers
-             */
-            function initializePopupHandlers() {
-                // open on toolbar click
-                $(selectToolbarButtons).click(function() {
-                    MyMine.presenter.openPopup(this);
-                });
 
 
-                // close button
-                $(selectPopupCloseButton).click(function() {
-                    MyMine.presenter.closePopup();
-                });
-                // esc keypress
-                $(document).keyup(function(e) {
-                    if (e.keyCode == 27) {
-                        MyMine.presenter.closePopup();
-                    }
-                });
-            }
 
-            /**
-             * Add a folder
-             */
-            function initializeAddFolder() {
-                $(selectPopupWindow + '.folder input').keydown(function(e) {
-                    if (e.keyCode == 13) {
-                        MyMine.presenter.addFolder();
-                    }
-                });
-                $(selectPopupWindow + '.folder div.btn.add').click(function() {
-                    MyMine.presenter.addFolder();
-                });
-            }
+            'table': (function() {
 
-            /**
-             * Add a tag
-             */
-            function initializeAddTag() {
-                $('#add-new-tag input').keydown(function(e) {
-                    if (e.keyCode == 13) {
-                        MyMine.presenter.addTag();
-                    }
-                });
-                $('#add-new-tag div.btn.add').click(function() {
-                    MyMine.presenter.addTag();
-                });
-            }
-
-            /**
-             * Remove tag
-             */
-            function initializeRemoveTag() {
-                $('div.tags ul li a span.remove').click(function() {
-                    MyMine.presenter.removeTag(this);
-                });
-            }
-
-            /**
-             * Initialize tags drag & drop
-             */
-            function initializeTagsDragDrop() {
-                // drag & drop of tags
-                $('ul.drag li').draggable(tagsDragDropSettings);
-                $('div.dropzone').droppable({
-                    'accept': 'ul.drag li',
-                    drop: function(event, ui) {
-                        ui.draggable.appendTo('div.dropzone div.tags ul')
-                        .attr('style', 'left:0;top:0;')
-                        .draggable('option', 'disabled', true)
-                        .draggable('option', 'revert', false);
-                    }
-                });
-            }
-
-            return {
+                /** @dict selected item's name => type in the main table */
+                var selected      = {},
+                /** @int number of selected items in the main table */
+                    selectedCount = 0;
 
                 /**
-                 * Initialize all the handlers
+                 * Initialize handlers for selecting items in the main table
                  */
-                initializeHandlers: function() {
-                    initializeSelectItemHandlers();
-                    initializeExpandCollapseHandlers();
-                    initializeSelectAllHandler();
-                    
-                    // popups
-                    initializePopupHandlers();
-                    
-                    initializeAddFolder();
-                    
-                    initializeAddTag();
-                    initializeRemoveTag();
-                    initializeTagsDragDrop()
-                },
+                function initializeSelectItemHandlers() {
+                    // on checkbox click
+                    $(selectAllCheckboxes).click(function(e) {
+                        MyMine.presenters.table.selectRow(this);
+                        e.stopPropagation();
+                    });
 
-                /**
-                 * Set item in the main table as selected
-                 */
-                setAsSelectedItem: function(name, type) {
-                    selected[name] = type;
-                    selectedCount++;
-                },
-
-                /**
-                 * Add Folder/Organize lists switch
-                 */
-                updateToolbar: function() {
-                    if (selectedCount > 0) {
-                        // organize lists
-                        $(selectToolbarButtons + '.folder').hide();
-                        $(selectToolbarButtons + '.organize').show();
-                    } else {
-                        // create folder
-                        $(selectToolbarButtons + '.folder').show();
-                        $(selectToolbarButtons + '.organize').hide();
-                    }
-                },
-
-                /**
-                 * Select row on checkbox or row click
-                 */
-                selectRow: function(element) {
-                    var row = $(element).closest('tr');
-                    // folder?
-                    if (row.hasClass('folder')) {
-                        var inFolder = true;
-                        if ($(element).is(':checked')) {
-                            while (inFolder) {
-                                row = row.next();
-                                if (row.hasClass('list') && row.hasClass('foldered')) {
-                                    if (! row.hasClass('selected')) {
-                                        row.addClass('selected');
-                                        row.find(selectRowToCheckbox).attr('checked', 'checked');
-                                        selectedCount++;
-                                    }
-                                } else {
-                                    inFolder = false;
-                                }
-                            }
+                    // on row select
+                    $(selectAllRows).click(function(e) {
+                        var checkbox = $(this).find(selectRowToCheckbox);
+                        // first tick the checkbox
+                        if (checkbox.attr('checked')) {
+                            checkbox.attr('checked', false);
                         } else {
-                            while (inFolder) {
-                                row = row.next();
-                                if (row.hasClass('list') && row.hasClass('foldered')) {
-                                    if (row.hasClass('selected')) {
-                                        row.removeClass('selected');
-                                        row.find(selectRowToCheckbox).attr('checked', false);
-                                        selectedCount--;
-                                    }
-                                } else {
-                                    inFolder = false;
-                                }
-                            }
+                            checkbox.attr('checked', 'checked');
                         }
-                    } else {
-                        if (! $(element).is(':checked')) {
-                            row.removeClass('selected');
-                            selectedCount--;
-                        } else {
-                            row.addClass('selected');
-                            selectedCount++;
-                        }
-                    }
-
-                    MyMine.presenter.updateToolbar();
-                },
-
-                selectAll: function(element) {
-                    if ($(element).attr('checked')) {
-                        $(selectAllRows).each(function() {
-                            $(this).addClass('selected').find(selectRowToCheckbox).attr('checked', 'checked');
-                        });
-                    } else {
-                        $(selectAllRows).each(function() {
-                            $(this).removeClass('selected').find(selectRowToCheckbox).attr('checked', false);
-                        });
-                    }
-                },
+                        MyMine.presenters.table.selectRow(checkbox);
+                        e.stopPropagation();
+                    });
+                }
 
                 /**
-                 * Expand/collapse folders
+                 * Initialize handlers for expanding/collapsing of items
                  */
-                expandCollapseFolders: function(element) {
-                    var next = $(element).closest('tr').next();
-                    if (next.hasClass('list') && next.hasClass('foldered')) {
-                        // has children
-                        var loop   = true,
-                            hidden = next.is(':hidden');
-                        // collapse
-                        while (loop) {
-                            if (hidden) {
-                                next.show();
+                function initializeExpandCollapseHandlers() {
+                    // items
+                    $(selectAllFolderLinks).click(function(e) {
+                        MyMine.presenters.table.expandCollapseFolders(this);
+                        e.stopPropagation();
+                        e.preventDefault();
+                    })
+                }
+
+                /**
+                 * Select all handler
+                 */
+                function initializeSelectAllHandler() {
+                    $(selectSelectAll).click(function() {
+                        MyMine.presenters.table.selectAll(this);
+                    })
+                }
+
+                /**
+                 * Popup open/close handlers
+                 */
+                function initializePopupHandlers() {
+                    // open on toolbar click
+                    $(selectToolbarButtons).click(function() {
+                        MyMine.presenters.table.openPopup(this);
+                    });
+
+
+                    // close button
+                    $(selectPopupCloseButton).click(function() {
+                        MyMine.presenters.table.closePopup();
+                    });
+                    // esc keypress
+                    $(document).keyup(function(e) {
+                        if (e.keyCode == 27) {
+                            MyMine.presenters.table.closePopup();
+                        }
+                    });
+                }
+
+                return {
+
+                    /**
+                     * Initialize all the handlers
+                     */
+                    initializeHandlers: function() {
+                        initializeSelectItemHandlers();
+                        initializeExpandCollapseHandlers();
+                        initializeSelectAllHandler();
+                        initializePopupHandlers();
+                    },
+
+                    /**
+                     * Set item in the main table as selected
+                     */
+                    setAsSelectedItem: function(name, type) {
+                        selected[name] = type;
+                        selectedCount++;
+                    },
+
+                    /**
+                     * Add Folder/Organize lists switch
+                     */
+                    updateToolbar: function() {
+                        if (selectedCount > 0) {
+                            // organize lists
+                            $(selectToolbarButtons + '.folder').hide();
+                            $(selectToolbarButtons + '.organize').show();
+                        } else {
+                            // create folder
+                            $(selectToolbarButtons + '.folder').show();
+                            $(selectToolbarButtons + '.organize').hide();
+                        }
+                    },
+
+                    /**
+                     * Select row on checkbox or row click
+                     */
+                    selectRow: function(element) {
+                        var row = $(element).closest('tr');
+                        // folder?
+                        if (row.hasClass('folder')) {
+                            var inFolder = true;
+                            if ($(element).is(':checked')) {
+                                while (inFolder) {
+                                    row = row.next();
+                                    if (row.hasClass('list') && row.hasClass('foldered')) {
+                                        if (! row.hasClass('selected')) {
+                                            row.addClass('selected');
+                                            row.find(selectRowToCheckbox).attr('checked', 'checked');
+                                            selectedCount++;
+                                        }
+                                    } else {
+                                        inFolder = false;
+                                    }
+                                }
                             } else {
-                                next.hide();
+                                while (inFolder) {
+                                    row = row.next();
+                                    if (row.hasClass('list') && row.hasClass('foldered')) {
+                                        if (row.hasClass('selected')) {
+                                            row.removeClass('selected');
+                                            row.find(selectRowToCheckbox).attr('checked', false);
+                                            selectedCount--;
+                                        }
+                                    } else {
+                                        inFolder = false;
+                                    }
+                                }
                             }
-
-                            next = next.next();
-                            if (! next.hasClass('list') || ! next.hasClass('foldered')) {
-                                loop = false;
+                        } else {
+                            if (! $(element).is(':checked')) {
+                                row.removeClass('selected');
+                                selectedCount--;
+                            } else {
+                                row.addClass('selected');
+                                selectedCount++;
                             }
                         }
+
+                        MyMine.presenters.table.updateToolbar();
+                    },
+
+                    selectAll: function(element) {
+                        if ($(element).attr('checked')) {
+                            $(selectAllRows).each(function() {
+                                $(this).addClass('selected').find(selectRowToCheckbox).attr('checked', 'checked');
+                            });
+                        } else {
+                            $(selectAllRows).each(function() {
+                                $(this).removeClass('selected').find(selectRowToCheckbox).attr('checked', false);
+                            });
+                        }
+                    },
+
+                    /**
+                     * Expand/collapse folders
+                     */
+                    expandCollapseFolders: function(element) {
+                        var next = $(element).closest('tr').next();
+                        if (next.hasClass('list') && next.hasClass('foldered')) {
+                            // has children
+                            var loop   = true,
+                                hidden = next.is(':hidden');
+                            // collapse
+                            while (loop) {
+                                if (hidden) {
+                                    next.show();
+                                } else {
+                                    next.hide();
+                                }
+
+                                next = next.next();
+                                if (! next.hasClass('list') || ! next.hasClass('foldered')) {
+                                    loop = false;
+                                }
+                            }
+                        }
+                    },
+
+                    /**
+                     * Open up overlay popup
+                     */
+                    openPopup: function(element) {
+                        $(selectPopupOverlay).show();
+                        $(selectPopupWindow + '.' + $(element).attr('class').split(/\s+/)[1]).show();
+                    },
+
+                    /**
+                     * Close overlay popup
+                     */
+                    closePopup: function() {
+                        $(selectPopupOverlay).hide().find(selectPopupOverlayToWindow).hide();
                     }
-                },
+                };
+            })(),
+
+
+
+
+            /********************* Folders Presenter *********************/
+            
+
+
+
+            'folders': (function() {
 
                 /**
-                 * Open up overlay popup
+                 * Add a folder
                  */
-                openPopup: function(element) {
-                    $(selectPopupOverlay).show();
-                    $(selectPopupWindow + '.' + $(element).attr('class').split(/\s+/)[1]).show();
-                },
+                function initializeAddFolder() {
+                    $(selectPopupWindow + '.folder input').keydown(function(e) {
+                        if (e.keyCode == 13) {
+                            MyMine.presenters.folders.addFolder();
+                        }
+                    });
+                    $(selectPopupWindow + '.folder div.btn.add').click(function() {
+                        MyMine.presenters.folders.addFolder();
+                    });
+                }
 
-                /**
-                 * Close overlay popup
-                 */
-                closePopup: function() {
-                    $(selectPopupOverlay).hide().find(selectPopupOverlayToWindow).hide();
-                },
+                return {
 
-                /**
-                 * Create a new folder
-                 */
-                addFolder: function() {
-                    var name = $(selectPopupOverlayToWindow + '.folder input').val();
-                    
-                    if (name) {
-                        try {
-                            // call to model
-                            MyMine.model.addFolder(name);
+                    /**
+                     * Initialize all the handlers
+                     */
+                    initializeHandlers: function() {
+                        initializeAddFolder();
+                    },
 
-                            // add the new row
-                            $('<tr/>', {
-                                'class': 'folder'
-                            })
-                            .append($('<td/>', {
-                                'class': 'first',
-                                'html': $('<input/>', {
-                                    'type': 'checkbox',
-                                    'class': 'check'
+                    /**
+                     * Create a new folder
+                     */
+                    addFolder: function() {
+                        var name = $(selectPopupOverlayToWindow + '.folder input').val();
+                        
+                        if (name) {
+                            try {
+                                // call to model
+                                MyMine.model.addFolder(name);
+
+                                // add the new row
+                                $('<tr/>', {
+                                    'class': 'folder'
                                 })
-                            }))
-                            .append($('<td/>', {
-                                'class': 'second'
-                            }))
-                            .append($('<td/>', {
-                                'class': 'main',
-                                'html': $('<div/>', {
-                                    'class': 'name',
-                                    'html': $('<a/>', {
-                                        'href': '#',
-                                        'html': $('<h2/>', {
-                                            'text': name
+                                .append($('<td/>', {
+                                    'class': 'first',
+                                    'html': $('<input/>', {
+                                        'type': 'checkbox',
+                                        'class': 'check'
+                                    })
+                                }))
+                                .append($('<td/>', {
+                                    'class': 'second'
+                                }))
+                                .append($('<td/>', {
+                                    'class': 'main',
+                                    'html': $('<div/>', {
+                                        'class': 'name',
+                                        'html': $('<a/>', {
+                                            'href': '#',
+                                            'html': $('<h2/>', {
+                                                'text': name
+                                            })
                                         })
                                     })
-                                })
-                            }))
-                            .append($('<td/>'))
-                            .append($('<td/>'))
-                            .append($('<td/>', {
-                                'class': 'datetime'
-                            }))
-                            .appendTo(selectMainTable);
-                            
-                            $(selectPopupOverlayToWindow + '.folder p.warning').text('');
-                            $(selectPopupOverlayToWindow + '.folder input').val('')
+                                }))
+                                .append($('<td/>'))
+                                .append($('<td/>'))
+                                .append($('<td/>', {
+                                    'class': 'datetime'
+                                }))
+                                .appendTo(selectMainTable);
+                                
+                                $(selectPopupOverlayToWindow + '.folder p.warning').text('');
+                                $(selectPopupOverlayToWindow + '.folder input').val('')
 
-                            $(selectPopupOverlay).hide().find('div.popup').hide();
-                        } catch(message) {
-                            $(selectPopupOverlayToWindow + '.folder p.warning').text(message);
+                                $(selectPopupOverlay).hide().find('div.popup').hide();
+                            } catch(message) {
+                                $(selectPopupOverlayToWindow + '.folder p.warning').text(message);
+                            }
                         }
                     }
-                },
+                };
+            })(),
+
+
+
+
+            /********************* Tags Presenter *********************/
+            
+
+
+
+            'tags': (function() {
+
+                /** @dict settings for jQuery UI Drag & Drop */
+                var tagsDragDropSettings = {
+                    'cursor': 'move',
+                    'opacity': 0.5,
+                    'revert': true,
+                    'containment': '#set-tags'
+                }
 
                 /**
-                 * Create a new tag
+                 * Add a tag
                  */
-                addTag: function() {
-                    var label = $('#add-new-tag input').val();
-                    if (label) {
-                        try {
-                            // try adding in the model
-                            MyMine.model.addTag(label);
-
-                            // actually add in the view
-                            $('<li/>', {
-                                'html': function() {
-                                   return $('<a/>')
-                                   .append($('<span/>', {
-                                       'class': 'label',
-                                       'text': label
-                                   }))
-                                   .append($('<span/>', {
-                                       'class': 'remove',
-                                       'text': 'x'
-                                   }))
-                                }
-                            })
-                            .appendTo('#set-tags div.dropzone div.tags ul')
-                            .click(function() {
-                                MyMine.presenter.removeTag(this);
-                            });
-
-                            $('#add-new-tag p.warning').html('');
-
-                            $('#add-new-tag input').val('')
-                        } catch(message) {
-                            $('#add-new-tag p.warning').text(message);
+                function initializeAddTag() {
+                    $('#add-new-tag input').keydown(function(e) {
+                        if (e.keyCode == 13) {
+                            MyMine.presenters.tags.addTag();
                         }
-                    }                    
-                },
+                    });
+                    $('#add-new-tag div.btn.add').click(function() {
+                        MyMine.presenters.tags.addTag();
+                    });
+                }
 
                 /**
                  * Remove tag
                  */
-                removeTag: function(element) {
-                    $(element).closest('li').appendTo('div.tags.available ul')
-                    .attr('style', 'position:relative')
-                    .draggable(tagsDragDropSettings)
-                    .draggable('option', 'disabled', false);
+                function initializeRemoveTag() {
+                    $('div.tags ul li a span.remove').click(function() {
+                        MyMine.presenters.tags.removeTag(this);
+                    });
                 }
-            };
-        })()
+
+                /**
+                 * Initialize tags drag & drop
+                 */
+                function initializeTagsDragDrop() {
+                    // drag & drop of tags
+                    $('ul.drag li').draggable(tagsDragDropSettings);
+                    $('div.dropzone').droppable({
+                        'accept': 'ul.drag li',
+                        drop: function(event, ui) {
+                            ui.draggable.appendTo('div.dropzone div.tags ul')
+                            .attr('style', 'left:0;top:0;')
+                            .draggable('option', 'disabled', true)
+                            .draggable('option', 'revert', false);
+                        }
+                    });
+                }
+
+                return {
+
+                    /**
+                     * Initialize all the handlers
+                     */
+                    initializeHandlers: function() {                        
+                        initializeAddTag();
+                        initializeRemoveTag();
+                        initializeTagsDragDrop()
+                    },
+
+                    /**
+                     * Create a new tag
+                     */
+                    addTag: function() {
+                        var label = $('#add-new-tag input').val();
+                        if (label) {
+                            try {
+                                // try adding in the model
+                                MyMine.model.addTag(label);
+
+                                // actually add in the view
+                                $('<li/>', {
+                                    'html': function() {
+                                       return $('<a/>')
+                                       .append($('<span/>', {
+                                           'class': 'label',
+                                           'text': label
+                                       }))
+                                       .append($('<span/>', {
+                                           'class': 'remove',
+                                           'text': 'x'
+                                       }))
+                                    }
+                                })
+                                .appendTo('#set-tags div.dropzone div.tags ul')
+                                .click(function() {
+                                    MyMine.presenters.tags.removeTag(this);
+                                });
+
+                                $('#add-new-tag p.warning').html('');
+
+                                $('#add-new-tag input').val('')
+                            } catch(message) {
+                                $('#add-new-tag p.warning').text(message);
+                            }
+                        }                    
+                    },
+
+                    /**
+                     * Remove tag
+                     */
+                    removeTag: function(element) {
+                        $(element).closest('li').appendTo('div.tags.available ul')
+                        .attr('style', 'position:relative')
+                        .draggable(tagsDragDropSettings)
+                        .draggable('option', 'disabled', false);
+                    }
+                };
+            })()
+
+
+        }
     };
 
 })();
