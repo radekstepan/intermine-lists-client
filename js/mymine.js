@@ -34,8 +34,15 @@ var MyMine = (function() {
     /** @string selector for all folder name links in the main table */
         selectAllFolderLinks   = 'table#lists tbody tr.folder td.main div.name a',
     /** @string selector for select all checkbox */
-        selectSelectAll        = 'input[type="checkbox"].select-all';
+        selectSelectAll        = 'table#lists input[type="checkbox"].select-all';
     
+    /** @string selector for all trashed lists table checkboxes */
+    var selectTrashedListsCheckboxes = 'table#trash tbody tr input[type="checkbox"].check',
+    /** @string selector for all trashed lists table rows */
+        selectTrashedListsRows       = 'table#trash tbody tr',
+    /** @string selector for select all checkbox on trashed lists */
+        selectSelectAllTrashed       = 'table#trash input[type="checkbox"].select-all';
+
     /** @string selector for popup overlay */
     var selectPopupOverlay         = '#body-overlay',
     /** @string selector for popup window from overlay */
@@ -110,6 +117,7 @@ var MyMine = (function() {
             MyMine.presenters.table.initializeHandlers();
             MyMine.presenters.folders.initializeHandlers();
             MyMine.presenters.tags.initializeHandlers();
+            MyMine.presenters.trash.initializeHandlers();
         },
         
 
@@ -604,6 +612,75 @@ var MyMine = (function() {
                         .draggable(tagsDragDropSettings)
                         .draggable('option', 'disabled', false);
                     }
+                };
+            })(),
+
+
+
+
+            /********************* Trash Presenter *********************/
+            
+
+
+
+            'trash': (function() {
+
+                /**
+                 * Initialize handlers for selecting items in the restore table
+                 */
+                function initializeSelectRestoreItemHandlers() {
+                    // on checkbox click
+                    $(selectTrashedListsCheckboxes).click(function(e) {
+                        MyMine.presenters.trash.selectRow(this);
+                        e.stopPropagation();
+                    });
+
+                    // on row select
+                    $(selectTrashedListsRows).click(function(e) {
+                        var checkbox = $(this).find(selectRowToCheckbox);
+                        // first tick the checkbox
+                        if (checkbox.attr('checked')) {
+                            checkbox.attr('checked', false);
+                        } else {
+                            checkbox.attr('checked', 'checked');
+                        }
+                        MyMine.presenters.trash.selectRow(checkbox);
+                        e.stopPropagation();
+                    });
+                }
+
+                /**
+                 * Select all handler
+                 */
+                function initializeSelectAllHandler() {
+                    $(selectSelectAllTrashed).click(function() {
+                        MyMine.presenters.trash.selectAll(this);
+                    })
+                }
+
+                return {
+
+                    /**
+                     * Initialize all the handlers
+                     */
+                    initializeHandlers: function() {
+                        initializeSelectRestoreItemHandlers();
+                    },
+
+                    /**
+                     * Select a row in a trashed lists table
+                     */
+                    selectRow: function(element) {
+                        alert('yay');
+                        // XXX implement
+                    },
+
+                    /**
+                     * Select all trashed lists
+                     */
+                    selectAll: function(element) {
+                        // XXX implement
+                    },
                 };
             })()
 
