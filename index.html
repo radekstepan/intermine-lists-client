@@ -19,7 +19,7 @@
 </head>
 <body>
     <h1>Your Lists</h1>
-    <div class="toolbar clearafter">
+    <div id="toolbar" class="toolbar clearafter">
         <div class="btn folder">
             <span class="label"></span>
             <span class="description">Create a folder</span>
@@ -361,87 +361,6 @@
 
         // selected status
         (function() {
-            // onload
-            $('table tbody tr input[type="checkbox"].check:checked').closest('tr').addClass('selected');
-            // how many lists are already selected
-            var selected = $('table tbody tr.selected').length;
-            updateToolbar();
-            
-            // launch on checkbox click
-            function selectRows(e, element) {
-                var row = $(element).closest('tr');
-                // folder?
-                if (row.hasClass('folder')) {
-                    var inFolder = true;
-                    if ($(element).is(':checked')) {
-                        while (inFolder) {
-                            row = row.next();
-                            if (row.hasClass('list') && row.hasClass('foldered')) {
-                                if (!row.hasClass('selected')) {
-                                    row.addClass('selected');
-                                    row.find('input[type="checkbox"].check').attr('checked', 'checked');
-                                    selected++;
-                                }
-                            } else {
-                                inFolder = false;
-                            }
-                        }
-                    } else {
-                        while (inFolder) {
-                            row = row.next();
-                            if (row.hasClass('list') && row.hasClass('foldered')) {
-                                if (row.hasClass('selected')) {
-                                    row.removeClass('selected');
-                                    row.find('input[type="checkbox"].check').attr('checked', false);
-                                    selected--;
-                                }
-                            } else {
-                                inFolder = false;
-                            }
-                        }
-                    }
-                } else {
-                    if (! $(element).is(':checked')) {
-                        row.removeClass('selected');
-                        selected--;
-                    } else {
-                        row.addClass('selected');
-                        selected++;
-                    }
-                }
-
-                updateToolbar();
-                e.stopPropagation();
-            }
-
-            // on checkbox click
-            $('table tbody tr input[type="checkbox"].check').click(function(e) {
-                selectRows(e, this);
-            });
-            // on row select
-            $('table tbody tr').click(function(e) {
-                var checkbox = $(this).find('input[type="checkbox"].check');
-                // first tick the checkbox
-                if (checkbox.attr('checked')) {
-                    checkbox.attr('checked', false);
-                } else {
-                    checkbox.attr('checked', 'checked');
-                }
-                selectRows(e, checkbox);
-            });
-
-            // create folder/organize switch
-            function updateToolbar() {
-                if (selected > 0) {
-                    // organize lists
-                    $('div.toolbar div.btn.folder').hide();
-                    $('div.toolbar div.btn.organize').show();
-                } else {
-                    // create folder
-                    $('div.toolbar div.btn.folder').show();
-                    $('div.toolbar div.btn.organize').hide();
-                }
-            }
 
             // expand/collapse folders
             $('table tbody tr.folder td.main div.name a').click(function(e) {
