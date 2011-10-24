@@ -117,12 +117,20 @@ var MyMine = (function() {
                 selectAllFolderLinks   = 'table#lists tbody tr.folder td.main div.name a',
             /** @string selector for select all checkbox */
                 selectSelectAll        = 'input[type="checkbox"].select-all';
+            
+            /** @string selector for popup overlay */
+            var selectPopupOverlay         = '#body-overlay',
+            /** @string selector for popup window from overlay */
+                selectPopupOverlayToWindow = 'div.popup',
+            /** @string selector for popup window */
+                selectPopupWindow          = '#body-overlay div.popup',
+            /** @string selector for overlay popup close button */
+                selectPopupCloseButton     = '#body-overlay div.btn.close';
 
             /** @dict selected item's name => type in the main table */
             var selected      = {},
             /** @int number of selected items in the main table */
                 selectedCount = 0;
-
 
             /**
              * Initialize handlers for selecting items in the main table
@@ -169,6 +177,25 @@ var MyMine = (function() {
                 })
             }
 
+            function initializePopupHandlers() {
+                // open on toolbar click
+                $(selectToolbarButtons).click(function() {
+                    MyMine.presenter.openPopup(this);
+                });
+
+
+                // close button
+                $(selectPopupCloseButton).click(function() {
+                    MyMine.presenter.closePopup();
+                });
+                // esc keypress
+                $(document).keyup(function(e) {
+                    if (e.keyCode == 27) {
+                        MyMine.presenter.closePopup();
+                    }
+                });
+            }
+
             return {
 
                 /**
@@ -178,6 +205,7 @@ var MyMine = (function() {
                     initializeSelectItemHandlers();
                     initializeExpandCollapseHandlers();
                     initializeSelectAllHandler();
+                    initializePopupHandlers();
                 },
 
                 /**
@@ -286,6 +314,21 @@ var MyMine = (function() {
                             }
                         }
                     }
+                },
+
+                /**
+                 * Open up overlay popup
+                 */
+                openPopup: function(element) {
+                    $(selectPopupOverlay).show();
+                    $(selectPopupWindow + '.' + $(element).attr('class').split(/\s+/)[1]).show();
+                },
+
+                /**
+                 * Close overlay popup
+                 */
+                closePopup: function() {
+                    $(selectPopupOverlay).hide().find(selectPopupOverlayToWindow).hide();
                 }
             };
         })()
