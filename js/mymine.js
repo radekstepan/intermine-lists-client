@@ -503,19 +503,19 @@ var MyMine = (function() {
                     'cursor': 'move',
                     'opacity': 0.5,
                     'revert': true,
-                    'containment': '#set-tags'
+                    'containment': selectPopupWindow + '.tags #set-tags'
                 }
 
                 /**
                  * Add a tag
                  */
                 function initializeAddTag() {
-                    $('#add-new-tag input').keydown(function(e) {
+                    $(selectPopupWindow + '.tags #add-new-tag input').keydown(function(e) {
                         if (e.keyCode == 13) {
                             MyMine.presenters.tags.addTag();
                         }
                     });
-                    $('#add-new-tag div.btn.add').click(function() {
+                    $(selectPopupWindow + '.tags #add-new-tag div.btn.add').click(function() {
                         MyMine.presenters.tags.addTag();
                     });
                 }
@@ -524,7 +524,7 @@ var MyMine = (function() {
                  * Remove tag
                  */
                 function initializeRemoveTag() {
-                    $('div.tags ul li a span.remove').click(function() {
+                    $(selectPopupWindow + '.tags div.tags ul li a span.remove').click(function() {
                         MyMine.presenters.tags.removeTag(this);
                     });
                 }
@@ -534,11 +534,11 @@ var MyMine = (function() {
                  */
                 function initializeTagsDragDrop() {
                     // drag & drop of tags
-                    $('ul.drag li').draggable(tagsDragDropSettings);
-                    $('div.dropzone').droppable({
-                        'accept': 'ul.drag li',
+                    $(selectPopupWindow + '.tags ul.drag li').draggable(tagsDragDropSettings);
+                    $(selectPopupWindow + '.tags div.dropzone').droppable({
+                        'accept': selectPopupWindow + '.tags ul.drag li',
                         drop: function(event, ui) {
-                            ui.draggable.appendTo('div.dropzone div.tags ul')
+                            ui.draggable.appendTo(selectPopupWindow + '.tags div.dropzone div.tags ul')
                             .attr('style', 'left:0;top:0;')
                             .draggable('option', 'disabled', true)
                             .draggable('option', 'revert', false);
@@ -561,7 +561,7 @@ var MyMine = (function() {
                      * Create a new tag
                      */
                     addTag: function() {
-                        var label = $('#add-new-tag input').val();
+                        var label = $(selectPopupWindow + '.tags #add-new-tag input').val();
                         if (label) {
                             try {
                                 // try adding in the model
@@ -581,16 +581,16 @@ var MyMine = (function() {
                                        }))
                                     }
                                 })
-                                .appendTo('#set-tags div.dropzone div.tags ul')
+                                .appendTo(selectPopupWindow + '.tags #set-tags div.dropzone div.tags ul')
                                 .click(function() {
                                     MyMine.presenters.tags.removeTag(this);
                                 });
 
-                                $('#add-new-tag p.warning').html('');
+                                $(selectPopupWindow + '.tags #add-new-tag p.warning').html('');
 
-                                $('#add-new-tag input').val('')
+                                $(selectPopupWindow + '.tags #add-new-tag input').val('')
                             } catch(message) {
-                                $('#add-new-tag p.warning').text(message);
+                                $(selectPopupWindow + '.tags #add-new-tag p.warning').text(message);
                             }
                         }                    
                     },
@@ -599,7 +599,7 @@ var MyMine = (function() {
                      * Remove tag
                      */
                     removeTag: function(element) {
-                        $(element).closest('li').appendTo('div.tags.available ul')
+                        $(element).closest('li').appendTo(selectPopupWindow + '.tags div.tags.available ul')
                         .attr('style', 'position:relative')
                         .draggable(tagsDragDropSettings)
                         .draggable('option', 'disabled', false);
