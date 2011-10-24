@@ -21,7 +21,7 @@ var MyMine = (function() {
      * Get all folders from the table after it was initialized
      * @XXX rewrite to fetch directly from source instead of parsing
      */
-    function privateIntitializeFolders() {
+    function intitializeFolders() {
         $(selectAllFolderNames).each(function() {
             MyMine.model.addFolder($(this).text());
         });
@@ -31,7 +31,7 @@ var MyMine = (function() {
      * Attach appropriate classes to items that have been selected (and remembered) after reload
      * @XXX rewrite to fetch directly from source instead of parsing
      */
-    function privateInitilizeSelectedItems() {
+    function initializeSelectedItems() {
         $(selectAllCheckedItems).each(function() {
             var row = $(this).closest('tr');
             // set selected class
@@ -46,6 +46,19 @@ var MyMine = (function() {
         MyMine.presenter.updateToolbar();
     }
 
+    /**
+     * Get tags in the system available to be used
+     * @XXX rewrite to fetch directly from source instead of parsing
+     */
+    function initializeTags() {
+        $('#set-tags div.tags ul li').each(function() {
+            var name = $(this).find('span.label').text();
+            if (name) {
+                MyMine.model.addTag(name);
+            }
+        })
+    }
+
     return {
 
         /**
@@ -53,13 +66,16 @@ var MyMine = (function() {
          */
         init: function() {
             // initialize all folders
-            privateIntitializeFolders();
+            intitializeFolders();
 
             // initialize selected items
-            privateInitilizeSelectedItems();
+            initializeSelectedItems();
 
             // initialize item selection handlers
             MyMine.presenter.initializeHandlers();
+
+            // initialize available tags
+            initializeTags();
         },
         
         /********************* Model *********************/
@@ -67,13 +83,15 @@ var MyMine = (function() {
         'model': (function() {
 
             /** @dict internal 'folders' storage */
-            var folders = {};
-
+            var folders = {},
             /** @dict internal 'lists' storage */
-            var lists = {};
+                lists   = {},
+            /** @dict internal available 'tags' storage */
+                tags    = {};
 
             /** @string messages */
-            var messageListExists = "Wowza! This list already exists.";
+            var messageListExists = "Wowza! This list already exists.",
+                messageTagExists  = "Wowza! That one already exists.";
 
             return {
 
@@ -95,6 +113,26 @@ var MyMine = (function() {
                  */
                 existsFolder: function(name) {
                     return folders[name];
+                },
+
+                /**
+                 * Add a tag to an internal structure
+                 * @throws
+                 */
+                addTag: function(name) {
+                    if (! MyMine.model.existsTag(name)) {
+                        tags[name] = true;
+                    } else {
+                        throw messageTagExists;
+                    }
+                },
+
+                /**
+                 * Does the tag exist?
+                 * @returns true if we have saved the tag name internally
+                 */
+                existsTag: function(name) {
+                    return tags[name];
                 }
             };
         })(),
@@ -128,6 +166,14 @@ var MyMine = (function() {
                 selectPopupWindow          = '#body-overlay div.popup',
             /** @string selector for overlay popup close button */
                 selectPopupCloseButton     = '#body-overlay div.btn.close';
+
+            /** @dict settings for jQuery UI Drag & Drop */
+            var tagsDragDropSettings = {
+                'cursor': 'move',
+                'opacity': 0.5,
+                'revert': true,
+                'containment': '#set-tags'
+            }
 
             /** @dict selected item's name => type in the main table */
             var selected      = {},
@@ -202,7 +248,7 @@ var MyMine = (function() {
             }
 
             /**
-             * Add folder
+             * Add a folder
              */
             function initializeAddFolder() {
                 $(selectPopupWindow + '.folder input').keydown(function(e) {
@@ -212,6 +258,46 @@ var MyMine = (function() {
                 });
                 $(selectPopupWindow + '.folder div.btn.add').click(function() {
                     MyMine.presenter.addFolder();
+                });
+            }
+
+            /**
+             * Add a tag
+             */
+            function initializeAddTag() {
+                $('#add-new-tag input').keydown(function(e) {
+                    if (e.keyCode == 13) {
+                        MyMine.presenter.addTag();
+                    }
+                });
+                $('#add-new-tag div.btn.add').click(function() {
+                    MyMine.presenter.addTag();
+                });
+            }
+
+            /**
+             * Remove tag
+             */
+            function initializeRemoveTag() {
+                $('div.tags ul li a span.remove').click(function() {
+                    MyMine.presenter.removeTag(this);
+                });
+            }
+
+            /**
+             * Initialize tags drag & drop
+             */
+            function initializeTagsDragDrop() {
+                // drag & drop of tags
+                $('ul.drag li').draggable(tagsDragDropSettings);
+                $('div.dropzone').droppable({
+                    'accept': 'ul.drag li',
+                    drop: function(event, ui) {
+                        ui.draggable.appendTo('div.dropzone div.tags ul')
+                        .attr('style', 'left:0;top:0;')
+                        .draggable('option', 'disabled', true)
+                        .draggable('option', 'revert', false);
+                    }
                 });
             }
 
@@ -227,7 +313,12 @@ var MyMine = (function() {
                     
                     // popups
                     initializePopupHandlers();
+                    
                     initializeAddFolder();
+                    
+                    initializeAddTag();
+                    initializeRemoveTag();
+                    initializeTagsDragDrop()
                 },
 
                 /**
@@ -353,7 +444,9 @@ var MyMine = (function() {
                     $(selectPopupOverlay).hide().find(selectPopupOverlayToWindow).hide();
                 },
 
-                // create a new folder
+                /**
+                 * Create a new folder
+                 */
                 addFolder: function() {
                     var name = $(selectPopupOverlayToWindow + '.folder input').val();
                     
@@ -402,7 +495,55 @@ var MyMine = (function() {
                         } catch(message) {
                             $(selectPopupOverlayToWindow + '.folder p.warning').text(message);
                         }
+                    }
+                },
+
+                /**
+                 * Create a new tag
+                 */
+                addTag: function() {
+                    var label = $('#add-new-tag input').val();
+                    if (label) {
+                        try {
+                            // try adding in the model
+                            MyMine.model.addTag(label);
+
+                            // actually add in the view
+                            $('<li/>', {
+                                'html': function() {
+                                   return $('<a/>')
+                                   .append($('<span/>', {
+                                       'class': 'label',
+                                       'text': label
+                                   }))
+                                   .append($('<span/>', {
+                                       'class': 'remove',
+                                       'text': 'x'
+                                   }))
+                                }
+                            })
+                            .appendTo('#set-tags div.dropzone div.tags ul')
+                            .click(function() {
+                                MyMine.presenter.removeTag(this);
+                            });
+
+                            $('#add-new-tag p.warning').html('');
+
+                            $('#add-new-tag input').val('')
+                        } catch(message) {
+                            $('#add-new-tag p.warning').text(message);
+                        }
                     }                    
+                },
+
+                /**
+                 * Remove tag
+                 */
+                removeTag: function(element) {
+                    $(element).closest('li').appendTo('div.tags.available ul')
+                    .attr('style', 'position:relative')
+                    .draggable(tagsDragDropSettings)
+                    .draggable('option', 'disabled', false);
                 }
             };
         })()
