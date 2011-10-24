@@ -91,7 +91,7 @@ div.tags ul { margin-left:10px; float:left; }
 div.tags ul li { display:block; float:left; }
 div.tags ul li a { background:#DEDEDE; font-size:12px; font-weight:bold; border-radius:4px; line-height:18px; height:18px;
 	color:#626262; padding:0 8px; margin-right:6px; text-decoration:none; cursor:default; display:block;
-	background:-moz-linear-gradient(top, #F7F7F7, #DEDEDE); background:-webkit-linear-gradient(top, #F7F7F7, #282828);
+	background:-moz-linear-gradient(top, #F7F7F7, #DEDEDE); background:-webkit-linear-gradient(top, #F7F7F7, #DEDEDE);
     background:-ms-linear-gradient(top, #F7F7F7, #DEDEDE); background:-o-linear-gradient(top, #F7F7F7, #DEDEDE); }
 div.tags ul li a span.label { background-repeat:no-repeat; background-position:0 1px; }
 div.tags ul li a.organic { color:#FFF; background:#35C53D;
