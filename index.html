@@ -10,6 +10,12 @@
 
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/mymine.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            MyMine.init();
+        });
+    </script>
 </head>
 <body>
     <h1>Your Lists</h1>
@@ -45,7 +51,7 @@
         </div>
     </div>
 
-    <table>
+    <table id="lists">
         <thead>
             <tr>
                 <th class="first"><input class="select-all" type="checkbox" /></th>
@@ -63,7 +69,7 @@
                 <td class="main">
                     <div class="name">
                         <a href="#">
-                            <h2>Gene list with my rubbish features (26)</h2>
+                            <h2 class="name">Gene list with my rubbish features (26)</h2>
                             <div class="description"><p><strong>Description:</strong> Some description for my list here
                             to say where it comes from etc.</p></div>
                         </a>
@@ -85,7 +91,7 @@
                 <td class="main">
                     <div class="name">
                         <a href="#">
-                            <h2>Human cloning experiment</h2>
+                            <h2 class="name">Human cloning experiment</h2>
                         </a>
                     </div>
                 </td>
@@ -99,7 +105,7 @@
                 <td class="main">
                     <div class="name">
                         <a href="#">
-                            <h2>Another list name this time with no description (91)</h2>
+                            <h2 class="name">Another list name this time with no description (91)</h2>
                         </a>
                     </div>
                     <div class="tags">
@@ -119,7 +125,7 @@
                 <td class="main">
                     <div class="name">
                         <a href="#">
-                            <h2>Gene list for all organisms 20 Sep 2011 10.45 (13,576)</h2>
+                            <h2 class="name">Gene list for all organisms 20 Sep 2011 10.45 (13,576)</h2>
                         </a>
                     </div>
                     <div class="tags">
@@ -138,7 +144,7 @@
                 <td class="main">
                     <div class="name">
                         <a href="#">
-                            <h2>Gene list for all organisms 20 Sep 2011 10.45dsds (13,575)</h2>
+                            <h2 class="name">Gene list for all organisms 20 Sep 2011 10.45dsds (13,575)</h2>
                         </a>
                     </div>
                     <div class="tags">
@@ -158,7 +164,7 @@
                 <td class="main">
                     <div class="name">
                         <a href="#">
-                            <h2>FlyTF_site_specific (42)</h2>
+                            <h2 class="name">FlyTF_site_specific (42)</h2>
                             <div class="description"><p><strong>Description:</strong> Experimentally verified site-specific
                             TFs: Transcription factors with experimental evidence for both DNA-binding and transcriptional
                             regulatory function.</p></div>
@@ -180,7 +186,7 @@
                 <td class="main">
                     <div class="name">
                         <a href="#">
-                            <h2>PL sperm_proteome_genes (365)</h2>
+                            <h2 class="name">PL sperm_proteome_genes (365)</h2>
                             <div class="description"><p><strong>Description:</strong> Genes encoding the D. melanogaster sperm
                             proteome (Source: Dorus et al 2006 - PubMed: 17099233).</p></div>
                         </a>
@@ -352,14 +358,6 @@
         if (!myMine) {
             myMine = {};
         }
-        
-        // get all the folders we have
-        (function() {
-            myMine.folders = {};
-            $('table tbody tr.folder').each(function() {
-                myMine.folders[$(this).find('td.main h2').text()] = true;
-            });
-        })();
 
         // selected status
         (function() {
@@ -509,7 +507,7 @@
                 function addNewFolder() {
                     var name = $('div.popup.folder input').val();
                     if (name) {
-                        if (!myMine.folders[name]) {
+                        if (!MyMine.model.existsFolder(name)) {
                             $('<tr/>', {
                                 'class': 'folder'
                             })
@@ -542,7 +540,7 @@
                             }))
                             .appendTo('table tbody');
 
-                            myMine.folders[name] = true;
+                            MyMine.model.addFolder(name);
                             
                             $('div.popup.folder p.warning').text('');
                             $('div.popup.folder input').val('')
