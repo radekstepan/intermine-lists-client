@@ -359,24 +359,6 @@
             myMine = {};
         }
 
-        // selected status
-        (function() {
-
-            // select all
-            $('input[type="checkbox"].select-all').click(function() {
-                var table = $(this).closest('table');
-                if ($(this).attr('checked')) {
-                    table.find('tbody tr').each(function() {
-                        $(this).addClass('selected').find('input[type="checkbox"].check').attr('checked', 'checked');
-                    });
-                } else {
-                    table.find('tbody tr.selected').each(function() {
-                        $(this).removeClass('selected').find('input[type="checkbox"].check').attr('checked', false);
-                    });
-                }
-            })
-        })();
-
         // popup boxes
         (function() {
             $('div.toolbar div.btn').click(function() {

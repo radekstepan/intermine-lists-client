@@ -106,15 +106,17 @@ var MyMine = (function() {
         'presenter': (function() {
 
             /** @string selector for toolbar buttons */
-            var selectToolbarButtons  = 'div#toolbar div.btn',
+            var selectToolbarButtons   = 'div#toolbar div.btn',
             /** @string selector for all main table checkboxes */
                 selectAllCheckboxes    = 'table#lists tbody tr input[type="checkbox"].check',
             /** @string selector for all main table rows */
-                selectAllRows    = 'table#lists tbody tr',
+                selectAllRows          = 'table#lists tbody tr',
             /** @string selector for row checkbox from main table row */
-                selectRowToCheckbox = 'input[type="checkbox"].check',
+                selectRowToCheckbox    = 'input[type="checkbox"].check',
             /** @string selector for all folder name links in the main table */
-                selectAllFolderLinks = 'table#lists tbody tr.folder td.main div.name a';
+                selectAllFolderLinks   = 'table#lists tbody tr.folder td.main div.name a',
+            /** @string selector for select all checkbox */
+                selectSelectAll        = 'input[type="checkbox"].select-all';
 
             /** @dict selected item's name => type in the main table */
             var selected      = {},
@@ -158,6 +160,15 @@ var MyMine = (function() {
                 })
             }
 
+            /**
+             * Select all handler
+             */
+            function initializeSelectAllHandler() {
+                $(selectSelectAll).click(function() {
+                    MyMine.presenter.selectAll(this);
+                })
+            }
+
             return {
 
                 /**
@@ -166,6 +177,7 @@ var MyMine = (function() {
                 initializeHandlers: function() {
                     initializeSelectItemHandlers();
                     initializeExpandCollapseHandlers();
+                    initializeSelectAllHandler();
                 },
 
                 /**
@@ -237,6 +249,18 @@ var MyMine = (function() {
                     }
 
                     MyMine.presenter.updateToolbar();
+                },
+
+                selectAll: function(element) {
+                    if ($(element).attr('checked')) {
+                        $(selectAllRows).each(function() {
+                            $(this).addClass('selected').find(selectRowToCheckbox).attr('checked', 'checked');
+                        });
+                    } else {
+                        $(selectAllRows).each(function() {
+                            $(this).removeClass('selected').find(selectRowToCheckbox).attr('checked', false);
+                        });
+                    }
                 },
 
                 /**
