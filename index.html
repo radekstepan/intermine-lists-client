@@ -202,9 +202,10 @@
     <div id="body-overlay">
         <div class="popup folder" style="width:300px">
             <h2>Choose folder name</h2>
+            <p class="warning"></p>
             <input type="text" />
             <p>Folders organize your lists, like on a PC.</p>
-            <div class="btn close green">Save</div>
+            <div class="btn add green">Save</div>
             <div class="btn close gray">Cancel</div>
         </div>
 
@@ -351,7 +352,14 @@
         if (!myMine) {
             myMine = {};
         }
+        
         // get all the folders we have
+        (function() {
+            myMine.folders = {};
+            $('table tbody tr.folder').each(function() {
+                myMine.folders[$(this).find('td.main h2').text()] = true;
+            });
+        })();
 
         // selected status
         (function() {
@@ -494,6 +502,66 @@
                     }
                 });
             });
+
+            // create folder
+            (function() {
+                // create a new folder
+                function addNewFolder() {
+                    var name = $('div.popup.folder input').val();
+                    if (name) {
+                        if (!myMine.folders[name]) {
+                            $('<tr/>', {
+                                'class': 'folder'
+                            })
+                            .append($('<td/>', {
+                                'class': 'first',
+                                'html': $('<input/>', {
+                                    'type': 'checkbox',
+                                    'class': 'check'
+                                })
+                            }))
+                            .append($('<td/>', {
+                                'class': 'second'
+                            }))
+                            .append($('<td/>', {
+                                'class': 'main',
+                                'html': $('<div/>', {
+                                    'class': 'name',
+                                    'html': $('<a/>', {
+                                        'href': '#',
+                                        'html': $('<h2/>', {
+                                            'text': name
+                                        })
+                                    })
+                                })
+                            }))
+                            .append($('<td/>'))
+                            .append($('<td/>'))
+                            .append($('<td/>', {
+                                'class': 'datetime'
+                            }))
+                            .appendTo('table tbody');
+
+                            myMine.folders[name] = true;
+                            
+                            $('div.popup.folder p.warning').text('');
+                            $('div.popup.folder input').val('')
+
+                            $('#body-overlay').hide().find('div.popup').hide();
+                        } else {
+                            $('div.popup.folder p.warning').text('Wowza! That one already exists.')
+                        }
+                    }                    
+                }
+                $('div.popup.folder input').keydown(function(e) {
+                    if (e.keyCode == 13) {
+                        addNewFolder();
+                    }
+                });
+                $('div.popup.folder div.btn.add').click(function() {
+                    addNewFolder();
+                });
+            })();
 
             // tagging
             (function() {
