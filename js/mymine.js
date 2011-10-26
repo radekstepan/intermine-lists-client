@@ -29,6 +29,8 @@ var MyMine = (function() {
         selectAllRows          = 'table#lists tbody tr',
     /** @string selector for toolbar buttons */
         selectToolbarButtons   = 'div#toolbar div.btn',
+    /** @string selector for toolbar button menus */
+        selectToolbarMenus     = 'div#toolbar ul.menu li',
     /** @string selector for row checkbox from main table row */
         selectRowToCheckbox    = 'input[type="checkbox"].check',
     /** @string selector for all folder name links in the main table */
@@ -261,7 +263,10 @@ var MyMine = (function() {
                     $(selectToolbarButtons).click(function() {
                         MyMine.presenters.table.openPopup(this);
                     });
-
+                    // open on button menu click
+                    $(selectToolbarMenus).click(function() {
+                        MyMine.presenters.table.openPopup(this);
+                    });
 
                     // close button
                     $(selectPopupCloseButton).click(function() {
@@ -399,8 +404,23 @@ var MyMine = (function() {
                      * Open up overlay popup
                      */
                     openPopup: function(element) {
-                        $(selectPopupOverlay).show();
-                        $(selectPopupWindow + '.' + $(element).attr('class').split(/\s+/)[1]).show();
+                        // who's your daddy?
+                        var parent = $(element).parent()
+                        if (parent.hasClass('menu-wrap')) {
+                            // toggle active state of a button if it has a submenu
+                            parent.toggleClass('active');
+                        }
+
+                        // fetch the class from the element
+                        var classes = $(element).attr('class').split(/\s+/),
+                            clazz   = (classes.length > 1) ? classes[1] : classes[0],
+                            path    = selectPopupWindow + '.' + clazz;
+                        
+                        // does the popup exist?
+                        if ($(path).length > 0) {
+                            $(selectPopupOverlay).show();
+                            $(path).show();
+                        }
                     },
 
                     /**

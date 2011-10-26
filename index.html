@@ -40,9 +40,16 @@
             <span class="label"></span>
             <span class="description">Edit list tags</span>
         </div>
-        <div class="btn maths">
-            <span class="label"></span>
-            <span class="description">Join, subtract, intersect lists</span>
+        <div class="menu-wrap">
+            <div class="btn maths">
+                <span class="label"></span>
+                <span class="description">Join, subtract, intersect lists</span>
+            </div>
+            <ul class="menu">
+                <li class="intersection"><span>&cap;</span> Intersection</li>
+                <li class="union"><span>&cup;</span> Union</li>
+                <li class="subtraction"><span>&minus;</span> Subtraction</li>
+            </ul>
         </div>
         <div class="btn more">More</div>
 
@@ -433,6 +440,29 @@
 
             <div class="btn close green">Save</div>
             <div class="btn close gray">Cancel</div>
+        </div>
+
+        <div>
+            <div class="popup intersection" style="width:300px">
+                <h2>Choose a name for list &cap;</h2>
+                <input type="text" />
+                <div class="btn add green">Save new list</div>
+                <div class="btn close gray">Cancel</div>
+            </div>
+
+            <div class="popup union" style="width:300px">
+                <h2>Choose a name for list &cup;</h2>
+                <input type="text" />
+                <div class="btn add green">Save new list</div>
+                <div class="btn close gray">Cancel</div>
+            </div>
+
+            <div class="popup subtraction" style="width:300px">
+                <h2>Choose a name for list &minus;</h2>
+                <input type="text" />
+                <div class="btn add green">Save new list</div>
+                <div class="btn close gray">Cancel</div>
+            </div>
         </div>
     </div>
 </body>

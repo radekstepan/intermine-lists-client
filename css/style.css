@@ -37,11 +37,24 @@ div.toolbar div.btn.tags span.label { background-image:url('../img/tags.png'); }
 div.toolbar div.btn.tags:hover span.label { background-image:url('../img/tags-dark.png'); }
 div.toolbar div.btn.trash span.label { background-image:url('../img/add-to-trash.png'); }
 div.toolbar div.btn.trash:hover span.label { background-image:url('../img/add-to-trash-dark.png'); }
-div.toolbar div.btn.maths span.label { background-image:url('../img/maths.png'); }
+div.toolbar div.btn.maths span.label { background-image:url('../img/maths.png'); width:40px; }
 div.toolbar div.btn.maths:hover span.label { background-image:url('../img/maths-dark.png'); }
 div.toolbar div.btn.restore span.label { background-image:url('../img/restore-list.png'); }
 div.toolbar div.btn.restore:hover span.label { background-image:url('../img/restore-list-dark.png'); }
 div.toolbar div.right { float:right; }
+
+div.toolbar ul.menu { position:absolute; top:25px; left:0; background:#F7F7F7; border:1px solid #B3B3B3; color:#626262;
+	text-shadow:0 1px 0 #FFF; font-weight:bold; -webkit-box-shadow:0 4px 10px #A5A5A5; -moz-box-shadow:0 4px 10px #A5A5A5;
+	box-shadow:0 4px 10px #A5A5A5; padding:6px; z-index:3; visibility:hidden; opacity:0; }
+div.toolbar ul.menu li { white-space:nowrap; padding:6px 8px; }
+div.toolbar ul.menu li span { width:13px; display:inline-block; }
+div.toolbar ul.menu li:hover { background:#5C0075; color:#FFF; text-shadow:0 1px 0 #525252; cursor:pointer; }
+div.toolbar div.menu-wrap { position:relative; float:left; }
+div.toolbar div.menu-wrap.active div.btn { border-radius:4px 4px 0 0; box-shadow:inset 0 1px 2px rgba(80, 80, 80, 0.25);
+	border-bottom:0; }
+div.toolbar div.menu-wrap.active div.btn span.description { display:none; }
+div.toolbar div.menu-wrap.active ul.menu { visibility:visible; opacity:1; -moz-transition:opacity 0.3s ease 0s;
+	-webkit-transition:opacity 0.3s ease 0s; }
 
 table { border-bottom:1px solid #DCC8E2; width:100%; margin-bottom:40px; }
 table h2 { margin:0; }
