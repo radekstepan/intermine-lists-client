@@ -665,21 +665,33 @@ var MyMine = (function() {
                      */
                     initializeHandlers: function() {
                         initializeSelectRestoreItemHandlers();
+                        initializeSelectAllHandler();
                     },
 
                     /**
                      * Select a row in a trashed lists table
                      */
                     selectRow: function(element) {
-                        alert('yay');
-                        // XXX implement
+                        if ($(element).attr('checked')) {
+                            $(element).closest('tr').addClass('selected');
+                        } else {
+                            $(element).closest('tr').removeClass('selected');
+                        }
                     },
 
                     /**
                      * Select all trashed lists
                      */
                     selectAll: function(element) {
-                        // XXX implement
+                        if ($(element).attr('checked')) {
+                            $(selectTrashedListsRows).each(function() {
+                                $(this).addClass('selected').find(selectRowToCheckbox).attr('checked', 'checked');
+                            });
+                        } else {
+                            $(selectTrashedListsRows).each(function() {
+                                $(this).removeClass('selected').find(selectRowToCheckbox).attr('checked', false);
+                            });
+                        }
                     },
                 };
             })()
