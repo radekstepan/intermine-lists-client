@@ -35,6 +35,11 @@ var MyMine = (function() {
         selectAllFolderLinks   = 'table#lists tbody tr.folder td.main div.name a',
     /** @string selector for select all checkbox */
         selectSelectAll        = 'table#lists input[type="checkbox"].select-all';
+
+    /** @string selector for all folders table checkboxes */
+    var selectFoldersCheckboxes = 'table#folders tbody tr input[type="checkbox"].check',
+    /** @string selector for all folders table rows */
+        selectFoldersRows       = 'table#folders tbody tr';
     
     /** @string selector for all trashed lists table checkboxes */
     var selectTrashedListsCheckboxes = 'table#trash tbody tr input[type="checkbox"].check',
@@ -431,6 +436,30 @@ var MyMine = (function() {
                     });
                 }
 
+                /**
+                 * Select folder list(s) to move to
+                 */
+                function initializeSelectMoveToFolder() {
+                    // on checkbox click
+                    $(selectFoldersCheckboxes).click(function(e) {
+                        MyMine.presenters.folders.selectMoveToFolder(this);
+                        e.stopPropagation();
+                    });
+
+                    // on row select
+                    $(selectFoldersRows).click(function(e) {
+                        var checkbox = $(this).find(selectRowToCheckbox);
+                        // first tick the checkbox
+                        if (checkbox.attr('checked')) {
+                            checkbox.attr('checked', false);
+                        } else {
+                            checkbox.attr('checked', 'checked');
+                        }
+                        MyMine.presenters.folders.selectMoveToFolder(checkbox);
+                        e.stopPropagation();
+                    });
+                }
+
                 return {
 
                     /**
@@ -438,6 +467,7 @@ var MyMine = (function() {
                      */
                     initializeHandlers: function() {
                         initializeAddFolder();
+                        initializeSelectMoveToFolder();
                     },
 
                     /**
@@ -491,6 +521,21 @@ var MyMine = (function() {
                             } catch(message) {
                                 $(selectPopupOverlayToWindow + '.folder p.warning').text(message);
                             }
+                        }
+                    },
+
+                    /**
+                     * Select folder to move lists to
+                     */
+                    selectMoveToFolder: function(element) {
+                        // deselect any previously selected lists
+                        $(element).closest('table').find('tr.selected').removeClass('selected')
+                        .find(selectRowToCheckbox).attr('checked', false);
+
+                        if ($(element).attr('checked')) {
+                            $(element).closest('tr').addClass('selected');
+                        } else {
+                            $(element).closest('tr').removeClass('selected');
                         }
                     }
                 };

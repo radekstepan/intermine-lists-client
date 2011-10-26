@@ -211,7 +211,92 @@
             <p class="warning"></p>
             <input type="text" />
             <p>Folders organize your lists, like on a PC.</p>
-            <div class="btn add green">Save</div>
+            <div class="btn add green">Save folder</div>
+            <div class="btn close gray">Cancel</div>
+        </div>
+
+        <div class="popup organize" style="width:700px">
+            <h2>Move lists to a folder</h2>
+
+            <div class="box height">
+                <table id="folders">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Name</th>
+                            <th></th>
+                            <th></th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="folder">
+                            <td class="first"><input class="check" type="checkbox" autocomplete="off" /></td>
+                            <td class="second"></td>
+                            <td class="main">
+                                <div class="name">
+                                    <h2 class="name">Human cloning experiment</h2>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td class="datetime">21:57</td>
+                        </tr>
+                        <tr class="folder">
+                            <td class="first"><input class="check" type="checkbox" autocomplete="off" /></td>
+                            <td class="second"></td>
+                            <td class="main">
+                                <div class="name">
+                                    <h2 class="name">It's Getting a Little Meta Up in Here</h2>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td class="datetime">21:57</td>
+                        </tr>
+                        <tr class="folder">
+                            <td class="first"><input class="check" type="checkbox" autocomplete="off" /></td>
+                            <td class="second"></td>
+                            <td class="main">
+                                <div class="name">
+                                    <h2 class="name">Justin and Jason discuss the TweetBoard.me results</h2>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td class="datetime">21:57</td>
+                        </tr>
+                        <tr class="folder">
+                            <td class="first"><input class="check" type="checkbox" autocomplete="off" /></td>
+                            <td class="second"></td>
+                            <td class="main">
+                                <div class="name">
+                                    <h2 class="name">Instantiating a virtual machine for each Appignite</h2>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td class="datetime">21:57</td>
+                        </tr>
+                        <tr class="folder">
+                            <td class="first"><input class="check" type="checkbox" autocomplete="off" /></td>
+                            <td class="second"></td>
+                            <td class="main">
+                                <div class="name">
+                                    <h2 class="name">Justin's juice diet and an update on Pluggio's growth</h2>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td class="datetime">21:57</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Choose a folder to move the lists to.</p>
+
+            <div class="btn add green">Move lists</div>
             <div class="btn close gray">Cancel</div>
         </div>
 
@@ -228,7 +313,7 @@
             <table id="trash">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" class="select-all" /></th>
+                        <th><input type="checkbox" class="select-all" autocomplete="off" /></th>
                         <th>Name</th>
                         <th>Type</th>
                         <th>Created</th>
