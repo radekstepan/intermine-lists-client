@@ -33,10 +33,14 @@ var MyMine = (function() {
         selectToolbarMenus     = 'div#toolbar ul.menu li',
     /** @string selector for row checkbox from main table row */
         selectRowToCheckbox    = 'input[type="checkbox"].check',
+    /** @string selector for all list name links in the main table */
+        selectAllListLinks     = 'table#lists tbody tr.list td.main div.name a',
     /** @string selector for all folder name links in the main table */
         selectAllFolderLinks   = 'table#lists tbody tr.folder td.main div.name a',
     /** @string selector for select all checkbox */
-        selectSelectAll        = 'table#lists input[type="checkbox"].select-all';
+        selectSelectAll        = 'table#lists input[type="checkbox"].select-all',
+    /** @string selector for all favorite stars */
+        selectAllFavoriteStars = 'table#lists span.favorite';
 
     /** @string selector for all folders table checkboxes */
     var selectFoldersCheckboxes = 'table#folders tbody tr input[type="checkbox"].check',
@@ -47,6 +51,8 @@ var MyMine = (function() {
     var selectTrashedListsCheckboxes = 'table#trash tbody tr input[type="checkbox"].check',
     /** @string selector for all trashed lists table rows */
         selectTrashedListsRows       = 'table#trash tbody tr',
+    /** @string selector for all trashed lists links table rows */
+        selectTrashedListsLinks      = 'table#trash tbody tr td div.name a',
     /** @string selector for select all checkbox on trashed lists */
         selectSelectAllTrashed       = 'table#trash input[type="checkbox"].select-all';
 
@@ -57,7 +63,9 @@ var MyMine = (function() {
     /** @string selector for popup window */
         selectPopupWindow          = '#body-overlay div.popup',
     /** @string selector for overlay popup close button */
-        selectPopupCloseButton     = '#body-overlay div.btn.close';
+        selectPopupCloseButton     = '#body-overlay div.btn.close',
+    /** @string selector for overlay popup tags */
+        selectPopupTags            = '#body-overlay div.tags ul li';
 
 
     /********************* Initialize *********************/
@@ -280,12 +288,35 @@ var MyMine = (function() {
                     });
                 }
 
+                /**
+                 * Handle tooltips through JS instead of CSS :hover as it does not work 100%
+                 */
+                function initializeTooltips() {
+                    function tooltip(element) {
+                        function toggleTooltip(selector) {
+                            var tooltip = $(element).find(selector);
+                            if (tooltip.length > 0) {
+                                tooltip.toggleClass('visible');
+                            }
+                            return false;
+                        }
+                        for (var selector in {'span.description':'', 'div.description':''}) {
+                            toggleTooltip(selector);
+                        }
+                    }
+
+                    var selectors = [selectToolbarButtons, selectAllListLinks, selectAllFavoriteStars,
+                        selectTrashedListsLinks, selectPopupTags];
+                    $(selectors.join(',')) .hover(function(){tooltip(this)}, function(){tooltip(this)});
+                }
+
                 return {
 
                     /**
                      * Initialize all the handlers
                      */
                     initializeHandlers: function() {
+                        initializeTooltips();
                         initializeSelectItemHandlers();
                         initializeExpandCollapseHandlers();
                         initializeSelectAllHandler();
@@ -428,6 +459,8 @@ var MyMine = (function() {
                      */
                     closePopup: function() {
                         $(selectPopupOverlay).hide().find(selectPopupOverlayToWindow).hide();
+                        // close all menus as well
+                        $(selectToolbarMenus).closest('div.menu-wrap').removeClass('active')
                     }
                 };
             })(),
