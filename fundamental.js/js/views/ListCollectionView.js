@@ -6,6 +6,8 @@ App.Views.ListCollectionView = Backbone.View.extend({
 	"el": "table#table tbody",
 
 	initialize: function(options) {
+		_.bindAll(this, "addOneList");
+
 		// On initialization, add all existing list items.
 		this.addAllLists();
 	},
@@ -14,7 +16,7 @@ App.Views.ListCollectionView = Backbone.View.extend({
 	// appending its element to the `<tbody>`.
 	addOneList: function(list) {
 		var view = new App.Views.ListItemView({model: list});
-		$("table#table tbody").append(view.render().el); // TODO fix this hack
+		$(this.el).append(view.render().el); // TODO fix this hack
 	},
 
 	// Add all items in the Lists collection at once.
