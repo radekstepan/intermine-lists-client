@@ -21,11 +21,12 @@
     <!-- the app itself -->
     <script src="js/App.js"></script>
     <script src="js/routers/MainRouter.js"></script>
-    <script src="js/models/Todo.js"></script>
-    <script src="js/views/CreateTodoView.js"></script>
-    <script src="js/views/TodoListView.js"></script>
-    <script src="js/views/TodoView.js"></script>
-    <script src="js/views/TodoStatsView.js"></script>
+    
+    <script src="js/models/List.js"></script>
+
+    <script src="js/views/ListCollectionView.js"></script>
+    <script src="js/views/ListItemView.js"></script>
+    <script src="js/views/ToolbarView.js"></script>
   </head>
   <body>
 
@@ -49,14 +50,19 @@
     <div class="container">
       
       <div id="content">
+        
         <div id="header" class="page-header">
-          <div class="toolbar">
-            <button class="btn primary">Create a folder</button>
-          </div>
+
+          <!-- actions toolbar -->
+          <div id="toolbar"></div>
+
+          <!-- modal popovers for actions -->
+          <div id="modals"></div>
         </div>
 
         <div class="span15">
-          <table class="condensed-table zebra-striped">
+          <!-- lists table -->
+          <table id="table" class="condensed-table zebra-striped">
             <thead>
               <tr>
                 <th><input type="checkbox" /></th>
@@ -65,26 +71,7 @@
                 <th>Created</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>FlyTF_trusted_TFs</td>
-                <td>Genes</td>
-                <td>6 Aug</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>FlyAtlas_brain_top</td>
-                <td>Genes</td>
-                <td>5 Nov</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>classIIb</td>
-                <td>Genes</td>
-                <td>13:45</td>
-              </tr>
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
