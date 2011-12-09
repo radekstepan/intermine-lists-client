@@ -4,3 +4,5 @@ footer { text-align:center; }
 
 #header { background:#F5F5F5; margin:-20px -20px 20px; padding:20px 20px 10px; }
 #content { background-color:#fff; box-shadow:0 3px 4px 0 rgba(0, 0, 0, 0.1); margin:0 -20px; padding:20px; }
+
+table#table tr.selected td { background:#FFF6D9; border-top-color:#FFC40D; }

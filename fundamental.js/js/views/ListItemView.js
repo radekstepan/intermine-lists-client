@@ -40,7 +40,12 @@ App.Views.ListItemView = Backbone.View.extend({
 
 	// Toggle the `selected` state of the list.
 	toggleSelected: function() {
+		// Toggle the item class in the template.
+		$(this.el).toggleClass('selected');
+
+		// Update the Model.
 		this.model.toggleSelected();
+		
 		// Trigger a notification so toolbar et al can redraw.
 		App.Mediator.trigger("listSelected");
 	},
