@@ -3,13 +3,28 @@
 
 App.Views.ListCollectionView = Backbone.View.extend({
 
-	"el": "table#table tbody",
+	"el": "table#table",
+
+	// The DOM events that can happen on a table.
+	"events": {
+		"click thead input[type='checkbox']": "toggleSelectAll"
+	},
 
 	initialize: function(options) {
 		_.bindAll(this, "addOneList");
 
 		// On initialization, add all existing list items.
 		this.addAllLists();
+	},
+
+	// Toggle the `selected` state of all lists.
+	toggleSelectAll: function() {
+		App.Models.Lists.each(function(list) {
+			list.toggleSelected();
+		});
+			
+		// Trigger a notification so toolbar et al can redraw.
+		App.Mediator.trigger("listSelected");
 	},
 
 	// Add a single list item to the table by creating a view for it, and
