@@ -9,8 +9,7 @@ var List = Backbone.Model.extend({
 			"name":     "Default name",
 			"type":     "Genes",
 			"created":  "Today",
-			"selected": false,
-			"folder": null
+			"selected": false
 		};
 	},
 
@@ -37,6 +36,10 @@ var Lists = Backbone.Collection.extend({
 
 	// Save all of the list items under the `lists` namespace.
 	"localStorage": new Store("lists"),
+
+	initialize: function(options) {
+		// TODO: listen in on Model to update internal count of deselected/selected items.
+	},
 
 	// Filter down the collection of all lists that are selected.
 	selected: function() {
