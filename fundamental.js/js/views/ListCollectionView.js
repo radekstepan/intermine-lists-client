@@ -19,9 +19,18 @@ App.Views.ListCollectionView = Backbone.View.extend({
 
 	// Toggle the `selected` state of all lists.
 	toggleSelectAll: function() {
-		App.Models.Lists.each(function(list) {
-			list.toggleSelected();
-		});
+		// If some lists are not selected, select them.
+		var deselected = App.Models.Lists.deselected();
+		if (!_.isEmpty(deselected)) {
+			_.each(deselected, function(list) {
+				list.toggleSelected();
+			});
+		} else {
+			// Otherwise deselect all lists.
+			App.Models.Lists.each(function(list) {
+				list.toggleSelected();
+			});
+		}
 			
 		// Trigger a notification so toolbar et al can redraw.
 		App.Mediator.trigger("listSelected");

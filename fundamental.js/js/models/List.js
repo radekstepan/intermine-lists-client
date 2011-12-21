@@ -16,6 +16,11 @@ var List = Backbone.Model.extend({
 	// Toggle the `selected` state of this list item.
 	toggleSelected: function() {
 		this.save({"selected": !this.get("selected")});
+	},
+
+	// Make the list item selected regardles of its current status.
+	setSelected: function() {
+		this.save({"selected": true});
 	}
 
 });
@@ -36,6 +41,13 @@ var Lists = Backbone.Collection.extend({
 	selected: function() {
 		return this.filter(function(list) {
 			return list.get("selected");
+		});
+	},
+
+	// Filter down the collection of all lists that are deselected.
+	deselected: function() {
+		return this.filter(function(list) {
+			return !list.get("selected");
 		});
 	},
 
