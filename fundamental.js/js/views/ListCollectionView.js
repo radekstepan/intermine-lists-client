@@ -12,6 +12,10 @@ App.Views.ListCollectionView = Backbone.View.extend({
 
 	initialize: function(options) {
 		_.bindAll(this, "addOneList");
+		_.bindAll(this, "renderCheckbox");
+
+		// Listen to when lists are being selected to re-render the check-all checkbox.
+		App.Mediator.bind("listSelected", this.renderCheckbox);
 
 		// On initialization, add all existing list items.
 		this.addAllLists();
@@ -31,9 +35,20 @@ App.Views.ListCollectionView = Backbone.View.extend({
 				list.toggleSelected();
 			});
 		}
-			
+
 		// Trigger a notification so toolbar et al can redraw.
 		App.Mediator.trigger("listSelected");
+	},
+
+	// Set the status of the checkbox based on whether all lists are selected or not.
+	renderCheckbox: function() {
+		var checkbox = $(this.el).find('thead input[type="checkbox"]');
+		if (App.Models.Lists.deselected().length == 0) {
+			// All lists are selected (or there are no lists ;), make sure box is checked.
+			checkbox.attr('checked', 'checked');
+		} else {
+			checkbox.attr('checked', false);
+		}
 	},
 
 	// Add a single list item to the table by creating a view for it, and

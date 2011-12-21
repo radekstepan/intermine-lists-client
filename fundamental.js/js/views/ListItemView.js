@@ -36,7 +36,7 @@ App.Views.ListItemView = Backbone.View.extend({
 	render: function() {
 		$(this.el).html(this.template(this.model.toJSON())); // serialize to JSON, fill tml, set as innerHTML
         // Is this item selected? Tag `<tr>` is not part of the template.
-        if (this.model.get("selected")) $(this.el).addClass('selected');
+        (this.model.get("selected")) ? $(this.el).addClass('selected') : $(this.el).removeClass('selected');
 		return this;
 	},
 

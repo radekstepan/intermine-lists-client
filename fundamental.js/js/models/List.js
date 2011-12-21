@@ -9,7 +9,8 @@ var List = Backbone.Model.extend({
 			"name":     "Default name",
 			"type":     "Genes",
 			"created":  "Today",
-			"selected": false
+			"selected": false,
+			"folder": null
 		};
 	},
 
