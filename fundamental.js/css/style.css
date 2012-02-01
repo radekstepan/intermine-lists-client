@@ -1,8 +1,11 @@
 .navbar-inner { border-radius:0; }
-
-footer { text-align:center; }
+.nav-tabs.nav-stacked > li:last-child > a { border-radius:0; }
+.nav-list { padding:0 15px; }
+.nav-list a:hover { color:#08C; text-shadow:none; }
 
 table#table tr.selected td { background:#FFF6D9; border-top-color:#FFC40D; }
 
 #toolbar .btn,
 #toolbar .btn-group { display:block; margin-bottom:10px; }
+
+footer { text-align:center; }

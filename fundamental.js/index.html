@@ -41,7 +41,7 @@
           <span class="icon-bar"></span>
         </a>
         <a class="brand" href="#">InterMine</a>
-        <div class="nav-collapse">
+          <div class="nav-collapse">
           
           <ul class="nav">
             <li class="active"><a href="#">Lists</a></li>
@@ -92,21 +92,34 @@
           </ul>
 
           <!-- groups, lists -->
-          <input type="text" class="input-medium" placeholder="Search lists...">
-          <ul class="nav nav-list">
-            <li><a href="#">List 1</a></li>
-            <li><a href="#">List 2</a></li>
-            <li class="nav-header">Group 1</li>
-            <li class="active"><a href="#">List 3</a></li>
-            <li><a href="#">List 4</a></li>
-            <li class="nav-header">Group 2</li>
-            <li><a href="#">List 5</a></li>
-            <li><a href="#">List 6</a></li>
+          <input type="text" class="input-long" placeholder="Search lists...">
+          <ul class="nav nav-tabs nav-stacked">
+            <li>
+              <ul class="nav nav-list">
+                <li><a href="#">List 1</a></li>
+                <li><a href="#">List 2</a></li>
+              </ul>
+            </li>
+            <li class="active"><a href="#">Group 1</a></li>
+            <li>
+              <ul class="nav nav-list">
+                <li class="active"><a href="#">List 3</a></li>
+                <li><a href="#">List 4</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Group 2</a></li>
           </ul>
         </div>
         
         <!-- content -->
-        <div class="span8">
+        <div id="content" class="span8">
+          <!-- crumbs -->
+          <ul id="breadcrumb" class="breadcrumb">
+            <li><a href="#">Home</a> <span class="divider">/</span></li>
+            <li><a href="#">Library</a> <span class="divider">/</span></li>
+            <li class="active">Data</li>
+          </ul>
+
           <!-- lists table -->
           <table id="table" class="table table-striped">
             <thead>

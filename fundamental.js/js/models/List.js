@@ -6,11 +6,21 @@ var List = Backbone.Model.extend({
 	// Attributes of a list item.
 	defaults: function() {
 		return {
-			"name":     "Default name",
-			"type":     "Genes",
-			"created":  "Today",
+			"name":     "",
+			"type":     "",
+			"created":  "",
+			"folder":   "",
 			"selected": false
 		};
+	},
+
+	initialize: function() {
+		// set the folder by parsing tags
+		_.find(this['attributes']['tags'], function(tag) {
+			if (tag.substring(0, 7) == 'folder/') {
+				return this['attributes']['folder'] = tag.substring(7);
+			}
+		}, this);
 	},
 
 	// Toggle the `selected` state of this list item.
@@ -36,10 +46,6 @@ var Lists = Backbone.Collection.extend({
 
 	// Save all of the list items under the `lists` namespace.
 	"localStorage": new Store("lists"),
-
-	initialize: function(options) {
-		// TODO: listen in on Model to update internal count of deselected/selected items.
-	},
 
 	// Filter down the collection of all lists that are selected.
 	selected: function() {
