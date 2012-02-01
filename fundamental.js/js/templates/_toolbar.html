@@ -1,5 +1,21 @@
+<!-- organise -->
 <% if (selected > 0) { %>
-	<button class="btn primary organize">Organize <%= selected %> <%= selected == 1 ? 'list' : 'lists' %></button>
+	<button class="btn organize">Organize <%= selected %> <%= selected == 1 ? 'list' : 'lists' %></button>
 <% } else { %>
 	<button class="btn create-folder">Create a folder</button>
 <% } %>
+
+<!-- tagging -->
+<button class="btn <%= selected == 1 ? '' : 'disabled' %> tag">Edit Tags</button>
+
+<!-- math operations -->
+<div class="btn-group operations">
+  <a class="btn <%= selected > 1 ? '' : 'disabled' %>" href="#">Operations</a>
+  <a class="btn <%= selected > 1 ? '' : 'disabled' %> dropdown-toggle" data-toggle="dropdown" href="#">
+  	<span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="#">Union</a></li>
+    <li><a href="#">Subtract</a></li>
+  </ul>
+</div>

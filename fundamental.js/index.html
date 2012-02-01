@@ -9,6 +9,7 @@
     <![endif]-->
 
     <link href="css/twitter-bootstrap/bootstrap.css" rel="stylesheet">
+    <script src="css/twitter-bootstrap/bootstrap.js"></script>
     <link href="css/style.css" rel="stylesheet">
 
     <script src="js/lib/jquery-1.7.js"></script>
@@ -30,39 +31,84 @@
   </head>
   <body>
 
-    <div class="topbar">
-      <div class="fill">
-        <div class="container">
+  <!-- navbar -->
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container" style="width: auto;">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#">InterMine</a>
+        <div class="nav-collapse">
           
-          <a class="brand" href="#">InterMine MyMine</a>
-          
-          <nav>
-            <ul class="nav">
-              <li class="active"><a href="#">Lists</a></li>
-              <li><a href="#">Queries</a></li>
-              <li><a href="#">Templates</a></li>
-            </ul>
-          <nav>
+          <ul class="nav">
+            <li class="active"><a href="#">Lists</a></li>
+            <li><a href="#">Templates</a></li>
+            <li><a href="#">Queries</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Perl</a></li>
+                <li><a href="#">Python</a></li>
+                <li><a href="#">Ruby</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Java</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <ul class="nav pull-right">
+            <li>
+              <form class="navbar-search pull-left" action="">
+                <input type="text" class="search-query span5" placeholder="Search mine...">
+              </form>
+            </li>
+            <li class="divider-vertical"></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="container">
-      
-      <div id="content">
-        
-        <div id="header" class="page-header">
+    <!-- flexible page structure -->
+    <div class="container-fluid">
+      <div class="row-fluid">
 
-          <!-- actions toolbar -->
-          <div id="toolbar"></div>
+        <!-- left sidebar -->
+        <div class="span2">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#">Lists</a></li>
+            <li><a href="#">Tags</a></li>
+          </ul>
 
-          <!-- modal popovers for actions -->
-          <div id="modals"></div>
+          <!-- groups, lists -->
+          <input type="text" class="input-medium" placeholder="Search lists...">
+          <ul class="nav nav-list">
+            <li><a href="#">List 1</a></li>
+            <li><a href="#">List 2</a></li>
+            <li class="nav-header">Group 1</li>
+            <li class="active"><a href="#">List 3</a></li>
+            <li><a href="#">List 4</a></li>
+            <li class="nav-header">Group 2</li>
+            <li><a href="#">List 5</a></li>
+            <li><a href="#">List 6</a></li>
+          </ul>
         </div>
-
-        <div class="span15">
+        
+        <!-- content -->
+        <div class="span8">
           <!-- lists table -->
-          <table id="table" class="condensed-table zebra-striped">
+          <table id="table" class="table table-striped">
             <thead>
               <tr>
                 <th><input type="checkbox" /></th>
@@ -74,12 +120,18 @@
             <tbody></tbody>
           </table>
         </div>
-      </div>
 
-      <footer>
-        <p>&copy; InterMine 2012</p>
-      </footer>
+        <!-- right sidebar, actions -->
+        <div class="span2">
+          <!-- actions toolbar -->
+          <div id="toolbar"></div>
+        </div>
+      </div>
     </div>
+
+    <footer>
+      <p>&copy; InterMine 2012</p>
+    </footer>
 
   </body>
 </html>
