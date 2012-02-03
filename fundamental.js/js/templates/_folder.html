@@ -1,8 +1,0 @@
-<% if (!topLevel) { %>
-	<a class="toggle"><%= name %></a>
-<% } %>
-<ul class="nav nav-list <% if (expanded) { %>active<% } %>">
-	<% _.each(lists, function(list) { %>
-		<li><a><%= list %></a></li>
-	<% }); %>
-</ul>

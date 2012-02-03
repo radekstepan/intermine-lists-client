@@ -11,7 +11,7 @@ App.Views.SidebarFolderView = Backbone.View.extend({
 		var result;
 		$.ajax({
 			"async": false,
-		    "url":   "js/templates/_folder.html",
+		    "url":   "js/templates/_sidebar_folder.html",
 		  	success: function(data) {
 		    	result = data;
 		  	},
@@ -30,8 +30,19 @@ App.Views.SidebarFolderView = Backbone.View.extend({
 
 	// We listen to changes to our Model representation, re-rendering.
 	initialize: function() {
+		_.bindAll(this, "addOneList");
+
 		this.model.bind("change", this.render, this);
 		this.model.bind("destroy", this.remove, this);
+	},
+
+	addOneList: function(listName) {
+		// Fetch the List from Lists based on listName and pass it into the View.
+		var list = App.Models.Lists.find(function(list) {
+			return (list.get("name") == listName);
+		});
+
+		$(this.el).find('ul.lists').append(new App.Views.SidebarListView({model: list}).render().el);		
 	},
 
 	// Re-render the contents of the folder.
@@ -45,6 +56,9 @@ App.Views.SidebarFolderView = Backbone.View.extend({
 		// Add a data attr to the view.
 		var name = folder.get("name") || 'top';
 		$(this.el).attr("data-list-name", name);
+
+		// Create a View for each List contained.
+		_.each(folder.get("lists"), this.addOneList);
 
 		return this;
 	},
