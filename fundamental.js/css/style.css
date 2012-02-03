@@ -3,6 +3,9 @@
 .nav-list { padding:0 15px; }
 .nav-list a:hover { color:#08C; text-shadow:none; }
 
+ul#folders li ul { display:none; }
+ul#folders li.active ul { display:block; }
+
 table#table tr.selected td { background:#FFF6D9; border-top-color:#FFC40D; }
 
 #toolbar .btn,

@@ -22,8 +22,12 @@
     <script src="js/models/Folder.js"></script>
     <script src="js/models/List.js"></script>
 
+    <script src="js/views/SidebarFolderCollectionView.js"></script>
+    <script src="js/views/FolderView.js"></script>
+    
     <script src="js/views/ListCollectionView.js"></script>
-    <script src="js/views/ListItemView.js"></script>
+    <script src="js/views/ListView.js"></script>
+    
     <script src="js/views/ToolbarView.js"></script>
   </head>
   <body>
@@ -90,34 +94,22 @@
 
           <!-- groups, lists -->
           <input type="text" class="input-long" placeholder="Search lists...">
-          <ul class="nav nav-tabs nav-stacked">
-            <li>
-              <ul class="nav nav-list">
-                <li><a href="#">List 1</a></li>
-                <li><a href="#">List 2</a></li>
-              </ul>
-            </li>
-            <li class="active"><a href="#">Group 1</a></li>
-            <li>
-              <ul class="nav nav-list">
-                <li class="active"><a href="#">List 3</a></li>
-                <li><a href="#">List 4</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Group 2</a></li>
-          </ul>
+          <ul id="folders" class="nav nav-tabs nav-stacked"></ul>
         </div>
         
         <!-- content -->
         <div id="content" class="span8">
           <!-- crumbs -->
+          <!--
           <ul id="breadcrumb" class="breadcrumb">
             <li><a href="#">Lists</a> <span class="divider">/</span></li>
             <li><a href="#">United Kingdom</a> <span class="divider">/</span></li>
             <li class="active">UK Cities</li>
           </ul>
+          -->
 
           <!-- lists table -->
+          <!--
           <table id="table" class="table table-striped">
             <thead>
               <tr>
@@ -130,6 +122,7 @@
             <tbody></tbody>
           </table>
         </div>
+        -->
 
         <!-- right sidebar, actions -->
         <div class="span2">
@@ -139,9 +132,11 @@
       </div>
     </div>
 
+    <!--
     <footer>
       <p>&copy; InterMine 2012</p>
     </footer>
+    -->
 
   </body>
 </html>

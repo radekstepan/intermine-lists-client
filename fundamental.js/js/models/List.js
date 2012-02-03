@@ -9,18 +9,22 @@ var List = Backbone.Model.extend({
 			"name":     "",
 			"type":     "",
 			"created":  "",
-			"folder":   "",
 			"selected": false
 		};
 	},
 
+	// On initializing a List, initialize a containing Folder too.
 	initialize: function() {
-		// set the folder by parsing tags
+		// Get the folder by parsing tags or use a top level folder.
+		var folder;
 		_.find(this['attributes']['tags'], function(tag) {
 			if (tag.substring(0, 7) == 'folder/') {
-				return this['attributes']['folder'] = tag.substring(7);
+				return folder = tag.substring(7);
 			}
 		}, this);
+
+		// Create/Add (to) a Folder.
+		App.Models.Folders.add(new Folder({ 'name': folder, 'lists': [this['attributes']['name']], 'topLevel': (folder) ? false : true }));
 	},
 
 	// Toggle the `selected` state of this list item.

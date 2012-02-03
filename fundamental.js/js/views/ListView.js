@@ -1,7 +1,7 @@
-// List Item View
+// List View
 // ----------
 
-App.Views.ListItemView = Backbone.View.extend({
+App.Views.ListView = Backbone.View.extend({
 
 	// Element does not exist yet, but will be a `<tr>`.
 	"tagName":  "tr",

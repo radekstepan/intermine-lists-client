@@ -1,0 +1,8 @@
+<% if (!topLevel) { %>
+	<a href="#"><%= name %></a>
+<% } %>
+<ul class="nav nav-list">
+	<% _.each(lists, function(list) { %>
+		<li><a href="#"><%= list %></a></li>
+	<% }); %>
+</ul>
