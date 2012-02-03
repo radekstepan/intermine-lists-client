@@ -25,12 +25,12 @@ var List = Backbone.Model.extend({
 
 	// Toggle the `selected` state of this list item.
 	toggleSelected: function() {
-		this.save({"selected": !this.get("selected")});
+		this.set({"selected": !this.get("selected")});
 	},
 
 	// Make the list item selected regardles of its current status.
 	setSelected: function() {
-		this.save({"selected": true});
+		this.set({"selected": true});
 	}
 
 });
@@ -43,9 +43,6 @@ var Lists = Backbone.Collection.extend({
 	// Reference to this collection's model.
 	// Override this property to specify the model class that the collection contains.
 	"model": List,
-
-	// Save all of the list items under the `lists` namespace.
-	"localStorage": new Store("lists"),
 
 	// Filter down the collection of all lists that are selected.
 	selected: function() {

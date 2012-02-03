@@ -6,9 +6,10 @@ App.Routers.Main = Backbone.Router.extend({
     initialize: function(options) {
     	// Initialize the lists using dummy data.
     	var lists = [
-    		{'name': 'FlyTF_trusted_TFs', 'type': 'Genes', 'created': '6 Aug', 'selected': false, 'tags': ['public']},
-    		{'name': 'FlyAtlas_brain_top', 'type': 'Genes', 'created': '5 Nov', 'selected': false, 'tags': ['folder/group 1']},
-    		{'name': 'classIIb', 'type': 'Genes', 'created': '13:45', 'selected': true, 'tags': ['public', 'folder/group 1']}
+    		{'name': 'UK Cities', 'type': 'Settlements', 'created': '6 Aug', 'selected': false, 'tags': ['public']},
+    		{'name': 'UK Towns', 'type': 'Settlements', 'created': '5 Nov', 'selected': false, 'tags': ['folder/United Kingdom']},
+    		{'name': 'UK Lakes', 'type': 'Water', 'created': '13:45', 'selected': false, 'tags': ['public', 'folder/United Kingdom']},
+            {'name': 'Czech Ponds', 'type': 'Water', 'created': '15 Jan 2011', 'selected': false, 'tags': ['public', 'folder/Czech Republic']}
     	];
     	App.Models.Lists = new Lists(lists);
         

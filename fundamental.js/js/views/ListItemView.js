@@ -34,7 +34,6 @@ App.Views.ListItemView = Backbone.View.extend({
 	// Re-render the contents of the list item.
 	// Override this function with your code that renders the view template from model data, and updates this.el with the new HTML.
 	render: function() {
-		console.log(this.model.toJSON());
 		$(this.el).html(this.template(this.model.toJSON())); // serialize to JSON, fill tml, set as innerHTML
         // Is this item selected? Tag `<tr>` is not part of the template.
         (this.model.get("selected")) ? $(this.el).addClass('selected') : $(this.el).removeClass('selected');
