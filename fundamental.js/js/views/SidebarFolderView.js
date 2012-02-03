@@ -1,7 +1,7 @@
-// Folder View
+// Folder View in a Sidebar
 // ----------
 
-App.Views.FolderView = Backbone.View.extend({
+App.Views.SidebarFolderView = Backbone.View.extend({
 
 	// Element does not exist yet, but will be a `<li>`.
 	"tagName":  "li",
@@ -19,6 +19,15 @@ App.Views.FolderView = Backbone.View.extend({
 		return result;
 	}()),
 
+	// The DOM events specific to a Folder.
+	"events": {
+		"click a.toggle": "toggleFolder"
+	},
+
+	toggleFolder: function() {
+		$(this.el).toggleClass('active').find('ul').toggleClass('active');
+	},
+
 	// We listen to changes to our Model representation, re-rendering.
 	initialize: function() {
 		this.model.bind("change", this.render, this);
@@ -27,7 +36,16 @@ App.Views.FolderView = Backbone.View.extend({
 
 	// Re-render the contents of the folder.
 	render: function() {
-		$(this.el).html(this.template(this.model.toJSON())); // serialize to JSON, fill tml, set as innerHTML
+		var folder = this.model;
+		// A top level folder? Set it as expanded.
+		if (folder.get("topLevel")) folder.set({"expanded": true});
+
+		$(this.el).html(this.template(folder.toJSON())); // serialize to JSON, fill tml, set as innerHTML
+
+		// Add a data attr to the view.
+		var name = folder.get("name") || 'top';
+		$(this.el).attr("data-list-name", name);
+
 		return this;
 	},
 
