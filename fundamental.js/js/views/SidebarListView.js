@@ -28,8 +28,8 @@ App.Views.SidebarListView = Backbone.View.extend({
 		// Model change.
 		this.model.toggleSelected();
 		
-		// Is this baby now selected?
-		if (this.model.get("selected")) App.Mediator.trigger("listSelected", this.model.get("name"));
+		// Trigger a message.
+		App.Mediator.trigger((this.model.get("selected")) ? "listSelected" : "listDeselected", this.model.get("name"));
 	},
 
 	// We listen to changes to our Model representation, re-rendering.
