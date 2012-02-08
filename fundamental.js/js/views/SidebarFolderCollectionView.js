@@ -32,7 +32,6 @@ App.Views.SidebarFolderCollectionView = Backbone.View.extend({
 	// Add all folders.
 	addAllFolders: function() {
 		App.Models.Folders.each(this.addOneFolder);
-	},
-
+	}
 
 });

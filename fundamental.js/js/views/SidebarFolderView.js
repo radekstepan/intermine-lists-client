@@ -31,9 +31,13 @@ App.Views.SidebarFolderView = Backbone.View.extend({
 	// We listen to changes to our Model representation, re-rendering.
 	initialize: function() {
 		_.bindAll(this, "addOneList");
+		_.bindAll(this, "filterLists");
 
 		this.model.bind("change", this.render, this);
 		this.model.bind("destroy", this.remove, this);
+
+		// Re-render the shebang with a filter applied.
+		App.Mediator.bind("filterLists", this.filterLists);
 	},
 
 	addOneList: function(listName) {
@@ -43,6 +47,23 @@ App.Views.SidebarFolderView = Backbone.View.extend({
 		});
 
 		$(this.el).find('ul.lists').append(new App.Views.SidebarListView({model: list}).render().el);		
+	},
+
+	// Show only filtered lists.
+	filterLists: function(filter) {
+		// Remove the current list.
+		$(this.el).find('ul.lists').remove();
+
+		// SQL LIKE - like case-insensitive regex
+		var re = new RegExp(filter + ".*", "i");
+
+		// Filter the listing and add items back.
+		_.each(this.model.get("lists"), function(listName) {
+			// SQL LIKE - like
+			if (listName.match(re)) {
+				this.addOneList(listName);
+			}
+		}, this);
 	},
 
 	// Re-render the contents of the folder.
