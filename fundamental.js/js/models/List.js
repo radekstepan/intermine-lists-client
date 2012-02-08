@@ -9,6 +9,7 @@ var List = Backbone.Model.extend({
 			"name":     "",
 			"type":     "",
 			"created":  "",
+			"folder":   "",
 			"selected": false
 		};
 	},
@@ -22,6 +23,9 @@ var List = Backbone.Model.extend({
 				return folder = tag.substring(7);
 			}
 		}, this);
+
+		// Save the folder on us.
+		this.set({"folder": (folder || false)});
 
 		// Create/Add (to) a Folder.
 		App.Models.Folders.add(new Folder({ 'name': folder, 'lists': [this['attributes']['name']], 'topLevel': (folder) ? false : true }));
@@ -60,6 +64,12 @@ var Lists = Backbone.Collection.extend({
 		return this.filter(function(list) {
 			return !list.get("selected");
 		});
+	},
+
+	byName: function(name) {
+		return this.find(function(list) {
+			return list.get("name") == name;
+		});		
 	},
 
 	// If you define a comparator, it will be used to maintain the collection in a sorted order.

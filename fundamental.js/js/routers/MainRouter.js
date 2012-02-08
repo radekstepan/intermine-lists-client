@@ -28,6 +28,9 @@ App.Routers.Main = Backbone.Router.extend({
         // Show the Sidebar Folder View.
         new App.Views.SidebarFolderCollectionView;
 
+        // Breadcrumb.
+        new App.Views.BreadcrumbView;
+
         // Instantiate the table with lists.
 		//new App.Views.ListCollectionView;
 
