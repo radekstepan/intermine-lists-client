@@ -1,6 +1,6 @@
 # Folder Item Model
 # ----------
-window.Folder = class Folder extends Backbone.Model
+class window.Folder extends Backbone.Model
 
 	defaults:
 		name:     "#"
@@ -10,7 +10,7 @@ window.Folder = class Folder extends Backbone.Model
 
 # Folder Items Collection
 # ---------------
-window.Folders = class Folders extends Backbone.Collection
+class window.Folders extends Backbone.Collection
 	
 	model: Folder
 	

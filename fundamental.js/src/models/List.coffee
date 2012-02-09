@@ -1,6 +1,6 @@
 # List Item Model
 # ----------
-window.List = class List extends Backbone.Model
+class window.List extends Backbone.Model
 
 	defaults:
 		name:     ""
@@ -32,7 +32,7 @@ window.List = class List extends Backbone.Model
 
 # List Items Collection
 # ---------------
-window.Lists = class Lists extends Backbone.Collection
+class window.Lists extends Backbone.Collection
 
 	model: List
 
