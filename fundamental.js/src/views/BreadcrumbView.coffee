@@ -24,7 +24,7 @@ App.Views.BreadcrumbView = class View extends Backbone.View
 
 	# Make sure that only one list is selected at any one time.
 	render: (listName) ->
-		$(@el).html(@template(App.Models.Lists.byName(listName).toJSON())).show()
+		$(@el).html(@template(App.Models.Lists.byName(listName).toJSON())).show().attr("data-view", "BreadcrumbView")
 
 	# Hide element if no list is selected.
 	hide: -> $(@el).hide()

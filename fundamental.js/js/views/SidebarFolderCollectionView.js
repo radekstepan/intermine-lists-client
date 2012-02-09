@@ -29,7 +29,7 @@
     View.prototype.addOneFolder = function(folder) {
       return $(this.el).append(new App.Views.SidebarFolderView({
         model: folder
-      }).render().el);
+      }).render().el).attr("data-view", "SidebarFolderCollectionView");
     };
 
     View.prototype.addAllFolders = function() {

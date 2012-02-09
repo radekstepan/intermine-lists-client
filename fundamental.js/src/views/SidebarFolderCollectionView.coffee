@@ -20,7 +20,7 @@ App.Views.SidebarFolderCollectionView = class View extends Backbone.View
 
 	# Add a folder to the listing.
 	addOneFolder: (folder) ->
-		$(@el).append(new App.Views.SidebarFolderView(model: folder).render().el)
+		$(@el).append(new App.Views.SidebarFolderView(model: folder).render().el).attr("data-view", "SidebarFolderCollectionView")
 
 	# Add all folders.
 	addAllFolders: -> App.Models.Folders.each(@addOneFolder)

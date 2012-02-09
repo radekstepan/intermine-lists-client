@@ -54,7 +54,8 @@ App.Views.SidebarFolderView = class View extends Backbone.View
 		# A top level folder? Set it as expanded.
 		folder.set(expanded: true) if folder.get("topLevel")
 		
-		$(@el).html(@template(folder.toJSON()))  # serialize to JSON, fill tml, set as innerHTML
+		# serialize to JSON, fill tml, set as innerHTML
+		$(@el).html(@template(folder.toJSON())).attr("data-view", "SidebarFolderView")
 		
 		# Add a data attr to the view.
 		name = folder.get("name") or "top"

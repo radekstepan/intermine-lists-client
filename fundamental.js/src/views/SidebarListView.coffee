@@ -32,7 +32,7 @@ App.Views.SidebarListView = class View extends Backbone.View
 		@model.bind("destroy", @remove, @)
 
 	render: ->
-		$(@el).html(@template(@model.toJSON()))
+		$(@el).html(@template(@model.toJSON())).attr("data-view", "SidebarListView")
 		
 		# Are we selected?
 		if @model.get("selected") then $(@el).addClass("active") else $(@el).removeClass("active")

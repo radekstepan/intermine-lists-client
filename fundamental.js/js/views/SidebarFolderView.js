@@ -68,7 +68,7 @@
           expanded: true
         });
       }
-      $(this.el).html(this.template(folder.toJSON()));
+      $(this.el).html(this.template(folder.toJSON())).attr("data-view", "SidebarFolderView");
       name = folder.get("name") || "top";
       $(this.el).attr("data-list-name", name);
       _.each(folder.get("lists"), this.addOneList);

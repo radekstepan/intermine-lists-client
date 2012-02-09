@@ -33,7 +33,7 @@
     };
 
     View.prototype.render = function(listName) {
-      return $(this.el).html(this.template(App.Models.Lists.byName(listName).toJSON())).show();
+      return $(this.el).html(this.template(App.Models.Lists.byName(listName).toJSON())).show().attr("data-view", "BreadcrumbView");
     };
 
     View.prototype.hide = function() {

@@ -40,7 +40,7 @@
     };
 
     View.prototype.render = function() {
-      $(this.el).html(this.template(this.model.toJSON()));
+      $(this.el).html(this.template(this.model.toJSON())).attr("data-view", "SidebarListView");
       if (this.model.get("selected")) {
         $(this.el).addClass("active");
       } else {
