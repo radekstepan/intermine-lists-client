@@ -11,10 +11,10 @@ class App.Views.SidebarFolderCollectionView extends Backbone.View
 		@addAllFolders()
 
 	# Make sure that only one list is selected at any one time.
-	deselectOtherLists: (folderName) ->
+	deselectOtherLists: (listSlug) ->
 		_.each(App.Models.Lists.selected(), (
 			(list) ->
-				list.set(selected: false) unless list.get("name") is folderName
+				list.set(selected: false) unless list.get("slug") is listSlug
 		))
 
 	# Add a folder to the listing.

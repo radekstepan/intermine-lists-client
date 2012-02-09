@@ -19,12 +19,12 @@ class App.Views.SidebarListView extends Backbone.View
 	events:
 		"click a": "toggleList"
 
-	toggleList: ->
+	toggleList: (e) ->
 		# Model change.
 		@model.toggleSelected()
 
-		# Trigger a message.
-		App.Mediator.trigger((if (@model.get("selected")) then "listSelected" else "listDeselected"), @model.get("name"))
+		# Prevent default page reload.
+		e.preventDefault()
 
 	# We listen to changes to our Model representation, re-rendering.
 	initialize: ->
@@ -36,7 +36,7 @@ class App.Views.SidebarListView extends Backbone.View
 		
 		# Are we selected?
 		if @model.get("selected") then $(@el).addClass("active") else $(@el).removeClass("active")
-		
+
 		# Chain baby.
 		@
 

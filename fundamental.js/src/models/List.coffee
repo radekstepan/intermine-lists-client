@@ -40,7 +40,7 @@ class window.List extends Backbone.Model
 	setSelected: => @set(selected: true)
 	
 	# Msg to others when our selected status has changed.
-	selectedChanged: =>	App.Mediator.trigger((if @get("selected") then "listSelected" else "listDeselected"), @get("name"))	
+	selectedChanged: =>	App.Mediator.trigger((if @get("selected") then "listSelected" else "listDeselected"), @get("slug"))	
 
 # List Items Collection
 # ---------------

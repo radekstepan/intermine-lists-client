@@ -20,8 +20,8 @@ class App.Views.BreadcrumbView extends Backbone.View
 		App.Mediator.bind("listDeselected", @hide)
 
 	# Make sure that only one list is selected at any one time.
-	render: (listName) =>
-		$(@el).html(@template(App.Models.Lists.byName(listName).toJSON())).show().attr("data-view", "BreadcrumbView")
+	render: (listSlug) =>
+		$(@el).html(@template(App.Models.Lists.bySlug(listSlug).toJSON())).show().attr("data-view", "BreadcrumbView")
 
 	# Hide element if no list is selected.
 	hide: => $(@el).hide()
