@@ -25,12 +25,10 @@ window.List = class List extends Backbone.Model
 
    
    	# Toggle the `selected` state of this list item.
-	toggleSelected: ->
-		@set(selected: not @get("selected"))
+	toggleSelected: -> @set(selected: not @get("selected"))
 
 	# Make the list item selected regardles of its current status.
-	setSelected: ->
-		@set(selected: true)
+	setSelected: -> @set(selected: true)
 
 # List Items Collection
 # ---------------
@@ -39,15 +37,11 @@ window.Lists = class Lists extends Backbone.Collection
 	model: List
 
 	# Filter down the collection of all lists that are selected.
-	selected: ->
-		@filter( (list) -> list.get "selected" )
+	selected: -> @filter( (list) -> list.get "selected" )
 
 	# Filter down the collection of all lists that are deselected.
-	deselected: ->
-		@filter( (list) -> not list.get("selected") )
+	deselected: -> @filter( (list) -> not list.get("selected") )
 
-	byName: (name) ->
-		@find( (list) -> list.get("name") is name )
+	byName: (name) -> @find( (list) -> list.get("name") is name )
 
-	comparator: (list) ->
-		list.get("name")
+	comparator: (list) -> list.get("name")
