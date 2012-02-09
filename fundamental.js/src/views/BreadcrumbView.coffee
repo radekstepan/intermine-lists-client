@@ -18,6 +18,7 @@ App.Views.BreadcrumbView = class View extends Backbone.View
 	initialize: (options) ->
 		_.bindAll(@, "render")
 		_.bindAll(@, "hide")
+		
 		App.Mediator.bind("listSelected", @render)
 		App.Mediator.bind("listDeselected", @hide)
 

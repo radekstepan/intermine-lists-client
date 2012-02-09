@@ -1,65 +1,64 @@
-// List View in a Sidebar
-// ----------
+(function() {
+  var View;
+  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-App.Views.SidebarListView = Backbone.View.extend({
+  App.Views.SidebarListView = View = (function() {
 
-	// Element does not exist yet, but will be a `<li>`.
-	"tagName":  "li",
+    __extends(View, Backbone.View);
 
-	// Cache the template function for a single item.
-	"template": _.template(function() {
-		var result;
-		$.ajax({
-			"async": false,
-		    "url":   "js/templates/_sidebar_list.html",
-		  	success: function(data) {
-		    	result = data;
-		  	},
-		});
-		return result;
-	}()),
+    function View() {
+      View.__super__.constructor.apply(this, arguments);
+    }
 
-	// The DOM events specific to a List.
-	"events": {
-		"click a": "toggleList"
-	},
+    View.prototype.tagName = "li";
 
-	toggleList: function() {
-		// Model change.
-		this.model.toggleSelected();
-		
-		// Trigger a message.
-		App.Mediator.trigger((this.model.get("selected")) ? "listSelected" : "listDeselected", this.model.get("name"));
-	},
+    View.prototype.template = _.template((function() {
+      var result;
+      result = "";
+      $.ajax({
+        async: false,
+        url: "js/templates/_sidebar_list.html",
+        success: function(data) {
+          return result = data;
+        }
+      });
+      return result;
+    })());
 
-	// We listen to changes to our Model representation, re-rendering.
-	initialize: function() {
-		this.model.bind("change", this.render, this);
-		this.model.bind("destroy", this.remove, this);
-	},
+    View.prototype.events = {
+      "click a": "toggleList"
+    };
 
-	// Re-render the contents of the folder.
-	render: function() {
-		$(this.el).html(this.template(this.model.toJSON())); // serialize to JSON, fill tml, set as innerHTML
+    View.prototype.toggleList = function() {
+      this.model.toggleSelected();
+      return App.Mediator.trigger((this.model.get("selected") ? "listSelected" : "listDeselected"), this.model.get("name"));
+    };
 
-		// Are we selected?
-		if (this.model.get("selected")) {
-			$(this.el).addClass('active');
-		} else {
-			$(this.el).removeClass('active');
-		}
+    View.prototype.initialize = function() {
+      this.model.bind("change", this.render, this);
+      return this.model.bind("destroy", this.remove, this);
+    };
 
-		return this;
-	},
+    View.prototype.render = function() {
+      $(this.el).html(this.template(this.model.toJSON()));
+      if (this.model.get("selected")) {
+        $(this.el).addClass("active");
+      } else {
+        $(this.el).removeClass("active");
+      }
+      return this;
+    };
 
-	// Remove this view from the DOM.
-	remove: function() {
-		$(this.el).remove();
-	},
+    View.prototype.remove = function() {
+      return $(this.el).remove();
+    };
 
-	// Remove the item, destroy the model.
-	clear: function() {
-		this.model.destroy();
-	}
+    View.prototype.clear = function() {
+      return this.model.destroy();
+    };
 
-});
+    return View;
+
+  })();
+
+}).call(this);
