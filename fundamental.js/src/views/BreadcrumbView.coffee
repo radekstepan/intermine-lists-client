@@ -1,6 +1,6 @@
 # Breadcrumb for a selected List.
 # ----------
-App.Views.BreadcrumbView = Backbone.View.extend(
+App.Views.BreadcrumbView = class View extends Backbone.View
 	
 	el: "ul#breadcrumb"
 
@@ -27,4 +27,3 @@ App.Views.BreadcrumbView = Backbone.View.extend(
 
 	# Hide element if no list is selected.
 	hide: -> $(@el).hide()
-)

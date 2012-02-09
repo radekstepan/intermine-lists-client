@@ -1,37 +1,43 @@
-// Folder Collection View in the Sidebar
-// ----------
+(function() {
+  var View;
+  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-App.Views.SidebarFolderCollectionView = Backbone.View.extend({
+  App.Views.SidebarFolderCollectionView = View = (function() {
 
-	"el": "ul#folders",
+    __extends(View, Backbone.View);
 
-	initialize: function(options) {
-		_.bindAll(this, "addOneFolder");
+    function View() {
+      View.__super__.constructor.apply(this, arguments);
+    }
 
-		App.Mediator.bind("listSelected", this.deselectOtherLists);
+    View.prototype.el = "ul#folders";
 
-		// On initialization, add all contained Folders.
-		this.addAllFolders();
-	},
+    View.prototype.initialize = function(options) {
+      _.bindAll(this, "addOneFolder");
+      App.Mediator.bind("listSelected", this.deselectOtherLists);
+      return this.addAllFolders();
+    };
 
-	// Make sure that only one list is selected at any one time.
-	deselectOtherLists: function(folderName) {
-		_.each(App.Models.Lists.selected(), function(list) {
-			if (list.get("name") != this) {
-				list.set({"selected": false});
-			}
-		}, folderName);
-	},
+    View.prototype.deselectOtherLists = function(folderName) {
+      return _.each(App.Models.Lists.selected(), (function(list) {
+        return list.set({
+          selected: list.get("name") !== this ? false : void 0
+        });
+      }), folderName);
+    };
 
-	// Add a folder to the listing.
-	addOneFolder: function(folder) {
-		// Render a new View and append to the list.
-		$(this.el).append(new App.Views.SidebarFolderView({model: folder}).render().el);
-	},
+    View.prototype.addOneFolder = function(folder) {
+      return $(this.el).append(new App.Views.SidebarFolderView({
+        model: folder
+      }).render().el);
+    };
 
-	// Add all folders.
-	addAllFolders: function() {
-		App.Models.Folders.each(this.addOneFolder);
-	}
+    View.prototype.addAllFolders = function() {
+      return App.Models.Folders.each(this.addOneFolder);
+    };
 
-});
+    return View;
+
+  })();
+
+}).call(this);
