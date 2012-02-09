@@ -1,2 +1,7 @@
 .DS_Store
 .idea/
+fundamental.js/js/App.js
+fundamental.js/js/models/
+fundamental.js/js/routers/
+fundamental.js/js/templates/
+fundamental.js/js/views/
