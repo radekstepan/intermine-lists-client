@@ -21,7 +21,12 @@ class App.Routers.Main extends Backbone.Router
         )
     
     # Check if we have any Lists selected and if not show "index".
-    urlShowIndex: => @.navigate("") if App.Models.Lists.selected.length is 0
+    urlShowIndex: =>
+        document.title = "All Lists - InterMine MyMine"
+        @.navigate("") if App.Models.Lists.selected.length is 0
 
     # Change the address bar on selecting a list.
-    urlShowList: (slug) => @.navigate("list/#{slug}")
+    urlShowList: (slug) =>
+        name = App.Models.Lists.bySlug(slug).get("name")
+        document.title = "#{name} - InterMine MyMine"
+        @.navigate("list/#{slug}")
