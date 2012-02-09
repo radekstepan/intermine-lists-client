@@ -1,6 +1,6 @@
 # List View in a Sidebar
 # ----------
-App.Views.SidebarListView = class View extends Backbone.View
+class App.Views.SidebarListView extends Backbone.View
 
 	# Element does not exist yet, but will be a `<li>`.
 	tagName: "li"

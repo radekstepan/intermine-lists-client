@@ -1,16 +1,19 @@
 (function() {
-  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   window.List = (function() {
 
     __extends(List, Backbone.Model);
 
     function List() {
+      this.selectedChanged = __bind(this.selectedChanged, this);
+      this.setSelected = __bind(this.setSelected, this);
       List.__super__.constructor.apply(this, arguments);
     }
 
     List.prototype.defaults = {
       name: "",
+      slug: "",
       type: "",
       created: "",
       folder: "",
@@ -26,11 +29,19 @@
       this.set({
         folder: folder || false
       });
-      return App.Models.Folders.add(new Folder({
+      App.Models.Folders.add(new Folder({
         name: folder,
         lists: [this["attributes"]["name"]],
         topLevel: (folder ? false : true)
       }));
+      this.set({
+        slug: this.slugify(this.get("name"))
+      });
+      return this.bind("change:selected", this.selectedChanged);
+    };
+
+    List.prototype.slugify = function(text) {
+      return text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/-/gi, "_").replace(/\s/gi, "-").toLowerCase();
     };
 
     List.prototype.toggleSelected = function() {
@@ -43,6 +54,10 @@
       return this.set({
         selected: true
       });
+    };
+
+    List.prototype.selectedChanged = function() {
+      return App.Mediator.trigger((this.get("selected") ? "listSelected" : "listDeselected"), this.get("name"));
     };
 
     return List;
@@ -74,6 +89,12 @@
     Lists.prototype.byName = function(name) {
       return this.find(function(list) {
         return list.get("name") === name;
+      });
+    };
+
+    Lists.prototype.bySlug = function(slug) {
+      return this.find(function(list) {
+        return list.get("slug") === slug;
       });
     };
 

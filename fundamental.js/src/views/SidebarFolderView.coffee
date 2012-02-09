@@ -1,6 +1,6 @@
 # Folder View in a Sidebar
 # ----------
-App.Views.SidebarFolderView = class View extends Backbone.View
+class App.Views.SidebarFolderView extends Backbone.View
 	
 	tagName: "li"
 

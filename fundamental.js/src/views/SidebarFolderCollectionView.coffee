@@ -1,6 +1,6 @@
 # Folder Collection View in the Sidebar
 # ----------
-App.Views.SidebarFolderCollectionView = class View extends Backbone.View
+class App.Views.SidebarFolderCollectionView extends Backbone.View
 
 	el: "ul#folders"
 

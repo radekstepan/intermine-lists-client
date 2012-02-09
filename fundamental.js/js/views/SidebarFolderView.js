@@ -1,20 +1,19 @@
 (function() {
-  var View;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  App.Views.SidebarFolderView = View = (function() {
+  App.Views.SidebarFolderView = (function() {
 
-    __extends(View, Backbone.View);
+    __extends(SidebarFolderView, Backbone.View);
 
-    function View() {
+    function SidebarFolderView() {
       this.remove = __bind(this.remove, this);
       this.addOneList = __bind(this.addOneList, this);
-      View.__super__.constructor.apply(this, arguments);
+      SidebarFolderView.__super__.constructor.apply(this, arguments);
     }
 
-    View.prototype.tagName = "li";
+    SidebarFolderView.prototype.tagName = "li";
 
-    View.prototype.template = _.template((function() {
+    SidebarFolderView.prototype.template = _.template((function() {
       var result;
       result = "";
       $.ajax({
@@ -27,21 +26,21 @@
       return result;
     })());
 
-    View.prototype.events = {
+    SidebarFolderView.prototype.events = {
       "click a.toggle": "toggleFolder"
     };
 
-    View.prototype.toggleFolder = function() {
+    SidebarFolderView.prototype.toggleFolder = function() {
       return $(this.el).toggleClass("active").find("ul").toggleClass("active");
     };
 
-    View.prototype.initialize = function() {
+    SidebarFolderView.prototype.initialize = function() {
       this.model.bind("change", this.render, this);
       this.model.bind("destroy", this.remove, this);
       return App.Mediator.bind("filterLists", this.filterLists);
     };
 
-    View.prototype.addOneList = function(listName) {
+    SidebarFolderView.prototype.addOneList = function(listName) {
       var list;
       list = App.Models.Lists.find(function(list) {
         return list.get("name") === listName;
@@ -51,7 +50,7 @@
       }).render().el);
     };
 
-    View.prototype.filterLists = function(filter) {
+    SidebarFolderView.prototype.filterLists = function(filter) {
       var listName, re, _i, _len, _ref, _results;
       $(this.el).find("ul.lists").remove();
       re = new RegExp("" + filter + ".*", "i");
@@ -64,7 +63,7 @@
       return _results;
     };
 
-    View.prototype.render = function() {
+    SidebarFolderView.prototype.render = function() {
       var folder, name;
       folder = this.model;
       if (folder.get("topLevel")) {
@@ -79,15 +78,15 @@
       return this;
     };
 
-    View.prototype.remove = function() {
+    SidebarFolderView.prototype.remove = function() {
       return $(this.el).remove();
     };
 
-    View.prototype.clear = function() {
+    SidebarFolderView.prototype.clear = function() {
       return this.model.destroy();
     };
 
-    return View;
+    return SidebarFolderView;
 
   })();
 

@@ -1,6 +1,6 @@
 # Breadcrumb for a selected List.
 # ----------
-App.Views.BreadcrumbView = class View extends Backbone.View
+class App.Views.BreadcrumbView extends Backbone.View
 	
 	el: "ul#breadcrumb"
 

@@ -4,6 +4,7 @@ class window.List extends Backbone.Model
 
 	defaults:
 		name:     ""
+		slug:     ""
 		type:     ""
 		created:  ""
 		folder:   ""
@@ -23,12 +24,23 @@ class window.List extends Backbone.Model
 			topLevel: (if (folder) then false else true)
 		))
 
+		# Slugify for linking purposes.
+		@set(slug: @slugify(@.get("name")))
+
+		# Bind to the change of the selected attr so we can msg abt it. 
+		this.bind("change:selected", @selectedChanged);
+	
+	# Replace rubbish, replace dashes with underscores, spaces with dashes and make it small.
+	slugify: (text) -> text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/-/gi, "_").replace(/\s/gi, "-").toLowerCase()
    
    	# Toggle the `selected` state of this list item.
 	toggleSelected: -> @set(selected: not @get("selected"))
 
 	# Make the list item selected regardles of its current status.
-	setSelected: -> @set(selected: true)
+	setSelected: => @set(selected: true)
+	
+	# Msg to others when our selected status has changed.
+	selectedChanged: =>	App.Mediator.trigger((if @get("selected") then "listSelected" else "listDeselected"), @get("name"))	
 
 # List Items Collection
 # ---------------
@@ -43,5 +55,7 @@ class window.Lists extends Backbone.Collection
 	deselected: -> @filter( (list) -> not list.get("selected") )
 
 	byName: (name) -> @find( (list) -> list.get("name") is name )
+
+	bySlug: (slug) -> @find( (list) -> list.get("slug") is slug )
 
 	comparator: (list) -> list.get("name")
