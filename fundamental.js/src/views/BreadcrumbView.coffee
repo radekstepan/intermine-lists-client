@@ -1,0 +1,30 @@
+# Breadcrumb for a selected List.
+# ----------
+App.Views.BreadcrumbView = Backbone.View.extend(
+	
+	el: "ul#breadcrumb"
+
+	# Cache the template function for a single item.
+	template: _.template(
+		do ->
+			result = ""
+			$.ajax
+				async: false
+				url: "js/templates/_breadcrumb.html"
+				success: (data) -> result = data
+			result
+	)
+
+	initialize: (options) ->
+		_.bindAll(@, "render")
+		_.bindAll(@, "hide")
+		App.Mediator.bind("listSelected", @render)
+		App.Mediator.bind("listDeselected", @hide)
+
+	# Make sure that only one list is selected at any one time.
+	render: (listName) ->
+		$(@el).html(@template(App.Models.Lists.byName(listName).toJSON())).show()
+
+	# Hide element if no list is selected.
+	hide: -> $(@el).hide()
+)
