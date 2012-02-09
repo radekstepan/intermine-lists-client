@@ -23,9 +23,6 @@ App.Views.SidebarFolderView = class View extends Backbone.View
 
 	# We listen to changes to our Model representation, re-rendering.
 	initialize: ->
-		_.bindAll(@, "addOneList")
-		_.bindAll(@, "filterLists")
-
 		@model.bind("change", @render, @)
 		@model.bind("destroy", @remove, @)
 		
@@ -33,7 +30,7 @@ App.Views.SidebarFolderView = class View extends Backbone.View
 		App.Mediator.bind("filterLists", @filterLists)
 
 	# Fetch the List from Lists based on listName and pass it into the View.
-	addOneList: (listName) ->
+	addOneList: (listName) =>
 		list = App.Models.Lists.find( (list) -> list.get("name") is listName )
 		$(@el).find("ul.lists").append(new App.Views.SidebarListView(model: list).render().el)
 
@@ -68,7 +65,7 @@ App.Views.SidebarFolderView = class View extends Backbone.View
 		@
 
 	# Remove this view from the DOM.
-	remove: -> $(@el).remove()
+	remove: => $(@el).remove()
 
 	# Remove the item, destroy the model.
 	clear: -> @model.destroy()

@@ -5,8 +5,6 @@ App.Views.SidebarFolderCollectionView = class View extends Backbone.View
 	el: "ul#folders"
 
 	initialize: (options) ->
-		_.bindAll(@, "addOneFolder")
-		
 		App.Mediator.bind("listSelected", @deselectOtherLists)
 		
 		# On initialization, add all contained Folders.
@@ -20,7 +18,7 @@ App.Views.SidebarFolderCollectionView = class View extends Backbone.View
 		))
 
 	# Add a folder to the listing.
-	addOneFolder: (folder) ->
+	addOneFolder: (folder) =>
 		$(@el).append(new App.Views.SidebarFolderView(model: folder).render().el).attr("data-view", "SidebarFolderCollectionView")
 
 	# Add all folders.
