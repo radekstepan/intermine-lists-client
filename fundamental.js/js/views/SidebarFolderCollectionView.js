@@ -20,10 +20,12 @@
 
     View.prototype.deselectOtherLists = function(folderName) {
       return _.each(App.Models.Lists.selected(), (function(list) {
-        return list.set({
-          selected: list.get("name") !== this ? false : void 0
-        });
-      }), folderName);
+        if (list.get("name") !== folderName) {
+          return list.set({
+            selected: false
+          });
+        }
+      }));
     };
 
     View.prototype.addOneFolder = function(folder) {
