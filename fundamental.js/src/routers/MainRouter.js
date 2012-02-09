@@ -29,7 +29,7 @@ App.Routers.Main = Backbone.Router.extend({
         new App.Views.SidebarFolderCollectionView;
 
         // Sidebar list search.
-        new App.Views.SidebarListSearchView;
+        //new App.Views.SidebarListSearchView;
 
         // Breadcrumb.
         new App.Views.BreadcrumbView;
