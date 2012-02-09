@@ -1,97 +1,90 @@
-// Folder View in a Sidebar
-// ----------
+(function() {
+  var View;
+  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-App.Views.SidebarFolderView = Backbone.View.extend({
+  App.Views.SidebarFolderView = View = (function() {
 
-	// Element does not exist yet, but will be a `<li>`.
-	"tagName":  "li",
+    __extends(View, Backbone.View);
 
-	// Cache the template function for a single item.
-	"template": _.template(function() {
-		var result;
-		$.ajax({
-			"async": false,
-		    "url":   "js/templates/_sidebar_folder.html",
-		  	success: function(data) {
-		    	result = data;
-		  	},
-		});
-		return result;
-	}()),
+    function View() {
+      View.__super__.constructor.apply(this, arguments);
+    }
 
-	// The DOM events specific to a Folder.
-	"events": {
-		"click a.toggle": "toggleFolder"
-	},
+    View.prototype.tagName = "li";
 
-	toggleFolder: function() {
-		$(this.el).toggleClass('active').find('ul').toggleClass('active');
-	},
+    View.prototype.template = _.template((function() {
+      var result;
+      result = "";
+      $.ajax({
+        async: false,
+        url: "js/templates/_sidebar_folder.html",
+        success: function(data) {
+          return result = data;
+        }
+      });
+      return result;
+    })());
 
-	// We listen to changes to our Model representation, re-rendering.
-	initialize: function() {
-		_.bindAll(this, "addOneList");
-		_.bindAll(this, "filterLists");
+    View.prototype.events = {
+      "click a.toggle": "toggleFolder"
+    };
 
-		this.model.bind("change", this.render, this);
-		this.model.bind("destroy", this.remove, this);
+    View.prototype.toggleFolder = function() {
+      return $(this.el).toggleClass("active").find("ul").toggleClass("active");
+    };
 
-		// Re-render the shebang with a filter applied.
-		App.Mediator.bind("filterLists", this.filterLists);
-	},
+    View.prototype.initialize = function() {
+      _.bindAll(this, "addOneList");
+      _.bindAll(this, "filterLists");
+      this.model.bind("change", this.render, this);
+      this.model.bind("destroy", this.remove, this);
+      return App.Mediator.bind("filterLists", this.filterLists);
+    };
 
-	addOneList: function(listName) {
-		// Fetch the List from Lists based on listName and pass it into the View.
-		var list = App.Models.Lists.find(function(list) {
-			return (list.get("name") == listName);
-		});
+    View.prototype.addOneList = function(listName) {
+      var list;
+      list = App.Models.Lists.find(function(list) {
+        return list.get("name") === listName;
+      });
+      return $(this.el).find("ul.lists").append(new App.Views.SidebarListView({
+        model: list
+      }).render().el);
+    };
 
-		$(this.el).find('ul.lists').append(new App.Views.SidebarListView({model: list}).render().el);		
-	},
+    View.prototype.filterLists = function(filter) {
+      var re;
+      $(this.el).find("ul.lists").remove();
+      re = new RegExp(filter + ".*", "i");
+      return _.each(this.model.get("lists"), (function(listName) {
+        if (listName.match(re)) return this.addOneList(listName);
+      }), this);
+    };
 
-	// Show only filtered lists.
-	filterLists: function(filter) {
-		// Remove the current list.
-		$(this.el).find('ul.lists').remove();
+    View.prototype.render = function() {
+      var folder, name;
+      folder = this.model;
+      if (folder.get("topLevel")) {
+        folder.set({
+          expanded: true
+        });
+      }
+      $(this.el).html(this.template(folder.toJSON()));
+      name = folder.get("name") || "top";
+      $(this.el).attr("data-list-name", name);
+      _.each(folder.get("lists"), this.addOneList);
+      return this;
+    };
 
-		// SQL LIKE - like case-insensitive regex
-		var re = new RegExp(filter + ".*", "i");
+    View.prototype.remove = function() {
+      return $(this.el).remove();
+    };
 
-		// Filter the listing and add items back.
-		_.each(this.model.get("lists"), function(listName) {
-			// SQL LIKE - like
-			if (listName.match(re)) {
-				this.addOneList(listName);
-			}
-		}, this);
-	},
+    View.prototype.clear = function() {
+      return this.model.destroy();
+    };
 
-	// Re-render the contents of the folder.
-	render: function() {
-		var folder = this.model;
-		// A top level folder? Set it as expanded.
-		if (folder.get("topLevel")) folder.set({"expanded": true});
+    return View;
 
-		$(this.el).html(this.template(folder.toJSON())); // serialize to JSON, fill tml, set as innerHTML
+  })();
 
-		// Add a data attr to the view.
-		var name = folder.get("name") || 'top';
-		$(this.el).attr("data-list-name", name);
-
-		// Create a View for each List contained.
-		_.each(folder.get("lists"), this.addOneList);
-
-		return this;
-	},
-
-	// Remove this view from the DOM.
-	remove: function() {
-		$(this.el).remove();
-	},
-
-	// Remove the item, destroy the model.
-	clear: function() {
-		this.model.destroy();
-	}
-
-});
+}).call(this);
