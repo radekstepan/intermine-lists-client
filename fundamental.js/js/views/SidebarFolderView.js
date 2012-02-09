@@ -52,12 +52,16 @@
     };
 
     View.prototype.filterLists = function(filter) {
-      var re;
+      var listName, re, _i, _len, _ref, _results;
       $(this.el).find("ul.lists").remove();
       re = new RegExp("" + filter + ".*", "i");
-      return _.each(this.model.get("lists"), (function(listName) {
-        if (listName.match(re)) return this.addOneList(listName);
-      }), this);
+      _ref = this.model.get("lists");
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        listName = _ref[_i];
+        if (listName.match(re)) _results.push(this.addOneList(listName));
+      }
+      return _results;
     };
 
     View.prototype.render = function() {

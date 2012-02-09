@@ -43,7 +43,8 @@ App.Views.SidebarFolderView = class View extends Backbone.View
 		re = new RegExp("#{filter}.*", "i")
 
 		# Filter the listing (SQL LIKE - like) and add items back
-		_.each(@model.get("lists"), ( (listName) -> @addOneList listName  if listName.match(re) ), @)
+		@addOneList(listName) for listName in @model.get("lists") when listName.match(re)
+		#_.each(@model.get("lists"), ( (listName) -> @addOneList(listName) if listName.match(re) ), @)
 
 	# Re-render the contents of the folder.
 	render: ->
