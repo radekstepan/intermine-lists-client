@@ -40,7 +40,7 @@ App.Views.SidebarFolderView = class View extends Backbone.View
 		$(@el).find("ul.lists").remove()
 
 		# SQL LIKE - like case-insensitive regex.
-		re = new RegExp(filter + ".*", "i")
+		re = new RegExp("#{filter}.*", "i")
 
 		# Filter the listing (SQL LIKE - like) and add items back
 		_.each(@model.get("lists"), ( (listName) -> @addOneList listName  if listName.match(re) ), @)

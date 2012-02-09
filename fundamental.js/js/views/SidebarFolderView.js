@@ -54,7 +54,7 @@
     View.prototype.filterLists = function(filter) {
       var re;
       $(this.el).find("ul.lists").remove();
-      re = new RegExp(filter + ".*", "i");
+      re = new RegExp("" + filter + ".*", "i");
       return _.each(this.model.get("lists"), (function(listName) {
         if (listName.match(re)) return this.addOneList(listName);
       }), this);
