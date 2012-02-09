@@ -1,49 +1,57 @@
-// Folder Item Model
-// ----------
+(function() {
+  var Folder, Folders;
+  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-var Folder = Backbone.Model.extend({
+  window.Folder = Folder = (function() {
 
-	// Attributes of a folder item.
-	defaults: function() {
-		return {
-			"name":     "#", // by default lists go to a top level Folder
-			"lists":    [],
-			"expanded": false,
-			"topLevel": false
-		};
-	}
+    __extends(Folder, Backbone.Model);
 
-});
+    function Folder() {
+      Folder.__super__.constructor.apply(this, arguments);
+    }
 
-// Folder Items Collection
-// ---------------
+    Folder.prototype.defaults = {
+      name: "#",
+      lists: [],
+      expanded: false,
+      topLevel: false
+    };
 
-var Folders = Backbone.Collection.extend({
+    return Folder;
 
-	// Reference to this collection's model.
-	"model": Folder,
+  })();
 
-	// If you define a comparator, it will be used to maintain the collection in a sorted order.
-	comparator: function(folder) {
-		return folder.get("name");
-	}
+  window.Folders = Folders = (function() {
 
-});
+    __extends(Folders, Backbone.Collection);
 
-// Detect duplicate folder names so they are not instantiated multiple times, but instead append List to the existing Folder.
-Folders.prototype.add = function(folder) {
-	var existing = this.find(function(_folder) { 
-		return _folder.get('name') === folder.get('name');
-	});
-	if (existing) {
-		// Folder exists, add the list to existing storage.
-		var lists = existing.get("lists");
-		existing.get("lists").push(folder.get("lists")[0]);
-		existing.set({"lists": lists});
+    function Folders() {
+      Folders.__super__.constructor.apply(this, arguments);
+    }
 
-		// Do not create a new Folder instance.
-		return false;
-	}
+    Folders.prototype.model = Folder;
 
-	Backbone.Collection.prototype.add.call(this, folder);
-}
+    Folders.prototype.comparator = function(folder) {
+      return folder.get("name");
+    };
+
+    return Folders;
+
+  })();
+
+  Folders.prototype.add = function(folder) {
+    var existing, lists;
+    if ((existing = this.find(function(_folder) {
+      return _folder.get("name") === folder.get("name");
+    }))) {
+      lists = existing.get("lists");
+      existing.get("lists").push(folder.get("lists")[0]);
+      existing.set({
+        "lists": lists
+      });
+      return false;
+    }
+    return Backbone.Collection.prototype.add.call(this, folder);
+  };
+
+}).call(this);

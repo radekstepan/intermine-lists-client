@@ -1,80 +1,89 @@
-// List Item Model
-// ----------
+(function() {
+  var List, Lists;
+  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-var List = Backbone.Model.extend({
+  window.List = List = (function() {
 
-	// Attributes of a list item.
-	defaults: function() {
-		return {
-			"name":     "",
-			"type":     "",
-			"created":  "",
-			"folder":   "",
-			"selected": false
-		};
-	},
+    __extends(List, Backbone.Model);
 
-	// On initializing a List, initialize a containing Folder too.
-	initialize: function() {
-		// Get the folder by parsing tags or use a top level folder.
-		var folder;
-		_.find(this['attributes']['tags'], function(tag) {
-			if (tag.substring(0, 7) == 'folder/') {
-				return folder = tag.substring(7);
-			}
-		}, this);
+    function List() {
+      List.__super__.constructor.apply(this, arguments);
+    }
 
-		// Save the folder on us.
-		this.set({"folder": (folder || false)});
+    List.prototype.defaults = {
+      name: "",
+      type: "",
+      created: "",
+      folder: "",
+      selected: false
+    };
 
-		// Create/Add (to) a Folder.
-		App.Models.Folders.add(new Folder({ 'name': folder, 'lists': [this['attributes']['name']], 'topLevel': (folder) ? false : true }));
-	},
+    List.prototype.initialize = function() {
+      var folder;
+      folder = void 0;
+      _.find(this["attributes"]["tags"], (function(tag) {
+        if (tag.substring(0, 7) === "folder/") return folder = tag.substring(7);
+      }));
+      this.set({
+        folder: folder || false
+      });
+      return App.Models.Folders.add(new Folder({
+        name: folder,
+        lists: [this["attributes"]["name"]],
+        topLevel: (folder ? false : true)
+      }));
+    };
 
-	// Toggle the `selected` state of this list item.
-	toggleSelected: function() {
-		this.set({"selected": !this.get("selected")});
-	},
+    List.prototype.toggleSelected = function() {
+      return this.set({
+        selected: !this.get("selected")
+      });
+    };
 
-	// Make the list item selected regardles of its current status.
-	setSelected: function() {
-		this.set({"selected": true});
-	}
+    List.prototype.setSelected = function() {
+      return this.set({
+        selected: true
+      });
+    };
 
-});
+    return List;
 
-// List Items Collection
-// ---------------
+  })();
 
-var Lists = Backbone.Collection.extend({
+  window.Lists = Lists = (function() {
 
-	// Reference to this collection's model.
-	// Override this property to specify the model class that the collection contains.
-	"model": List,
+    __extends(Lists, Backbone.Collection);
 
-	// Filter down the collection of all lists that are selected.
-	selected: function() {
-		return this.filter(function(list) {
-			return list.get("selected");
-		});
-	},
+    function Lists() {
+      Lists.__super__.constructor.apply(this, arguments);
+    }
 
-	// Filter down the collection of all lists that are deselected.
-	deselected: function() {
-		return this.filter(function(list) {
-			return !list.get("selected");
-		});
-	},
+    Lists.prototype.model = List;
 
-	byName: function(name) {
-		return this.find(function(list) {
-			return list.get("name") == name;
-		});		
-	},
+    Lists.prototype.selected = function() {
+      return this.filter(function(list) {
+        return list.get("selected");
+      });
+    };
 
-	// If you define a comparator, it will be used to maintain the collection in a sorted order.
-	comparator: function(list) {
-		return list.get("name");
-	}
+    Lists.prototype.deselected = function() {
+      return this.filter(function(list) {
+        return !list.get("selected");
+      });
+    };
 
-});
+    Lists.prototype.byName = function(name) {
+      return this.find(function(list) {
+        return list.get("name") === name;
+      });
+    };
+
+    Lists.prototype.comparator = function(list) {
+      return list.get("name");
+    };
+
+    return Lists;
+
+  })();
+
+}).call(this);
