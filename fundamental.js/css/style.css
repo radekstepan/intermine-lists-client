@@ -15,3 +15,5 @@ table#table tr.selected td { background:#FFF6D9; border-top-color:#FFC40D; }
 #toolbar .btn-group { display:block; margin-bottom:10px; }
 
 footer { text-align:center; }
+
+#data-view-label { position:absolute; bottom:0; right:10px; z-index:2; box-shadow:1px 1px 3px #BBB; }

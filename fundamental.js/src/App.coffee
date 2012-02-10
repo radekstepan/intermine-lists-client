@@ -56,3 +56,21 @@ window.App =
 # Initialize the app when DOM is ready.
 $ ->
     App.initialize()
+
+    # Show us which View we are hovering over.
+    $('*[data-view]').hover(
+        ->
+            # Remove previous label.
+            $('div#data-view-label').remove()
+            # Create a label.
+            $('<div/>', { 'id': 'data-view-label', 'class': 'alert alert-info', 'html': =>
+                # Give me me and all parents that describe a View.
+                text = $(@).attr('data-view')
+                text = "<strong>#{text}</strong>"
+                text += " &lang; " + $(parent).attr('data-view') for parent in $(@).parents('*[data-view]')
+                text
+            }).appendTo('body')
+        , ->
+            # Remove previous label.
+            $('div#data-view-label').remove()
+    )
