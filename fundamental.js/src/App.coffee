@@ -42,11 +42,8 @@ window.App =
         ]
         App.Models.Lists = new Lists(lists)
 
-        # Show the Sidebar Folder View.
-        new App.Views.SidebarFolderCollectionView
-
-        # Breadcrumb.
-        new App.Views.BreadcrumbView
+        # Start the layout.
+        new App.Views.LayoutView
 
         # Set the main application router.
         new App.Routers.Main
