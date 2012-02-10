@@ -5,11 +5,6 @@ class App.Views.LayoutView extends Backbone.View
 	# Attach straight to body to monitor all that happens.
 	el: "body"
 
-	# For determining which View we are hovering over.
-	viewTooltip:
-		active: false
-		path:   undefined
-
 	initialize: (options) ->
 		# Show the Sidebar Folder View.
         new App.Views.SidebarFolderCollectionView
@@ -25,10 +20,35 @@ class App.Views.LayoutView extends Backbone.View
 # ----------
 class window.ViewTooltip
 
+	# For determining which View we are hovering over.
+	active: false
+	path:   undefined
+
 	constructor: ->
-		$('*[data-view]').hover(@activate, @deactivate)
+		tooltip = @
+		$('*[data-view]').hover (->
+			tooltip.activate(@)
+		), ->
+			tooltip.deactivate(@)
 	
-	activate: ->
+	activate: (element) =>
+		console.log element
+
+		# Grab hold of the current View path.
+		path = $(element).attr('data-view')
+		path = "<strong>#{path}</strong>"
+		path += " &lang; " + $(parent).attr('data-view') for parent in $(element).parents('*[data-view]')
+
+		console.log path
+
+		#setTimeout(@showTooltip(), 0) and !@active unless @active
+    
+	deactivate: ->
+		# Remove the label.
+		$('div#data-view-label').remove()
+	
+	showTooltip: ->
+		console.log "blaaa"
 		# Create a label.
 		$('<div/>', { 'id': 'data-view-label', 'class': 'alert alert-info', 'html': =>
 			# Give me me and all parents that describe a View.
@@ -37,7 +57,3 @@ class window.ViewTooltip
 			text += " &lang; " + $(parent).attr('data-view') for parent in $(@).parents('*[data-view]')
 			text
 		}).appendTo('body')
-    
-	deactivate: ->
-		# Remove the label.
-		$('div#data-view-label').remove()
