@@ -57,7 +57,7 @@ class App.Views.SidebarFolderView extends Backbone.View
 		
 		# Add a data attr to the view.
 		name = folder.get("name") or "top"
-		$(@el).attr("data-list-name", name)
+		$(@el).attr("data-folder-name", name)
 
 		# Create a View for each List contained.
 		_.each(folder.get("lists"), @addOneList)
