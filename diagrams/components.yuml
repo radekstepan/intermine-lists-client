@@ -1,0 +1,16 @@
+http://yuml.me/diagram/scruffy/class/
+
+[note: The main Class diagram{bg:cornsilk}],
+
+[window.App]-1>[Folders{bg:blue}],
+[Folders]++-*>[Folder{bg:blue}],
+
+[window.App]-1>[Lists{bg:blue}],
+[Lists]++-*>[List{bg:blue}],
+
+[window.App]-1>[Router.Main{bg:orange}],
+
+[window.App]-1>[BreadcrumbView{bg:green}],
+[window.App]-1>[SidebarFolderCollectionView{bg:green}],
+[SidebarFolderCollectionView]1-*>[SidebarFolderView{bg:green}],
+[SidebarFolderView]1-*>[SidebarListView{bg:green}],
