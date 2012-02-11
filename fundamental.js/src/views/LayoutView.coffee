@@ -22,38 +22,38 @@ class window.ViewTooltip
 
 	# For determining which View we are hovering over.
 	active: false
-	path:   undefined
+	path:   ""
 
 	constructor: ->
 		tooltip = @
-		$('*[data-view]').hover (->
-			tooltip.activate(@)
-		), ->
-			tooltip.deactivate(@)
-	
-	activate: (element) =>
-		console.log element
+		# Attach to current and future elements.
+		$('*[data-view]').live "mouseover mouseout", (event) ->
+			if event.type is "mouseover"
+				tooltip.activate(@)
+			else
+				tooltip.deactivate(@)
 
-		# Grab hold of the current View path.
+	# Grab hold of the current View path and save it if it is longer than the "previous" one.
+	activate: (element) =>
 		path = $(element).attr('data-view')
 		path = "<strong>#{path}</strong>"
 		path += " &lang; " + $(parent).attr('data-view') for parent in $(element).parents('*[data-view]')
 
-		console.log path
+		@path = path unless path.length < @path.length
 
-		#setTimeout(@showTooltip(), 0) and !@active unless @active
+		# Timeout showing of the tooltip.
+		setTimeout(@showTooltip, 0) and !@active unless @active
     
-	deactivate: ->
-		# Remove the label.
+    # Remove the label and reset.
+	deactivate: =>
 		$('div#data-view-label').remove()
+		@active = false
+		@path = ""
 	
-	showTooltip: ->
-		console.log "blaaa"
-		# Create a label.
-		$('<div/>', { 'id': 'data-view-label', 'class': 'alert alert-info', 'html': =>
-			# Give me me and all parents that describe a View.
-			text = $(@).attr('data-view')
-			text = "<strong>#{text}</strong>"
-			text += " &lang; " + $(parent).attr('data-view') for parent in $(@).parents('*[data-view]')
-			text
-		}).appendTo('body')
+	showTooltip: =>
+		# Create and show the label.
+		$('<div/>', { 'id': 'data-view-label', 'class': 'alert alert-info', 'html': @path }).appendTo('body') unless @path.length is 0
+
+		# Text emmited, reset.
+		@active = false
+		@path = ""
