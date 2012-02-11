@@ -25,3 +25,17 @@ A client side app maintaining InterMine Lists offering folder/tag organization a
 - Use brackets in CoffeeScript function calls.
 - Use CofeeScript > underscore.js where possible.
 - Try not to be smart, code needs to be understandable...
+
+## Links:
+### Backbone.js
+- [http://documentcloud.github.com/backbone/](http://documentcloud.github.com/backbone/)
+
+### CoffeeScript
+- [http://coffeescript.org/](http://coffeescript.org/)
+- [http://js2coffee.org/](http://js2coffee.org/)
+
+### JavaScript
+- [http://jsbin.com/](http://jsbin.com/)
+
+### CSS
+- [http://twitter.github.com/bootstrap/](http://twitter.github.com/bootstrap/)
