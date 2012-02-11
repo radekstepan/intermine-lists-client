@@ -2,15 +2,19 @@ http://yuml.me/diagram/scruffy/class/
 
 [note: The main Class diagram{bg:cornsilk}],
 
-[window.App]-1>[Folders{bg:blue}],
-[Folders]++-*>[Folder{bg:blue}],
+[App]-1>[Folders{bg:deepskyblue}],
+[Folders]++-*>[Folder{bg:deepskyblue}],
 
-[window.App]-1>[Lists{bg:blue}],
-[Lists]++-*>[List{bg:blue}],
+[App]-1>[Lists{bg:deepskyblue}],
+[Lists]++-*>[List{bg:deepskyblue}],
 
-[window.App]-1>[Router.Main{bg:orange}],
+[App]-1>[Router.Main{bg:orange}],
 
-[window.App]-1>[BreadcrumbView{bg:green}],
-[window.App]-1>[SidebarFolderCollectionView{bg:green}],
-[SidebarFolderCollectionView]1-*>[SidebarFolderView{bg:green}],
-[SidebarFolderView]1-*>[SidebarListView{bg:green}],
+[App]-1>[LayoutView{bg:chartreuse}],
+[LayoutView]1-1>[BreadcrumbView{bg:chartreuse}],
+[LayoutView]1-1>[SidebarFolderCollectionView{bg:chartreuse}],
+[SidebarFolderCollectionView]1-*>[SidebarFolderView{bg:chartreuse}],
+[SidebarFolderView]1-*>[SidebarListView{bg:chartreuse}],
+
+[App]->[Mediator],
+[LayoutView]->[ViewTooltip],
