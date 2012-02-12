@@ -2,19 +2,21 @@ http://yuml.me/diagram/scruffy/class/
 
 [note: The main Class diagram{bg:cornsilk}],
 
-[App]-1>[Folders{bg:deepskyblue}],
-[Folders]++-*>[Folder{bg:deepskyblue}],
+[App]-1>[Folders{bg:powderblue}],
+[Folders]++-*>[Folder{bg:powderblue}],
 
-[App]-1>[Lists{bg:deepskyblue}],
-[Lists]++-*>[List{bg:deepskyblue}],
+[App]-1>[Lists{bg:powderblue}],
+[Lists]++-*>[List{bg:powderblue}],
 
-[App]-1>[Router.Main{bg:orange}],
+[App]-1>[Router.Main{bg:burlywood}],
 
-[App]-1>[LayoutView{bg:chartreuse}],
-[LayoutView]1-1>[BreadcrumbView{bg:chartreuse}],
-[LayoutView]1-1>[SidebarFolderCollectionView{bg:chartreuse}],
-[SidebarFolderCollectionView]1-*>[SidebarFolderView{bg:chartreuse}],
-[SidebarFolderView]1-*>[SidebarListView{bg:chartreuse}],
+[App]-1>[LayoutView{bg:greenyellow}],
+[LayoutView]1-1>[BreadcrumbView{bg:greenyellow}],
+[LayoutView]1-1>[SidebarFolderCollectionView{bg:greenyellow}],
+[LayoutView]1-1>[NotificationsView{bg:greenyellow}],
+[NotificationsView]1-*>[NotificationView{bg:greenyellow}],
+[SidebarFolderCollectionView]1-*>[SidebarFolderView{bg:greenyellow}],
+[SidebarFolderView]1-*>[SidebarListView{bg:greenyellow}],
 
 [App]->[Mediator],
 [LayoutView]->[ViewTooltip],
