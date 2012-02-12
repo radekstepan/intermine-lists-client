@@ -63,12 +63,22 @@ class App.Views.NotificationView extends Backbone.View
 			result
 	)
 
+	# The DOM events.
+	events:
+		"click a": "close"
+
 	# Set on the Object and chain so we can render.
 	initialize: (@text, @title, @type, @sticky) -> @
-	
+
 	render: ->
-		$(@el).html(@template({'text': @text, 'title': @title})).addClass(@type).attr("data-view", "NotificationView")
+		$(@el).hide().html(@template({'text': @text, 'title': @title})).addClass(@type).slideDown().attr("data-view", "NotificationView")
+
+		# Pure love :)
+		setTimeout(@close, 3000) unless @sticky
+
 		@
+	
+	close: => $(@el).slideUp("fast")
 
 
 # Show us which View we are hovering over.
