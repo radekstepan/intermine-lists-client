@@ -18,8 +18,6 @@ class App.Views.LayoutView extends Backbone.View
         # View tooltip helper.
         new ViewTooltip
 
-        App.Mediator.trigger("notification", "text", "Hello") for x in [1..2]
-
 
 # Show us a Growl style notification.
 # ----------

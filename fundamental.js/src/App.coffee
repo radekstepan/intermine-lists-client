@@ -50,6 +50,9 @@ window.App =
         # Start history so we can bookmark links.
         Backbone.history.start()
 
+        # Welcome us.
+        App.Mediator.trigger("notification", "Welcome to MyMine")
+
 # Initialize the app when DOM is ready.
 $ ->
     App.initialize()
