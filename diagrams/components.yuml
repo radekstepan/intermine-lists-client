@@ -1,6 +1,6 @@
 http://yuml.me/diagram/scruffy/class/
 
-[note: The main Class diagram{bg:cornsilk}],
+[note: The main Class diagram with message channels{bg:cornsilk}],
 
 [App]-1>[Folders{bg:powderblue}],
 [Folders]++-*>[Folder{bg:powderblue}],
@@ -20,3 +20,7 @@ http://yuml.me/diagram/scruffy/class/
 
 [App]->[Mediator],
 [LayoutView]->[ViewTooltip],
+
+[App]notification-.->[NotificationsView],
+[List]list(De)Selected-.->[BreadcrumbView],
+[List]listSelected-.->[SidebarFolderCollectionView],
