@@ -9,6 +9,9 @@ class App.Views.LayoutView extends Backbone.View
 		# Notifications View.
         new App.Views.NotificationsView().render()
 
+        # Show the Sidebar List search View.
+        new App.Views.SidebarListSearchView
+
 		# Show the Sidebar Folder View.
         new App.Views.SidebarFolderCollectionView
 

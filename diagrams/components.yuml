@@ -1,4 +1,4 @@
-http://yuml.me/diagram/scruffy/class/
+# use http://yuml.me/diagram/scruffy/class/draw2 and strip blank lines!
 
 [note: The main Class diagram with message channels{bg:cornsilk}],
 
@@ -12,6 +12,7 @@ http://yuml.me/diagram/scruffy/class/
 
 [App]-1>[LayoutView{bg:greenyellow}],
 [LayoutView]1-1>[BreadcrumbView{bg:greenyellow}],
+[LayoutView]1-1>[SidebarListSearchView{bg:greenyellow}],
 [LayoutView]1-1>[SidebarFolderCollectionView{bg:greenyellow}],
 [LayoutView]1-1>[NotificationsView{bg:greenyellow}],
 [NotificationsView]1-*>[NotificationView{bg:greenyellow}],
@@ -24,3 +25,4 @@ http://yuml.me/diagram/scruffy/class/
 [App]notification-.->[NotificationsView],
 [List]list(De)Selected-.->[BreadcrumbView],
 [List]listSelected-.->[SidebarFolderCollectionView],
+[SidebarListSearchView]filterLists-.->[SidebarFolderView],
