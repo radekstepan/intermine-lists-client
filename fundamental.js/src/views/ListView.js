@@ -6,18 +6,8 @@ App.Views.ListView = Backbone.View.extend({
 	// Element does not exist yet, but will be a `<tr>`.
 	"tagName":  "tr",
 
-	// Cache the template function for a single item.
-	"template": _.template(function() {
-		var result;
-		$.ajax({
-			"async": false,
-		    "url":   "js/templates/_list.html",
-		  	success: function(data) {
-		    	result = data;
-		  	},
-		});
-		return result;
-	}()),
+	/* broken... */
+	template: -> super("js/templates/_list.html"),
 
 	// The DOM events specific to an item.
 	"events": {

@@ -53,6 +53,17 @@ window.App =
         # Welcome us.
         App.Mediator.trigger("notification", "Welcome to MyMine")
 
+# Extend Backbone Views with an underscore/jQuery templating.
+Backbone.View::template = (model, template) ->
+    _.template( do ->
+        result = ""
+        $.ajax
+            async: false
+            url: template
+            success: (data) -> result = data
+        result
+    , model)
+
 # Initialize the app when DOM is ready.
 $ ->
     App.initialize()

@@ -5,16 +5,7 @@ class App.Views.SidebarListView extends Backbone.View
 	# Element does not exist yet, but will be a `<li>`.
 	tagName: "li"
 
-	# Cache the template function for a single item.
-	template: _.template(
-		do ->
-			result = ""
-			$.ajax
-				async: false
-				url: "js/templates/_sidebar_list.html"
-				success: (data) -> result = data
-			result
-	)
+	template: (model) -> super(model, "js/templates/_sidebar_list.html")
 
 	events:
 		"click a": "toggleList"

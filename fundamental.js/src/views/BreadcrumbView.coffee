@@ -4,18 +4,9 @@ class App.Views.BreadcrumbView extends Backbone.View
 	
 	el: "ul#breadcrumb"
 
-	# Cache the template function for a single item.
-	template: _.template(
-		do ->
-			result = ""
-			$.ajax
-				async: false
-				url: "js/templates/_breadcrumb.html"
-				success: (data) -> result = data
-			result
-	)
+	template: (model) -> super(model, "js/templates/_breadcrumb.html")
 
-	initialize: (options) ->		
+	initialize: (options) ->
 		App.Mediator.bind("listSelected", @render)
 		App.Mediator.bind("listDeselected", @hide)
 

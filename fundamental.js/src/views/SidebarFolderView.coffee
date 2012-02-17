@@ -4,16 +4,7 @@ class App.Views.SidebarFolderView extends Backbone.View
 	
 	tagName: "li"
 
-	# Cache the template function for a single item.
-	template: _.template(
-		do ->
-			result = ""
-			$.ajax
-				async: false
-				url: "js/templates/_sidebar_folder.html"
-				success: (data) -> result = data
-			result
-	)
+	template: (model) -> super(model, "js/templates/_sidebar_folder.html")
 
 	# The DOM events specific to a Folder.
 	events:
