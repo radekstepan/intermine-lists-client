@@ -1,0 +1,11 @@
+{
+    "name": "intermine-lists-client",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "coffee-script": "latest",
+        "eco": "latest",
+        "colors": "latest",
+        "uglify-js": "latest"
+    }
+}
