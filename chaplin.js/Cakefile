@@ -3,7 +3,6 @@
 fs  = require 'fs'
 cs  = require 'coffee-script'
 eco = require 'eco'
-exe = require('child_process').exec
 require 'colors'
 
 task "run", "compile the chaplin.js and eco client code into js then run", ->
@@ -26,11 +25,11 @@ task "run", "compile the chaplin.js and eco client code into js then run", ->
         walk './src/templates', /\.eco$/, (err, files) ->
             throw err if err
             
-            js = []
+            js = [ 'window.JST = {};' ]
             for file in files
                 console.log file.grey
-                name = file.split('/').pop()
-                js.push uglify "JST['#{name}'] = " + eco.precompile fs.readFileSync file, "utf-8"
+                name = file.split('/').pop().split('.')[0]
+                js.push uglify "window.JST['#{name}'] = " + eco.precompile fs.readFileSync file, "utf-8"
 
             # Write as one js file.
             write "./public/js/templates/all.js", js.join "\n"
@@ -38,8 +37,7 @@ task "run", "compile the chaplin.js and eco client code into js then run", ->
             done()
 
     queue [ coffee, templates ], (out) ->
-        console.log 'All is well, starting webserver on port 1111.'.green
-        exe 'cd public/ ; python -m SimpleHTTPServer 1111'
+        console.log 'All is well.'.green
 
 # -------------------------------------------------------------------
 
