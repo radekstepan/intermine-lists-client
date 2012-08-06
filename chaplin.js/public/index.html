@@ -2,69 +2,117 @@
 <head>
     <meta charset="utf-8" />
 
-    <title>Blað CMS</title>
+    <title>Töskur</title>
 
-    <link rel="stylesheet" href="css/foundation3.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
 
     <script src="js/vendor/require-2.0.2.js"></script>
 </head>
 <body>
-    <div id="top">
-        <div class="row">
-            <div class="two columns">
-                <a class="name" href="/admin">Blað CMS</a>
-            </div>
-            <div class="two column">
-                <a href="new" class="small blue nice button right new">New Document</a></a>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="twelve columns">
-            <div id="app"></div>
+<!-- navbar -->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container" style="width: auto">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            
+            <a class="brand" href="#">InterMine</a>
+            
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Lists</a></li>
+                    <li><a href="#">Templates</a></li>
+                    <li><a href="#">Queries</a></li>
+                </ul>
+
+                <ul class="nav pull-right">
+                    <li class="divider-vertical"></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Login</a></li>
+                            <li><a href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- flexible page structure -->
+<div class="container-fluid">
+    <div class="row-fluid">
+        <!-- left sidebar -->
+        <div class="span2">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">Lists</a></li>
+                <li><a href="#">Tags</a></li>
+            </ul>
+
+            <!-- groups, lists -->
+            <input id="list-search" type="text" class="input-long" placeholder="Search lists...">
+            <ul id="folders" class="nav nav-tabs nav-stacked"></ul>
+        </div>
+    
+        <!-- content -->
+        <div id="content" class="span8">
+            <!-- crumbs -->
+            <ul id="breadcrumb" class="breadcrumb" style="display:none"></ul>
+
+            <!-- lists table folder -->
+            <div id="folder"></div>
+        </div>
+
+        <!-- right sidebar, actions -->
+        <div class="span2">
+            <!-- actions toolbar -->
+            <div id="toolbar"></div>
+        </div>
+    </div>
+</div>
+
+<!-- notifications -->
+<ul id="notifications"></ul>
+
 </body>
 
 <script>
 // Configure the AMD module loader
 requirejs.config({
     // The path where your JavaScripts are located
-    baseUrl: '/admin/js/',
+    'baseUrl': 'js/',
     // Specify the paths of vendor libraries
-    paths: {
+    'paths': {
         'jquery':     'vendor/jquery-1.7.2',
         'underscore': 'vendor/underscore-1.3.3',
         'backbone':   'vendor/backbone-0.9.2',
         'chaplin':    'vendor/chaplin',
-        'foundation': 'vendor/foundation',
-        'modernizr':  'vendor/modernizr.foundation',
-        'browserid':  'vendor/browserid'
     },
     // Underscore and Backbone are not AMD-capable per default,
     // so we need to use the AMD wrapping of RequireJS
-    shim: {
+    'shim': {
         'backbone': {
             'deps': [ 'underscore', 'jquery' ],
             'exports': 'Backbone'
         },
         'underscore': {
             'exports': '_'
-        },
-        'foundation': {
-            'deps': [ 'jquery', 'modernizr' ]
         }
     }
     // For easier development, disable browser caching
     // Of course, this should be removed in a production environment
-    //, urlArgs: 'bust=' +  (new Date()).getTime()
+    , 'urlArgs': 'bust=' +  (new Date()).getTime()
 });
 
-// Bootstrap the application requiring Foundation3 and BrowserID
-require(['application', 'foundation', 'browserid'], function (Application) {
-    window.app = new Application();
+// Bootstrap the application.
+require(['application'], function (Töskur) {
+    window.app = new Töskur();
     window.app.initialize();
 });
 </script>
