@@ -1,9 +1,9 @@
 define [
-    'chaplin'
-], (Chaplin) ->
+    'view'
+], (View) ->
 
     # An app wide message.
-    class NotificationView extends Chaplin.View
+    class NotificationView extends View
 
         tagName:         'li'               # a list item
         containerMethod: 'append'           # appended
@@ -27,8 +27,6 @@ define [
         # Add to container.
         afterRender: ->
             super
-
-            @
 
             $(@el).hide().addClass(@type).slideDown()
 
