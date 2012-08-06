@@ -16,6 +16,12 @@ define [
             @initLayout()
             @initMediator()
 
+            # Register all routes and start routing
+            @initRouter routes
+
+            # Freeze the application instance to prevent further changes
+            Object.freeze? @
+
         # Override standard layout initializer
         # ------------------------------------
         initLayout: ->
