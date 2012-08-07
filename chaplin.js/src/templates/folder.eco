@@ -1,1 +1,4 @@
-Folder
+<% if !@topLevel: %>
+    <a class="toggle"><%= @name %></a>
+<% end %>
+<ul class="nav nav-list lists<% if @expanded: %> active<% end %>"></ul>

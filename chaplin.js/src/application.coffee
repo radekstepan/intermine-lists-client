@@ -8,6 +8,8 @@ define [
     # Choose a meaningful name for your application
     class Töskur extends Chaplin.Application
 
+        title: 'InterMine List Client "Töskur"'
+
         initialize: ->
             super
 
@@ -27,7 +29,7 @@ define [
         initLayout: ->
             # Use an application-specific Layout class. Currently this adds
             # no features to the standard Chaplin Layout, it’s an empty placeholder.
-            @layout = new Layout()
+            @layout = new Layout {@title}
 
         # Create additional mediator properties
         # -------------------------------------
