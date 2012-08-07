@@ -28,9 +28,10 @@ define [
             ,
                 'name': 'World Seas'
                 'path': '/'
+                'expanded': true
             ]
 
         # Show a listing of all root lists and folders in the sidebar.
         index: (params) ->
-            console.log @store.getPath('/')
+            console.log @store.getRoot()
             #new SidebarView 'collection': collection

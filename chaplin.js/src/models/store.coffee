@@ -27,15 +27,11 @@ define [
 
             # No cigar... push a new one.
             @folders.add
-                'path': path
-                'name': path.split('/').pop()
+                'path':  path
+                'name':  path.split('/').pop()
+                'store': @ # backreference
 
-        # Resolve a path to a collection of folders/lists.
-        getPath: (path='/') ->
-            f = @folders.filter (folder) -> folder.get('path') is path
-            if f.length > 0
-                # Now give us lists.
-                l = @lists.filter (list) -> list.get('path') is path
-                
-                'folders': f
-                'lists':   l
+        # Get root folder structure.
+        getRoot: ->
+            # Give us matching folders, we have at least one root one.
+            @folders.filter( (folder) -> (folder.get('path').split('/').length - 1) is 1 )
