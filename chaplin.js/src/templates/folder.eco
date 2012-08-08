@@ -1,5 +1,5 @@
 <% if @path isnt '/': %>
-    <a class="folder toggle"><%= @name %></a>
+    <a class="folder <%= @cid %>"><%= @name %></a>
 <% end %>
 <ul class="nav nav-list lists"></ul>
 <ul class="nav nav-list folders"></ul>
