@@ -1,6 +1,6 @@
 define [
     'chaplin'
-    'views/notification_view'
+    'views/notification'
     'templates/all'           # make all templates globally available
 ], (Chaplin, NotificationView) ->
 

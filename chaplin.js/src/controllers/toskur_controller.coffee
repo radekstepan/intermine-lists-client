@@ -1,7 +1,8 @@
 define [
     'chaplin'
     'models/store'
-], (Chaplin, Store) ->
+    'views/sidebar_root_folder'
+], (Chaplin, Store, SidebarRootFolderView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
@@ -34,7 +35,6 @@ define [
                 'expanded': true
             ]
 
-        # Get the root folder and take it from there.
         index: (params) ->
-            console.log @store.findFolder('/')
-            #new SidebarView 'collection': collection
+            # Get the root folder and take it from there.
+            new SidebarRootFolderView 'model': @store.findFolder('/')
