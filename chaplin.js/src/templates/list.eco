@@ -1,1 +1,1 @@
-<a class="list" href="/#/list/"><%= @name %></a>
+<a class="list" href="/list/<%= @slug %>"><%= @name %></a>

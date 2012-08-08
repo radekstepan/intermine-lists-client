@@ -9,5 +9,5 @@ define [
         # Get the template from here.
         getTemplateFunction: -> JST['list']
 
-        # 'Serialize' our opts.
+        # 'Serialize' us with our cid.
         getTemplateData: -> @model.toJSON()

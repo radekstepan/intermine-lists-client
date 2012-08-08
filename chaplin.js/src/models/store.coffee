@@ -17,8 +17,20 @@ define [
             for row in data
                 @makeFolder @makeList row
 
+        # Slugify a string.
+        slugify: (text) -> text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/-/gi, "_").replace(/\s/gi, "-").toLowerCase()
+
+        # Find a list from this collection by its slug.
+        findList: (slug) ->
+            l = @.filter (item) -> item.get('slug') is slug
+            if l.length > 0
+                l[0]
+
         # Make a list out if dict data.
         makeList: (data) ->
+            # Slugify the list name.
+            data.slug = @slugify data.name
+            # Create us and return us.
             @.push data
             @.at(@.length - 1)
 

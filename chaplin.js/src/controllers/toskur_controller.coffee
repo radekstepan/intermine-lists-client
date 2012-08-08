@@ -9,8 +9,8 @@ define [
 
         historyURL: (params) -> ''
 
+        # Give us the Store.
         initialize: ->
-            # Central repo of all lists and folders. Passing a structure of lists.
             @store = new Store [
                 'name': 'UK Cities'
                 'path': '/United Kingdom'
@@ -34,7 +34,14 @@ define [
                 'path': '/'
                 'expanded': true
             ]
-
+            
         index: (params) ->
-            # Get the root folder and take it from there.
-            new SidebarRootFolderView 'model': @store.findFolder('/')
+            # Render the root folder and take it from there.
+            @view = new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
+
+        # Show an individual list by its `slug`.
+        findOne: (params) ->
+            # Retrieve the list in question.
+            list = @store.findList params.slug
+            if list?
+                Chaplin.mediator.publish 'notification', 'You have asked for this list', list.get('name')
