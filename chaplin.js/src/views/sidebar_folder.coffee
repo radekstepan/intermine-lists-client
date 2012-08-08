@@ -17,10 +17,11 @@ define [
         afterRender: ->
             super
 
-            # Render our lists.
-            for list in @model.get 'lists'
-                $(@el).find('ul.lists').first().append (new SidebarListView('model': list)).render().el
+            if @model.get('path') is '/' or @model.get('expanded')
+                # Render our lists.
+                for list in @model.get 'lists'
+                    $(@el).find('ul.lists').first().append (new SidebarListView('model': list)).render().el
 
-            # Render our folders.
-            for folder in @model.get 'folders'
-                $(@el).find('ul.folders').first().append (new SidebarFolderView('model': folder)).render().el
+                # Render our folders.
+                for folder in @model.get 'folders'
+                    $(@el).find('ul.folders').first().append (new SidebarFolderView('model': folder)).render().el
