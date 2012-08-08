@@ -2,11 +2,10 @@ a { cursor:pointer; }
 
 .navbar-inner { border-radius:0; }
 .nav-tabs.nav-stacked > li:last-child > a { border-radius:0; }
-.nav-list { padding:0; }
+.nav-list { padding:0 0 0 15px; }
 
-ul#folders { cursor:pointer; padding:0 27px 0 15px; }
-ul#folders li a.folder { border:1px solid #DDD; }
-ul#folders li ul.active { display:block; }
+ul#folders { cursor:pointer; padding:0; }
+ul#folders ul.lists { padding-left:16px; }
 
 table#table tr.selected td { background:#FFF6D9; border-top-color:#FFC40D; }
 
