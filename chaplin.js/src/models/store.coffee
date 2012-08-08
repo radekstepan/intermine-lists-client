@@ -10,10 +10,10 @@ define [
         # A first class object, Folders and Tags are 'niceties'.
         model: List
 
-        # Hold folders here.
-        folders: new Folders()
-
         initialize: (data) ->
+            # Hold folders here and re-initialize.
+            @folders = new Folders()
+
             for row in data
                 @makeFolder @makeList row
 

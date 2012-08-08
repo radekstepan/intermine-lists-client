@@ -18,13 +18,15 @@ define [
         afterRender: ->
             super
 
-            # Dispose of previous subviews.
+            # Dispose of previous subviews and clean up events.
+            @undelegate()
             ( view.dispose() for view in @subviews )
 
             # Events only on this folder.
-            @undelegate() # clean up first
             @delegate 'click', "a.folder.#{@model.cid}", @toggleFolder
             @modelBind 'change', @render
+
+            #console.log "folder #{@model.get('path')} `#{@model.cid}` - #{@model.get('lists').length} lists and #{@model.get('folders').length} folders"
 
             # Render the subviews.
             if @model.get('path') is '/' or @model.get('expanded')

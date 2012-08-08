@@ -6,6 +6,6 @@ define [
     class SidebarRootFolderView extends SidebarFolderView
 
         tagName:         'li'         # a list item
-        containerMethod: 'append'     # appended
-        container:       'ul#folders' # to the top level list
+        containerMethod: 'html'       # overriding everything
+        container:       'ul#folders' # in the top level list
         autoRender:      true         # as soon as we create us
