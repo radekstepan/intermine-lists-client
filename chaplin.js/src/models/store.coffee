@@ -84,3 +84,17 @@ define [
                             'name':    parentPath.split('/').pop() # Last part of the path.
                             'lists':   []
                             'folders': [ folder ]
+
+                        parent = @folders.at(@folders.length - 1)
+
+                    # Make a back reference to the parent.
+                    folder.set 'parent': parent
+
+        # Expand a given path and any folders leading up to it.
+        expandFolder: (path) ->
+            # Get the initial folder by path.
+            folder = @findFolder path
+            # Traverse the tree up and set the parents to be expanded too.
+            while folder?
+                folder.set 'expanded': true
+                folder = folder.get 'parent'

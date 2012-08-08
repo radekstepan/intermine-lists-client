@@ -41,12 +41,15 @@ define [
 
         # Show an individual list by its `slug`.
         findOne: (params) ->
-            # Render the root folder (and onwards) in the sidebar.
-            @view = new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
-
             # Retrieve the list in question.
             list = @store.findList params.slug
-            if list?
-                Chaplin.mediator.publish 'notification', 'You have asked for this list', list.get('name')
-            else
+            unless list?
                 Chaplin.mediator.publish 'notification', 'This list has not been found'
+            else
+                Chaplin.mediator.publish 'notification', 'You have asked for this list', list.get('name')
+
+                # We have the list, so expand the path towards the list.
+                @store.expandFolder list.get 'path'
+
+            # Render the root folder (and onwards) in the sidebar.
+            @view = new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
