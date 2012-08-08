@@ -1,37 +1,45 @@
 define [
-    'models/lists'
+    'chaplin'
+    'models/list'
     'models/folders'
-], (Lists, Folders) ->
+], (Chaplin, List, Folders) ->
 
     # A flat store of all lists (and folders) on a page.
-    class Store
+    class Store extends Chaplin.Collection
         
-        # Storage
-        lists:   new Lists()
+        # A first class object, Folders and Tags are 'niceties'.
+        model: List
+
+        # Hold folders here.
         folders: new Folders()
 
-        constructor: (data) ->
+        initialize: (data) ->
             for row in data
-                @makeFolder (@makeList(row)).get('path')
+                @makeFolder @makeList row
 
         # Make a list out if dict data.
         makeList: (data) ->
-            @lists.push data
-            @lists.at(@lists.length - 1)
+            @.push data
+            @.at(@.length - 1)
 
         # For a given path will create folder if needed.
-        makeFolder: (path='/') ->
+        makeFolder: (list) ->
+            path = list.get('path')
+
             # Find in existing.
             f = @folders.filter (item) -> item.get('path') is path
-            return if f.length > 0
+            if f.length > 0
+                folder = f[0]
 
-            # No cigar... push a new one.
-            @folders.add
-                'path':  path
-                'name':  path.split('/').pop()
-                'store': @ # backreference
-
-        # Get root folder structure.
-        getRoot: ->
-            # Give us matching folders, we have at least one root one.
-            @folders.filter( (folder) -> (folder.get('path').split('/').length - 1) is 1 )
+                # Append the list reference.
+                lists = folder.get 'lists'
+                lists.push list
+                folder.unset 'lists', 'silent': true
+                folder.set 'lists': lists
+            
+            else
+                # No cigar... add a new one linking to this list.
+                @folders.add
+                    'path':  path
+                    'name':  path.split('/').pop() # Last part of the path.
+                    'lists': [ list ]

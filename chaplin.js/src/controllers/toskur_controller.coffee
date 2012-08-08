@@ -9,7 +9,7 @@ define [
         historyURL: (params) -> ''
 
         initialize: ->
-            # Central repo of all lists and folders.
+            # Central repo of all lists and folders. Passing a structure of lists.
             @store = new Store [
                 'name': 'UK Cities'
                 'path': '/United Kingdom'
@@ -33,5 +33,5 @@ define [
 
         # Show a listing of all root lists and folders in the sidebar.
         index: (params) ->
-            console.log @store.getRoot()
+            console.log @store.folders
             #new SidebarView 'collection': collection
