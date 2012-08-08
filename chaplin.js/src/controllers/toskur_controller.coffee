@@ -20,6 +20,9 @@ define [
                 'name': 'UK Lakes'
                 'path': '/United Kingdom'
             ,
+                'name': 'Welsh Lakes'
+                'path': '/United Kingdom/Wales'
+            ,
                 'name': 'Czech Ponds'
                 'path': '/Czech Republic'
             ,
@@ -31,7 +34,7 @@ define [
                 'expanded': true
             ]
 
-        # Show a listing of all root lists and folders in the sidebar.
+        # Get the root folder and take it from there.
         index: (params) ->
-            console.log @store.folders
+            console.log @store.findFolder('/')
             #new SidebarView 'collection': collection

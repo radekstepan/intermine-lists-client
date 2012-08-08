@@ -22,15 +22,19 @@ define [
             @.push data
             @.at(@.length - 1)
 
-        # For a given path will create folder if needed.
+        # Given a path find the one matching folder.
+        findFolder: (path) ->
+            f = @folders.filter (item) -> item.get('path') is path
+            if f.length > 0
+                f[0]
+
+        # For a given path will (create folder and) link to list (and parent folder).
         makeFolder: (list) ->
             path = list.get('path')
 
             # Find in existing.
-            f = @folders.filter (item) -> item.get('path') is path
-            if f.length > 0
-                folder = f[0]
-
+            folder = @findFolder path
+            if folder?
                 # Append the list reference.
                 lists = folder.get 'lists'
                 lists.push list
@@ -39,7 +43,32 @@ define [
             
             else
                 # No cigar... add a new one linking to this list.
-                @folders.add
-                    'path':  path
-                    'name':  path.split('/').pop() # Last part of the path.
-                    'lists': [ list ]
+                @folders.push
+                    'path':    path
+                    'name':    path.split('/').pop() # Last part of the path.
+                    'lists':   [ list ]
+                    'folders': []
+
+                # Do we need to link this folder to a parent folder?
+                parentPath = (p = path.split('/'))[0...p.length - 1].join('/')
+                # Linked to root folder including root folder itself.
+                if parentPath is '' and path isnt '/' then parentPath = '/'
+                if parentPath isnt ''
+                    folder = @folders.at(@folders.length - 1)
+
+                    # Does the parent exist already?
+                    parent = @findFolder parentPath
+                    if parent?
+                        # Link us.
+                        folders = parent.get('folders')
+                        folders.push folder
+                        parent.unset 'folders', 'silent': true
+                        parent.set 'folders': folders
+                    
+                    else
+                        # Create a new folder and link to this folder.
+                        @folders.push
+                            'path':    parentPath
+                            'name':    parentPath.split('/').pop() # Last part of the path.
+                            'lists':   []
+                            'folders': [ folder ]
