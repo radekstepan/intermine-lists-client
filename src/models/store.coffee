@@ -11,12 +11,22 @@ define [
         # A first class object, Folders and Tags are 'niceties'.
         model: List
 
+        # Point-less reference just to remember it will be present.
+        folders: null
+
         initialize: (data) ->
             # Hold folders here and re-initialize.
             @folders = new Folders()
 
             for row in data
                 @makeFolder @makeList row
+
+        # Extend standard `dispose` by cleaning up `folders` too.
+        dispose: ->
+            super
+
+            @folders?.dispose()
+            delete @folders
 
         # Slugify a string.
         slugify: (text) -> text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/-/gi, "_").replace(/\s/gi, "-").toLowerCase()
