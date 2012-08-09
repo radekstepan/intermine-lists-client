@@ -3,7 +3,8 @@ define [
     'garbage'
     'models/store'
     'views/sidebar_root_folder'
-], (Chaplin, Garbage, Store, SidebarRootFolderView) ->
+    'views/breadcrumb_view'
+], (Chaplin, Garbage, Store, SidebarRootFolderView, BreadcrumbView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
@@ -41,7 +42,7 @@ define [
             
         index: (params) ->
             # Render the root folder (and onwards) in the sidebar.
-            @views.push new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
+            @views.push new SidebarRootFolderView 'model': @store.findFolder('/')
 
         # Show an individual list by its `slug`.
         findOne: (params) ->
@@ -55,8 +56,8 @@ define [
                 # We have the list, so expand the path towards the list.
                 @store.expandFolder list.get 'path'
 
-                # Create a breadcrumb view for this list.
-
+                # Create a breadcrumb View for this list.
+                @views.push new BreadcrumbView 'collection': @store.getPath list
 
             # Render the root folder (and onwards) in the sidebar.
-            @views.push new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
+            @views.push new SidebarRootFolderView 'model': @store.findFolder('/')

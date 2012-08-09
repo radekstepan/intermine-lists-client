@@ -2,7 +2,8 @@ define [
     'chaplin'
     'models/list'
     'models/folders'
-], (Chaplin, List, Folders) ->
+    'models/path'
+], (Chaplin, List, Folders, Path) ->
 
     # A flat store of all lists (and folders) on a page.
     class Store extends Chaplin.Collection
@@ -98,3 +99,16 @@ define [
             while folder?
                 folder.set 'expanded': true
                 folder = folder.get 'parent'
+
+        # Give us a Collection representation of the path.
+        getPath: (list) ->
+            coll = new Path()
+            coll.addList list
+
+            folder = @findFolder list.get 'path'
+            # Traverse the tree up.
+            while folder?
+                coll.addFolder folder
+                folder = folder.get 'parent'
+            
+            coll
