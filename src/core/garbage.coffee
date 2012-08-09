@@ -1,6 +1,4 @@
-define [
-    'chaplin'
-], (Chaplin) ->
+define ->
 
     # An object implementing the `dispose` fce to garbage collect all of its `objects` internals.
     class Garbage
@@ -10,7 +8,10 @@ define [
         # New store for objects.
         constructor: -> @objects = []
 
-        # Array-like interface.
+        ###
+        Array-like interface for pushing objects onto the stack.
+        @param {Object} object Usually a View that we want to later dispose of.
+        ###
         push: (object) -> @objects.push object
 
         # Interface for Chaplin calls.

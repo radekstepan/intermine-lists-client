@@ -28,16 +28,25 @@ define [
             @folders?.dispose()
             delete @folders
 
-        # Slugify a string.
+        ###
+        Slugify a string.
+        @param {string} text
+        ###
         slugify: (text) -> text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/-/gi, "_").replace(/\s/gi, "-").toLowerCase()
 
-        # Find a list from this collection by its slug.
+        ###
+        Find a list from this collection by its slug.
+        @param {string} slug
+        ###
         findList: (slug) ->
             l = @.filter (item) -> item.get('slug') is slug
             if l.length > 0
                 l[0]
 
-        # Make a list out if dict data.
+        ###
+        Make a list out if dict data.
+        @param {Object} data A pure dictionary of data to make into a List object.
+        ###
         makeList: (data) ->
             # Slugify the list name.
             data.slug = @slugify data.name
@@ -45,13 +54,19 @@ define [
             @.push data
             @.at(@.length - 1)
 
-        # Given a path find the one matching folder.
+        ###
+        Given a path find the one matching folder.
+        @param {string} path
+        ###
         findFolder: (path) ->
             f = @folders.filter (item) -> item.get('path') is path
             if f.length > 0
                 f[0]
 
-        # For a given path will (create folder and) link to list (and parent folder).
+        ###
+        For a given path will (create folder and) link to list (and parent folder).
+        @param {List} list
+        ###
         makeFolder: (list) ->
             path = list.get('path')
 
@@ -101,7 +116,10 @@ define [
                     # Make a back reference to the parent.
                     folder.set 'parent': parent
 
-        # Expand a given path and any folders leading up to it.
+        ###
+        Expand a given path and any folders leading up to it.
+        @param {string} path
+        ###
         expandFolder: (path) ->
             # Get the initial folder by path.
             folder = @findFolder path
@@ -110,7 +128,10 @@ define [
                 folder.set 'expanded': true
                 folder = folder.get 'parent'
 
-        # Give us a Collection representation of the path.
+        ###
+        Give us a Collection representation of the path.
+        @param {List} list
+        ###
         getPath: (list) ->
             coll = new Path()
             coll.addList list

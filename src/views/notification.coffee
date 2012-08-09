@@ -18,7 +18,13 @@ define [
             'title': @title
             'text':  @text
 
-        # Opts and events.
+        ###
+        Create a new notification.
+        @param {string} text Text of the notification message.
+        @param {string} title Text of the notification message title, not required.
+        @param {string} type Type of the message, determines CSS class (notify/warn/error)
+        @param {boolean} sticky Close automagically or stick around?
+        ###
         initialize: (@text, @title, @type, @sticky) ->
             @
 
@@ -33,6 +39,6 @@ define [
             setTimeout(@close, 3000) unless @sticky
 
         # Dispose of.
-        close: =>
+        close: => # being passed around...
             $(@el).slideUp("fast")
             @dispose

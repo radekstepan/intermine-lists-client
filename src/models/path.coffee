@@ -11,17 +11,26 @@ define [
             # Keep index of element's position.
             @position = 0
 
-        # Reverse order of items so we start with the top most item although items added from bottom up.
+        ###
+        Reverse order of items so we start with the top most item although items added from bottom up.
+        @param {object} item A model.
+        ###
         comparator: (item) -> - item.get('position')
 
-        # Add a list to the collection.
+        ###
+        Add a list to the collection.
+        @param {List} list
+        ###
         addList: (list) ->
             @push
                 'type':    'list'
                 'name':    list.get 'name'
                 'position': @position++
 
-        # Add a folder to the collection.
+        ###
+        Add a folder to the collection.
+        @param {Folder} folder
+        ###
         addFolder: (folder) ->
             name = folder.get('path').split('/').pop()
             if name isnt ''

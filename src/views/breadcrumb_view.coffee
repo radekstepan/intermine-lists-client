@@ -9,6 +9,8 @@ define [
         className:  'breadcrumb'
         autoRender: true            # as soon as we create us
 
-        getView: (item) ->
-            # Instantiate an individual crumb item View.
-            new CrumbView 'model': item
+        ###
+        Instantiate an individual crumb item View.
+        @param {Object} item A model
+        ###
+        getView: (item) -> new CrumbView 'model': item

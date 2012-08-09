@@ -39,12 +39,19 @@ define [
                 'path': '/'
                 'expanded': true
             ]
-            
+
+        ###
+        Show the default index page.
+        @param {Object} params Passed in properties
+        ###
         index: (params) ->
             # Render the root folder (and onwards) in the sidebar.
             @views.push new SidebarRootFolderView 'model': @store.findFolder('/')
 
-        # Show an individual list by its `slug`.
+        ###
+        Show an individual list by its `slug`.
+        @param {Object} params Passed in properties
+        ###
         findOne: (params) ->
             # Retrieve the list in question.
             list = @store.findList params.slug
