@@ -1,5 +1,5 @@
 define [
-    'view'
+    'core/view'
 ], (View) ->
 
     class SidebarListView extends View

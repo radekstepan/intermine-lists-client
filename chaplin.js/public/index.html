@@ -112,7 +112,7 @@ requirejs.config({
 });
 
 // Bootstrap the application.
-require([ 'application' ], function (Töskur) {
+require([ 'core/application' ], function (Töskur) {
     window.App = new Töskur();
     window.App.initialize();
 });

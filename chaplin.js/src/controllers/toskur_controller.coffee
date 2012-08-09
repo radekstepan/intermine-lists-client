@@ -1,6 +1,6 @@
 define [
     'chaplin'
-    'garbage'
+    'core/garbage'
     'models/store'
     'views/sidebar_root_folder'
     'views/breadcrumb_view'

@@ -1,5 +1,5 @@
 define [
-    'view'
+    'core/view'
     'views/sidebar_list'
     'views/sidebar_folder'
 ], (View, SidebarListView, SidebarFolderView) ->

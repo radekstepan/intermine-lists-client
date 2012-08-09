@@ -1,7 +1,7 @@
 define [
     'chaplin'
     'views/layout'
-    'routes'
+    'core/routes'
 ], (Chaplin, Layout, routes) ->
 
     # The application object

@@ -2,5 +2,4 @@ controllers/
 models/
 views/
 templates/
-application.js
-routes.js
+core/
