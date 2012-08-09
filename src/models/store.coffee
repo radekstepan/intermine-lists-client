@@ -141,5 +141,5 @@ define [
             while folder?
                 coll.addFolder folder
                 folder = folder.get 'parent'
-            
+
             coll

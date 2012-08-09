@@ -7,8 +7,10 @@ a { cursor:pointer; }
 ul#folders { cursor:pointer; padding:0; }
 ul#folders ul.lists { padding-left:16px; }
 
+ul#breadcrumb { display:none; }
 ul#breadcrumb li:not(:last-child) { margin-right:5px; }
 ul#breadcrumb li:not(:last-child):after { content:"/"; display:inline-block; }
+ul#breadcrumb li a.home { margin-right:5px; }
 
 table#table tr.selected td { background:#FFF6D9; border-top-color:#FFC40D; }
 

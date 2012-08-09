@@ -5,8 +5,8 @@ define [
 
     class BreadcrumbView extends Chaplin.CollectionView
 
+        tagName:    'li'
         container:  'ul#breadcrumb' # in the top level list
-        className:  'breadcrumb'
         autoRender: true            # as soon as we create us
 
         ###
@@ -14,3 +14,7 @@ define [
         @param {Object} item A model
         ###
         getView: (item) -> new CrumbView 'model': item
+
+        afterRender: ->
+            super
+            $(@container).show()

@@ -9,4 +9,4 @@ define [
         autoRender:      true     # as soon as we create us
 
         # Get the template from here.
-        getTemplateFunction: -> JST['breadcrumb']
+        getTemplateFunction: -> JST['crumb']
