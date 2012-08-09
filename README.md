@@ -17,7 +17,6 @@ $ npm install -d
 Use cake to compile all resources and call the python webserver.
 
 ```bash
-$ cd chaplin.js/
 $ cake run
 $ cd public/
 $ python -m SimpleHTTPServer 1111
