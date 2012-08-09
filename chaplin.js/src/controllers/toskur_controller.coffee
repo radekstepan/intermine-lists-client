@@ -1,16 +1,20 @@
 define [
     'chaplin'
+    'garbage'
     'models/store'
     'views/sidebar_root_folder'
-], (Chaplin, Store, SidebarRootFolderView) ->
+], (Chaplin, Garbage, Store, SidebarRootFolderView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
 
         historyURL: (params) -> ''
 
-        # Give us the Store.
         initialize: ->
+            # Storage for objects to be garbage collected.
+            @views = new Garbage()
+
+            # Give us the Store.
             @store = new Store [
                 'name': 'UK Cities'
                 'path': '/United Kingdom'
@@ -37,7 +41,7 @@ define [
             
         index: (params) ->
             # Render the root folder (and onwards) in the sidebar.
-            @view = new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
+            @views.push new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
 
         # Show an individual list by its `slug`.
         findOne: (params) ->
@@ -51,5 +55,8 @@ define [
                 # We have the list, so expand the path towards the list.
                 @store.expandFolder list.get 'path'
 
+                # Create a breadcrumb view for this list.
+
+
             # Render the root folder (and onwards) in the sidebar.
-            @view = new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
+            @views.push new SidebarRootFolderView 'model': @store.findFolder('/') # save on `view` so is disposed of
