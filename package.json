@@ -4,6 +4,9 @@
     "private": true,
     "dependencies": {
         "coffee-script": "latest",
+        "flatiron": "git://github.com/flatiron/flatiron.git#master",
+        "union": "git://github.com/flatiron/union.git#master",
+        "connect": "1.9.2",
         "eco": "latest",
         "colors": "latest",
         "uglify-js": "latest"

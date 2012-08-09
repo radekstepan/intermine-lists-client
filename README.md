@@ -14,12 +14,16 @@ Then install dependencies.
 $ npm install -d
 ```
 
-Use cake to compile all resources and call the python webserver.
+Use cake to compile the client side app.
 
 ```bash
-$ cake run
-$ cd public/
-$ python -m SimpleHTTPServer 1111
+$ ./node_modules/.bin/cake run
+```
+
+Then execute the flatiron webserver:
+
+```bash
+$ ./node_modules/.bin/coffee server.coffee
 ```
 
 Visit [http://127.0.0.1:1111](http://127.0.0.1:1111).
