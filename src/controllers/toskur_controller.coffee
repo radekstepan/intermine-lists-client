@@ -3,8 +3,9 @@ define [
     'core/garbage'
     'models/store'
     'views/sidebar_root_folder'
-    'views/breadcrumb_view'
-], (Chaplin, Garbage, Store, SidebarRootFolderView, BreadcrumbView) ->
+    'views/sidebar_filter'
+    'views/breadcrumb'
+], (Chaplin, Garbage, Store, SidebarRootFolderView, SidebarFilterView, BreadcrumbView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
@@ -40,13 +41,36 @@ define [
                 'expanded': true
             ]
 
+            # Render the root folder (and onwards) in the sidebar.
+            @views.push 'lists', new SidebarRootFolderView 'model': @store.findFolder('/')
+
+            # Sidebar filtering.
+            @views.push new SidebarFilterView()
+
+            # Receive filter list messages.
+            Chaplin.mediator.subscribe 'filterLists', @filterLists
+
+        # Need to dispose of us listening to `filterLists`.
+        dispose: ->
+            Chaplin.mediator.unsubscribe 'filterLists'
+
+            super
+
+        ###
+        The user wants to filter the sidebar lists.
+        @param {string} filter
+        ###
+        filterLists: (filter) =>
+            # Get rid of existing lists listing.
+            @views.disposeOf 'lists'
+
+            console.log filter
+
         ###
         Show the default index page.
         @param {Object} params Passed in properties
         ###
         index: (params) ->
-            # Render the root folder (and onwards) in the sidebar.
-            @views.push new SidebarRootFolderView 'model': @store.findFolder('/')
 
         ###
         Show an individual list by its `slug`.
@@ -65,6 +89,3 @@ define [
 
                 # Create a breadcrumb View for this list.
                 @views.push new BreadcrumbView 'collection': @store.getPath list
-
-            # Render the root folder (and onwards) in the sidebar.
-            @views.push new SidebarRootFolderView 'model': @store.findFolder('/')

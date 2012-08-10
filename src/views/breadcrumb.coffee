@@ -1,6 +1,6 @@
 define [
     'chaplin'
-    'views/crumb_view'
+    'views/crumb'
 ], (Chaplin, CrumbView) ->
 
     class BreadcrumbView extends Chaplin.CollectionView
@@ -17,4 +17,5 @@ define [
 
         afterRender: ->
             super
+            
             $(@container).show()
