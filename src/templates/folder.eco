@@ -1,8 +1,19 @@
-<% if @path isnt '/': %>
-    <a class="folder <%= @cid %>">
-        <span class="<% if @expanded: %>icon-folder-open<% else: %>icon-folder-close<% end %>"></span>
-        <%= @name %>
-    </a>
-<% end %>
-<ul class="nav nav-list lists"></ul>
-<ul class="nav nav-list folders"></ul>
+<table>
+    <tbody>
+        <% for list in @lists: %>
+            <tr>
+                <td><a class="list" href="/list/<%= list.slug %>"><%= list.name %></a></td>
+            </tr>
+        <% end %>
+        <% for folder in @folders: %>
+            <tr>
+                <td>
+                    <a class="folder <%= folder.cid %>">
+                        <span class="icon-folder-close"></span>
+                        <%= folder.name %>
+                    </a>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

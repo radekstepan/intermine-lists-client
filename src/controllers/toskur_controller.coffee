@@ -6,7 +6,8 @@ define [
     'views/sidebar_lists'
     'views/sidebar_filter'
     'views/breadcrumb'
-], (Chaplin, Garbage, Store, SidebarRootFolderView, SidebarListsView, SidebarFilterView, BreadcrumbView) ->
+    'views/main_folder'
+], (Chaplin, Garbage, Store, SidebarRootFolderView, SidebarListsView, SidebarFilterView, BreadcrumbView, MainFolderView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
@@ -51,9 +52,19 @@ define [
             # Receive filter list messages.
             Chaplin.mediator.subscribe 'filterLists', @filterLists
 
+            # What to show in the main View?
+            Chaplin.mediator.subscribe 'expandFolder', @changeMainView
+            Chaplin.mediator.subscribe 'showRoot', @changeMainView
+
         # Need to dispose of us listening to `filterLists`.
         dispose: ->
-            Chaplin.mediator.unsubscribe 'filterLists'
+            channels = [
+                'filterLists'
+                'expandFolder'
+                'showRoot'
+            ]
+            for channel in channels
+                Chaplin.mediator.unsubscribe channel
 
             super
 
@@ -75,6 +86,18 @@ define [
                 
                 # Push all to a lists View.
                 @views.push 'lists', new SidebarListsView 'collection': coll
+
+        ###
+        Sidebar says we should update the main View.
+        @param {Folder} model If passed says to change the main View to this one.
+        ###        
+        changeMainView: (model=@store.findFolder('/')) =>
+            @views.disposeOf 'main'
+            
+            # We are dealing with folders.
+            if model.constructor.name is 'Folder'
+                # Make a new View for us.
+                @views.push 'main', new MainFolderView 'model': model
 
         ###
         Show the default index page.

@@ -1,15 +1,16 @@
 define [
+    'chaplin'
     'core/view'
     'views/sidebar_list'
     'views/sidebar_folder'
-], (View, SidebarListView, SidebarFolderView) ->
+], (Chaplin, View, SidebarListView, SidebarFolderView) ->
 
     class SidebarFolderView extends View
 
         tagName: 'li' # a list item
 
         # Get the template from here.
-        getTemplateFunction: -> JST['folder']
+        getTemplateFunction: -> JST['sidebar_folder']
 
         # 'Serialize' our opts and add cid so we can constrain events.
         getTemplateData: -> _.extend { 'cid': @model.cid }, @model.toJSON()
@@ -41,4 +42,11 @@ define [
                     @subviews.push v
 
         # Toggle the folder, the view is listening to Model changes already.
-        toggleFolder: -> @model.set 'expanded', !@model.get('expanded')
+        toggleFolder: ->
+            @model.set 'expanded', isExpanded = !@model.get('expanded')
+
+            # Have we expanded?
+            if isExpanded
+                Chaplin.mediator.publish 'expandFolder', @model
+            else
+                Chaplin.mediator.publish 'showRoot'
