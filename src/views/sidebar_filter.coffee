@@ -35,7 +35,7 @@ define [
             @timeout = setTimeout (=>
                 # Fetch the query value.
                 query = $(e.target).val()
-                if query isnt '' and query isnt @query
+                if query isnt @query
                     # Trigger a message to other components to do their bidding.
                     Chaplin.mediator.publish 'filterLists', @query = query
             ), 500
