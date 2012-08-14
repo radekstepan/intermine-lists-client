@@ -1,7 +1,7 @@
 <% if @path isnt '/': %>
-    <a class="folder <%= @cid %>">
-        <span class="<% if @expanded: %>icon-folder-open<% else: %>icon-folder-close<% end %>"></span>
-        <%= @name %>
+    <a class="folder <%= @cid %> toggle" title="Toggle folder"></a>
+    <a class="folder <%= @cid %> select" title="Select folder">
+        <span class="icon-folder-close"></span> <%= @name %>
     </a>
 <% end %>
 <ul class="nav nav-list lists"></ul>
