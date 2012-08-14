@@ -123,3 +123,6 @@ define [
 
                 # Main view, show the selected folder.
                 @views.push 'main', new MainFolderView 'model': folder
+
+                # Create a breadcrumb View for this folder.
+                @views.push new BreadcrumbView 'collection': @store.getPath folder

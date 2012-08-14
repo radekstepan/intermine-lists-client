@@ -154,13 +154,17 @@ define [
 
         ###
         Give us a Collection representation of the path.
-        @param {List} list
+        @param {List or Folder} obj
         ###
-        getPath: (list) ->
+        getPath: (obj) ->
             coll = new Path()
-            coll.addList list
-
-            folder = @findFolder list.get 'path'
+            
+            if obj.constructor.name is 'List'
+                coll.addList list
+                folder = @findFolder list.get 'path'
+            else
+                folder = obj
+            
             # Traverse the tree up.
             while folder?
                 coll.addFolder folder

@@ -39,3 +39,4 @@ define [
                     'type':     'folder'
                     'name':     name
                     'position': @position++
+                    'slug':     folder.get 'slug'
