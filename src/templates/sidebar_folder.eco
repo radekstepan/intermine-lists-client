@@ -3,6 +3,10 @@
     <a href="/folder/<%= @slug %>">
         <span class="icon-folder-close"></span> <%= @name %>
     </a>
+<% else: %>
+    <a href="/">
+        <span class="icon-home"></span>
+    </a>
 <% end %>
 <ul class="nav nav-list lists"></ul>
 <ul class="nav nav-list folders"></ul>
