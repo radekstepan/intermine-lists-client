@@ -3,6 +3,7 @@
 flatiron = require 'flatiron'
 union    = require 'union'
 connect  = require 'connect'
+fs       = require 'fs'
 
 app = flatiron.app
 app.use flatiron.plugins.http,
@@ -22,3 +23,19 @@ app.use flatiron.plugins.http,
 app.start 1111, (err) ->
     throw err if err
     app.log.info "Listening on port #{app.server.address().port}".green
+
+app.router.path '/api/lists', ->
+    @get ->
+        fs.readFile './data/lists.json', 'utf8', (err, data) =>
+            throw err if err
+            @res.writeHead 200, "content-type": "application/json;charset=utf-8"
+            @res.write data
+            @res.end()
+
+app.router.path '/api/list', ->
+    @get ->
+        fs.readFile './data/list.json', 'utf8', (err, data) =>
+            throw err if err
+            @res.writeHead 200, "content-type": "application/json;charset=utf-8"
+            @res.write data
+            @res.end()
