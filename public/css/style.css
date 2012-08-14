@@ -7,7 +7,7 @@ a { cursor:pointer; }
 ul#folders { cursor:pointer; padding:0; }
 ul#folders ul.lists { padding-left:16px; }
 ul#folders li { position:relative; }
-ul#folders li a { padding:3px 15px; border:0; }
+ul#folders li a { padding:3px 15px; border:0; margin-right:0; }
 ul#folders .folder.toggle { display:none; }
 ul#folders .folder.toggle.active { display:block; position:absolute; top:4px; left:0; padding:0; }
 ul#folders .folder.toggle.active:hover { cursor:pointer; }

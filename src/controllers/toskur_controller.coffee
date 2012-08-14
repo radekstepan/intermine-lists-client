@@ -3,11 +3,11 @@ define [
     'core/garbage'
     'models/store'
     'views/sidebar_root_folder'
-    'views/sidebar_lists'
     'views/filter'
     'views/breadcrumb'
     'views/main_folder'
-], (Chaplin, Garbage, Store, SidebarRootFolderView, SidebarListsView, FilterView, BreadcrumbView, MainFolderView) ->
+    'views/main_filtered_list'
+], (Chaplin, Garbage, Store, SidebarRootFolderView, FilterView, BreadcrumbView, MainFolderView, MainFilteredListView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
@@ -60,23 +60,23 @@ define [
             super
 
         ###
-        The user wants to filter the sidebar lists.
+        The user wants to filter the lists.
         @param {string} filter
         ###
         filterLists: (filter) =>
             # Get rid of existing lists listing.
-            @views.disposeOf 'lists'
+            @views.disposeOf 'main'
 
             # Is this a 'clearing' query?
             if filter is ''
-                @views.push 'lists', new SidebarRootFolderView 'model': @store.findFolder('/')
+                @views.push 'main', new MainFolderView 'model': @store.getSelectedFolder()
             else
                 # Filter the collection.
                 re = new RegExp "#{filter}.*", 'i'
                 coll = new Chaplin.Collection @store.filter (list) -> list.get('name').match re
                 
-                # Push all to a lists View.
-                @views.push 'lists', new SidebarListsView 'collection': coll
+                # Show the filtered lists.
+                @views.push 'main', new MainFilteredListView 'collection': coll
 
         ###
         Show the default index page.
