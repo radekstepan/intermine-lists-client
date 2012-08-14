@@ -39,7 +39,7 @@ define [
         @param {string} slug
         ###
         findList: (slug) ->
-            l = @.filter (item) -> item.get('slug') is slug
+            l = @filter (item) -> item.get('slug') is slug
             if l.length > 0
                 l[0]
 
@@ -131,7 +131,7 @@ define [
         expandFolder: (obj) ->
             if obj.constructor.name isnt 'Folder'
                 # Get the initial folder by path.
-                folder = @findFolder path
+                folder = @findFolder obj
             else
                 # Get the parent of this folder.
                 folder = obj.get 'parent'
@@ -160,8 +160,8 @@ define [
             coll = new Path()
             
             if obj.constructor.name is 'List'
-                coll.addList list
-                folder = @findFolder list.get 'path'
+                coll.addList obj
+                folder = @findFolder obj.get 'path'
             else
                 folder = obj
             

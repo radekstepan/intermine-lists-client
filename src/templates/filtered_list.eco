@@ -1,4 +1,8 @@
 <% if @lists.length > 0: %>
+    <div class="alert alert-success">
+        <h4 class="alert-heading">Search results</h4>
+    </div>
+
     <table class="table table-striped">
         <tbody>
             <% for list in @lists: %>
