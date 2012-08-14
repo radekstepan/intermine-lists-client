@@ -18,6 +18,8 @@ table#table tr.selected td { background:#FFF6D9; border-top-color:#FFC40D; }
 
 footer { text-align:center; }
 
+#filtering input { margin:6px 0 0 10px; }
+
 /* Growl notifications */
 ul#notifications { position:fixed; top:10px; right:20px; z-index:1; color:#000; }
 ul#notifications li { margin-bottom:5px; list-style-type:none; border:1px solid #EEE; border-bottom-color:#CACACA;
