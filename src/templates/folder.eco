@@ -1,15 +1,18 @@
-<table>
+<table class="table table-striped">
     <tbody>
         <% for list in @lists: %>
             <tr>
-                <td><a class="list" href="/list/<%= list.slug %>"><%= list.name %></a></td>
+                <td>
+                    <span class="icon-list-alt"></span>
+                    <a class="list" href="/list/<%= list.slug %>"><%= list.name %></a>
+                </td>
             </tr>
         <% end %>
         <% for folder in @folders: %>
             <tr>
                 <td>
-                    <a class="folder <%= folder.cid %>">
-                        <span class="icon-folder-close"></span>
+                    <span class="icon-folder-close"></span>
+                    <a href="/folder/<%= folder.slug %>">
                         <%= folder.name %>
                     </a>
                 </td>

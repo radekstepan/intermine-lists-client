@@ -16,7 +16,7 @@ ul#breadcrumb li:not(:last-child) { margin-right:5px; }
 ul#breadcrumb li:not(:last-child):after { content:"/"; display:inline-block; }
 ul#breadcrumb li a.home { margin-right:5px; }
 
-table#table tr.selected td { background:#FFF6D9; border-top-color:#FFC40D; }
+#main table.table tr td [class^="icon-"] { color:#DD4814; }
 
 #toolbar .btn,
 #toolbar .btn-group { display:block; margin-bottom:10px; }

@@ -167,3 +167,10 @@ define [
                 folder = folder.get 'parent'
 
             coll
+
+        # Get the folder that is set to be selected or return root.
+        getSelectedFolder: ->
+            for folder in @store.folders.models
+                if folder.get('selected') is true
+                    return folder
+            return @store.getPath('/')

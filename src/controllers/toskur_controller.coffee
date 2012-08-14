@@ -46,7 +46,7 @@ define [
             # Render the root folder (and onwards) in the sidebar.
             @views.push 'lists', new SidebarRootFolderView 'model': @store.findFolder('/')
 
-            # Sidebar filtering.
+            # Lists filtering.
             @views.push new FilterView()
 
             # Receive filter list messages.
@@ -79,22 +79,12 @@ define [
                 @views.push 'lists', new SidebarListsView 'collection': coll
 
         ###
-        Sidebar says we should update the main View.
-        @param {Folder} model If passed says to change the main View to this one.
-        ###        
-        changeMainView: (model=@store.findFolder('/')) =>
-            @views.disposeOf 'main'
-            
-            # We are dealing with folders.
-            if model.constructor.name is 'Folder'
-                # Make a new View for us.
-                @views.push 'main', new MainFolderView 'model': model
-
-        ###
         Show the default index page.
         @param {Object} params Passed in properties
         ###
         index: (params) ->
+            # Main view, show the root folder.
+            @views.push 'main', new MainFolderView 'model': @store.findFolder('/')
 
         ###
         Show an individual list by its `slug`.
@@ -130,3 +120,6 @@ define [
 
                 # We have the folder, so expand the path towards the folder.
                 @store.expandFolder folder
+
+                # Main view, show the selected folder.
+                @views.push 'main', new MainFolderView 'model': folder
