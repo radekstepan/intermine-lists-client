@@ -25,10 +25,10 @@ define [
 
             # Events only on this folder.
             @delegate 'click', ".folder.#{@model.cid}.toggle", @toggleFolder
-            @delegate 'click', ".folder.#{@model.cid}.select", @selectFolder
             @modelBind 'change', @render
 
-            #console.log "folder #{@model.get('path')} `#{@model.cid}` - #{@model.get('lists').length} lists and #{@model.get('folders').length} folders"
+            # Are we selected?
+            if @model.get('selected') then $(@el).addClass('active')
 
             # Render the subviews.
             if @model.get('path') is '/' or @model.get('expanded')
@@ -50,5 +50,3 @@ define [
 
         # Toggle the folder, the view is listening to Model changes already.
         toggleFolder: -> @model.set 'expanded', isExpanded = !@model.get('expanded')
-
-        selectFolder: -> console.log 'selected'

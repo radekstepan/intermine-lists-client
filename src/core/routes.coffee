@@ -5,5 +5,6 @@ define ->
     @param {function} match Method of the Router.
     ###
     (match) ->
-        match '', 			'toskur#index'
-        match 'list/:slug', 'toskur#findOne'
+        match '',             'toskur#index'
+        match 'list/:slug',   'toskur#list'
+        match 'folder/:slug', 'toskur#folder'

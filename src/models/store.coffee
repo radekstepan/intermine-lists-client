@@ -55,11 +55,12 @@ define [
             @.at(@.length - 1)
 
         ###
-        Given a path find the one matching folder.
-        @param {string} path
+        Given a key find the one matching folder.
+        @param {string} key
+        @param {string} param An attribute to filter by
         ###
-        findFolder: (path) ->
-            f = @folders.filter (item) -> item.get('path') is path
+        findFolder: (path, param='path') ->
+            f = @folders.filter (item) -> item.get(param) is path
             if f.length > 0
                 f[0]
 
@@ -80,12 +81,17 @@ define [
                 folder.set 'lists': lists
             
             else
+                # Make a slug.
+                slug = @slugify path[1...].replace /\//g, '-'
+
                 # No cigar... add a new one linking to this list.
                 @folders.push
-                    'path':    path
-                    'name':    path.split('/').pop() # Last part of the path.
-                    'lists':   [ list ]
-                    'folders': []
+                    'path':     path
+                    'name':     path.split('/').pop() # last part of the path.
+                    'lists':    [ list ]
+                    'folders':  []
+                    'slug':     slug
+                    'selected': false
 
                 # Do we need to link this folder to a parent folder?
                 parentPath = (p = path.split('/'))[0...p.length - 1].join('/')
@@ -106,10 +112,12 @@ define [
                     else
                         # Create a new folder and link to this folder.
                         @folders.push
-                            'path':    parentPath
-                            'name':    parentPath.split('/').pop() # Last part of the path.
-                            'lists':   []
-                            'folders': [ folder ]
+                            'path':     parentPath
+                            'name':     parentPath.split('/').pop() # Last part of the path.
+                            'lists':    []
+                            'folders':  [ folder ]
+                            'slug':     slug
+                            'selected': false
 
                         parent = @folders.at(@folders.length - 1)
 
@@ -118,15 +126,31 @@ define [
 
         ###
         Expand a given path and any folders leading up to it.
-        @param {string} path
+        @param {string or Folder} obj A list path or a Folder object (not its parent)
         ###
-        expandFolder: (path) ->
-            # Get the initial folder by path.
-            folder = @findFolder path
+        expandFolder: (obj) ->
+            if obj.constructor.name isnt 'Folder'
+                # Get the initial folder by path.
+                folder = @findFolder path
+            else
+                # Get the parent of this folder.
+                folder = obj.get 'parent'
+
             # Traverse the tree up and set the parents to be expanded too.
             while folder?
                 folder.set 'expanded': true
                 folder = folder.get 'parent'
+
+        ###
+        Will select this folder and deselect all others.
+        @param {Folder} folder A folder to select
+        ###
+        selectFolder: (folder) ->
+            # Deselect all others.
+            f.set('selected', false) for f in @folders.models
+
+            # Select this one.
+            folder.set 'selected', true
 
         ###
         Give us a Collection representation of the path.

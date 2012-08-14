@@ -1,6 +1,6 @@
 <% if @path isnt '/': %>
-    <a class="folder <%= @cid %> toggle" title="Toggle folder"></a>
-    <a class="folder <%= @cid %> select" title="Select folder">
+    <a class="folder <%= @cid %> toggle"></a>
+    <a href="/folder/<%= @slug %>">
         <span class="icon-folder-close"></span> <%= @name %>
     </a>
 <% end %>

@@ -3,7 +3,7 @@ define [
     'core/view'
 ], (Chaplin, View) ->
 
-    class SidebarFilterView extends View
+    class FilterView extends View
 
         container:  '#filtering'
         autoRender: true

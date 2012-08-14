@@ -4,10 +4,10 @@ define [
     'models/store'
     'views/sidebar_root_folder'
     'views/sidebar_lists'
-    'views/sidebar_filter'
+    'views/filter'
     'views/breadcrumb'
     'views/main_folder'
-], (Chaplin, Garbage, Store, SidebarRootFolderView, SidebarListsView, SidebarFilterView, BreadcrumbView, MainFolderView) ->
+], (Chaplin, Garbage, Store, SidebarRootFolderView, SidebarListsView, FilterView, BreadcrumbView, MainFolderView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
@@ -47,23 +47,14 @@ define [
             @views.push 'lists', new SidebarRootFolderView 'model': @store.findFolder('/')
 
             # Sidebar filtering.
-            @views.push new SidebarFilterView()
+            @views.push new FilterView()
 
             # Receive filter list messages.
             Chaplin.mediator.subscribe 'filterLists', @filterLists
 
-            # What to show in the main View?
-            Chaplin.mediator.subscribe 'expandFolder', @changeMainView
-            Chaplin.mediator.subscribe 'showRoot', @changeMainView
-
         # Need to dispose of us listening to `filterLists`.
         dispose: ->
-            channels = [
-                'filterLists'
-                'expandFolder'
-                'showRoot'
-            ]
-            for channel in channels
+            for channel in [ 'filterLists' ]
                 Chaplin.mediator.unsubscribe channel
 
             super
@@ -109,7 +100,7 @@ define [
         Show an individual list by its `slug`.
         @param {Object} params Passed in properties
         ###
-        findOne: (params) ->
+        list: (params) ->
             # Retrieve the list in question.
             list = @store.findList params.slug
             unless list?
@@ -122,3 +113,20 @@ define [
 
                 # Create a breadcrumb View for this list.
                 @views.push new BreadcrumbView 'collection': @store.getPath list
+
+        ###
+        Show an individual folder by its `slug`.
+        @param {Object} params Passed in properties
+        ###
+        folder: (params) ->
+            folder = @store.findFolder(params.slug, 'slug')
+            unless folder?
+                Chaplin.mediator.publish 'notification', 'This folder has not been found'
+            else
+                Chaplin.mediator.publish 'notification', 'You have asked for this folder', folder.get('name')
+
+                # Set this folder as selected.
+                @store.selectFolder folder
+
+                # We have the folder, so expand the path towards the folder.
+                @store.expandFolder folder
