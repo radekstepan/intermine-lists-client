@@ -43,21 +43,22 @@ define [
         @param {string} filter
         ###
         filterLists: (filter) =>
-            # Get rid of existing lists listing.
-            @views.disposeOf 'main'
+            # Remove existing filtered list.
+            @views.disposeOf 'filter'
 
             # Is this a 'clearing' query?
             if filter is ''
-                @views.push 'main', new MainFolderView 'model': @store.getSelectedFolder()
+                # Show the original...
+                @views.objects?.main.render()
             else
                 # Filter the collection.
                 re = new RegExp "#{filter}.*", 'i'
                 coll = new Chaplin.Collection @store.filter (list) -> list.get('name').match re
                 
                 # Show the filtered lists.
-                @views.push 'main', new MainFilteredListView 'collection': coll
+                @views.push 'filter', new MainFilteredListView 'collection': coll
 
-        ###
+        ### 
         Show the default index page.
         @param {Object} params Passed in properties
         ###
