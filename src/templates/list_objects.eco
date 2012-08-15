@@ -1,0 +1,10 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <% for key in @head: %>
+                <th><%= key %></th>
+            <% end %>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>

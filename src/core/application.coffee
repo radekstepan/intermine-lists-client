@@ -10,6 +10,8 @@ define [
 
         title: 'InterMine List Client "Töskur"'
 
+        data: {}
+
         initialize: ->
             super
 
@@ -18,21 +20,31 @@ define [
             @initLayout()
             @initMediator()
 
-            # Register all routes and start routing
-            @initRouter routes
+            @initData =>
+                # Register all routes and start routing
+                @initRouter routes
 
-            # Freeze the application instance to prevent further changes
-            Object.freeze? @
+                # Freeze the application instance to prevent further changes
+                Object.freeze? @
 
-        # Override standard layout initializer
-        # ------------------------------------
+        # Get the data from the API.
+        initData: (done) ->
+            # Lists.
+            $.getJSON '/api/lists', (data) =>
+                @data.lists = data
+
+                # Its contents.
+                $.getJSON '/api/list', (data) =>
+                    @data.list = data
+                    done()
+
+        # Override standard layout initializer.
         initLayout: ->
             # Use an application-specific Layout class. Currently this adds
             # no features to the standard Chaplin Layout, it’s an empty placeholder.
             @layout = new Layout {@title}
 
-        # Create additional mediator properties
-        # -------------------------------------
+        # Create additional mediator properties.
         initMediator: ->
             # Create a user property
             Chaplin.mediator.user = null

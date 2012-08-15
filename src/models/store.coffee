@@ -1,13 +1,14 @@
 define [
     'chaplin'
     'models/list'
+    'models/list_objects'
     'models/folders'
     'models/path'
-], (Chaplin, List, Folders, Path) ->
+], (Chaplin, List, ListObjects, Folders, Path) ->
 
     # A flat store of all lists (and folders) on a page.
     class Store extends Chaplin.Collection
-        
+
         # A first class object, Folders and Tags are 'niceties'.
         model: List
 
@@ -50,6 +51,10 @@ define [
         makeList: (data) ->
             # Slugify the list name.
             data.slug = @slugify data.name
+            
+            # Get the list objects.
+            data.objects = new ListObjects window.App.data.list
+            
             # Create us and return us.
             @.push data
             @.at(@.length - 1)

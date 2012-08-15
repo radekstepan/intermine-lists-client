@@ -1,0 +1,3 @@
+<% for _, value of @values: %>
+    <td><%= value %></td>
+<% end %>

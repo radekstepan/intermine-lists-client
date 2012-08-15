@@ -6,8 +6,9 @@ define [
     'views/filter'
     'views/breadcrumb'
     'views/main_folder'
+    'views/main_list'
     'views/main_filtered_list'
-], (Chaplin, Garbage, Store, SidebarRootFolderView, FilterView, BreadcrumbView, MainFolderView, MainFilteredListView) ->
+], (Chaplin, Garbage, Store, SidebarRootFolderView, FilterView, BreadcrumbView, MainFolderView, MainListView, MainFilteredListView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
@@ -18,30 +19,8 @@ define [
             # Storage for objects to be garbage collected.
             @views = new Garbage()
 
-            # Give us the Store.
-            @store = new Store [
-                'name': 'UK Cities'
-                'path': '/United Kingdom'
-            ,
-                'name': 'UK Towns'
-                'path': '/United Kingdom'
-            ,
-                'name': 'UK Lakes'
-                'path': '/United Kingdom'
-            ,
-                'name': 'Welsh Lakes'
-                'path': '/United Kingdom/Wales'
-            ,
-                'name': 'Czech Ponds'
-                'path': '/Czech Republic'
-            ,
-                'name': 'Czech Villages'
-                'path': '/Czech Republic'
-            ,
-                'name': 'World Seas'
-                'path': '/'
-                'expanded': true
-            ]
+            # Give us the Store, inject the API fetched data.
+            @store = new Store window.App.data.lists
 
             # Render the root folder (and onwards) in the sidebar.
             @views.push 'lists', new SidebarRootFolderView 'model': @store.findFolder('/')
@@ -100,6 +79,9 @@ define [
 
                 # We have the list, so expand the path towards the list.
                 @store.expandFolder list.get 'path'
+
+                # Main view, show the selected list and its contents.
+                @views.push 'main', new MainListView 'collection': list.get 'objects'
 
                 # Create a breadcrumb View for this list.
                 @views.push new BreadcrumbView 'collection': @store.getPath list
