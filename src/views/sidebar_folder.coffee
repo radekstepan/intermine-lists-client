@@ -1,7 +1,6 @@
 define [
     'chaplin'
     'core/view'
-    'views/sidebar_list'
     'views/sidebar_folder'
 ], (Chaplin, View, SidebarListView, SidebarFolderView) ->
 
@@ -32,11 +31,6 @@ define [
 
             # Render the subviews.
             if @model.get('path') is '/' or @model.get('expanded')
-                # Render our lists.
-                # for list in @model.get 'lists'
-                #     $(@el).find('ul.lists').first().append (v = new SidebarListView('model': list)).render().el
-                #     @subviews.push v
-
                 # Render our folders.
                 for folder in @model.get 'folders'
                     $(@el).find('ul.folders').first().append (v = new SidebarFolderView('model': folder)).render().el

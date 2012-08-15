@@ -1,7 +1,6 @@
 define [
-    'views/sidebar_list'
     'views/sidebar_folder'
-], (SidebarListView, SidebarFolderView) ->
+], (SidebarFolderView) ->
 
     class SidebarRootFolderView extends SidebarFolderView
 

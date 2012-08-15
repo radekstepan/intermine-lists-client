@@ -2,6 +2,7 @@ define [
     'core/view'
 ], (View) ->
 
+    # The filtered collection of lists.
     class MainFilteredListView extends View
 
         containerMethod: 'html'

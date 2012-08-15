@@ -4,6 +4,7 @@ define [
     'views/list_object'
 ], (Garbage, View, ListObjectView) ->
 
+    # The list and its contents.
     class MainListView extends View
 
         container:  '#main'
@@ -12,6 +13,7 @@ define [
         initialize: ->
             super
 
+            # The garbage truck... wroom!
             @views = new Garbage()
 
         # Get the template from here.
