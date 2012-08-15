@@ -15,4 +15,15 @@ define [
         afterRender: ->
             super
 
-            $(@el).addClass('folder')
+            $(@el).addClass 'folder'
+
+        initialize: ->
+            super
+
+            $(@el).droppable
+                'over': @over
+                'out':  @out
+
+        over: => $(@el).addClass 'hover'
+
+        out: => $(@el).removeClass 'hover'

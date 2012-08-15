@@ -11,4 +11,6 @@ define [
         getTemplateFunction: -> JST['list_moving']
 
         afterRender: ->
+            super
+            
             $(@el).addClass 'moving'
