@@ -1,15 +1,31 @@
 define [
+    'core/garbage'
     'core/view'
-], (View) ->
+    'views/list'
+], (Garbage, View, ListView) ->
 
     # The filtered collection of lists.
     class MainFilteredListView extends View
 
-        containerMethod: 'html'
         container:       '#main'
         autoRender:      true
+        containerMethod: 'html'
+
+        initialize: ->
+            super
+
+            # The garbage truck... wroom!
+            @views = new Garbage()
 
         # Get the template from here.
         getTemplateFunction: -> JST['filtered_list']
 
-        getTemplateData: -> 'lists': ( list.toJSON() for list in @options.collection.models )
+        # Peek into the data to show msg according to the results.
+        getTemplateData: -> 'length': @options.collection.models.length
+
+        afterRender: ->
+            super
+
+            # Render the lists inside.
+            for model in @options.collection.models
+                @views.push view = new ListView 'model': model

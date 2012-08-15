@@ -1,19 +1,10 @@
-<% if @lists.length > 0: %>
+<% if @length isnt 0: %>
     <div class="alert alert-success">
         <h4 class="alert-heading">Search results</h4>
     </div>
 
     <table class="table table-striped">
-        <tbody>
-            <% for list in @lists: %>
-                <tr>
-                    <td>
-                        <span class="icon-list-alt"></span>
-                        <a class="list" href="/list/<%= list.slug %>"><%= list.name %></a>
-                    </td>
-                </tr>
-            <% end %>
-        </tbody>
+        <tbody></tbody>
     </table>
 <% else: %>
     <div class="alert alert-block">
