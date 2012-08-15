@@ -11,3 +11,8 @@ define [
 
         # Get the template from here.
         getTemplateFunction: -> JST['folder']
+
+        afterRender: ->
+            super
+
+            $(@el).addClass('folder')

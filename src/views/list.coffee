@@ -1,40 +1,28 @@
 define [
     'core/view'
-], (View) ->
+    'views/list_moving'
+], (View, ListMovingView) ->
 
     class ListView extends View
 
         container:       '#main table tbody'
         containerMethod: 'append'
         autoRender:      true
-
-        tagName: -> if not @moving then 'tr' else 'div'
-
-        # Is this list UI moving?
-        moving: false
+        tagName:         'tr'
 
         # Get the template from here.
-        getTemplateFunction: -> if not @moving then JST['list'] else JST['list_moving']
+        getTemplateFunction: -> JST['list']
 
         initialize: ->
             super
 
             $(@el).draggable
-                'start': @startDragging
-                'stop':  @stopDragging
-            $(@el).data 'view', @
+                'helper': @helper
 
         afterRender: ->
             super
 
             $(@el).addClass('list')
 
-        # We have started to drag this list.
-        startDragging: =>
-            @moving = true
-            @render()
-
-        # This drug for too long...
-        stopDragging: =>
-            @moving = false
-            @render()
+        # Create a clone of yourself while being dragged.
+        helper: => (@clone = new ListMovingView('model': @model)).el

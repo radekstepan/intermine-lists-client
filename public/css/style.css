@@ -18,14 +18,11 @@ ul#breadcrumb li a.home { margin-right:5px; }
 
 #main table.table tr td [class^="icon-"] { color:#DD4814; }
 
-/* a draggable element in the main table */
-#main table .list.ui-draggable-dragging { position:absolute !important; cursor:pointer; box-shadow:2px 2px 3px rgba(50, 50, 50, 0.15);
-    background:#FFF; padding:8px; border:1px solid #DDD; }
+/* a draggable element when moving */
+.moving { cursor:pointer; box-shadow:2px 2px 3px rgba(50, 50, 50, 0.15); background:#FFF; padding:8px; border:1px solid #DDD; }
 
 #toolbar .btn,
 #toolbar .btn-group { display:block; margin-bottom:10px; }
-
-footer { text-align:center; }
 
 #filtering input { margin:6px 0 0 10px; }
 
