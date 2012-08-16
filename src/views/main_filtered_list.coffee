@@ -1,8 +1,8 @@
 define [
     'core/garbage'
     'core/view'
-    'views/list'
-], (Garbage, View, ListView) ->
+    'views/filtered_list'
+], (Garbage, View, FilteredListView) ->
 
     # The filtered collection of lists.
     class MainFilteredListView extends View
@@ -18,7 +18,7 @@ define [
             @views = new Garbage()
 
         # Get the template from here.
-        getTemplateFunction: -> JST['filtered_list']
+        getTemplateFunction: -> JST['filtered_lists']
 
         # Peek into the data to show msg according to the results.
         getTemplateData: -> 'length': @collection.models.length
@@ -28,4 +28,4 @@ define [
 
             # Render the lists inside.
             for model in @collection.models
-                @views.push view = new ListView 'model': model
+                @views.push view = new FilteredListView 'model': model

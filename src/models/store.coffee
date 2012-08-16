@@ -19,6 +19,7 @@ define [
         initialize: -> @folders = new Folders()
 
         # Our custom constructor.
+        # Alternatively, we could let Backbone init Lists and then retrospectively create Folders and add Obj.
         constructor: (models, options={}) ->
             # Backbone.js
             @model = options.model if options.model

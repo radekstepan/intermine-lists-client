@@ -1,9 +1,4 @@
 <td>
     <span class="icon-list-alt"></span>
     <a class="list" href="/list/<%= @slug %>"><%= @name %></a>
-    
-    <!-- sometimes we have a folder ref (filtered list) -->
-    <% if @folder?: %>
-        <%= @folder.path %>
-    <% end %>
 </td>

@@ -1,14 +1,7 @@
-<% if @length isnt 0: %>
-    <div class="alert alert-success">
-        <h4 class="alert-heading">Search results</h4>
-    </div>
-
-    <table class="table table-striped">
-        <tbody></tbody>
-    </table>
-<% else: %>
-    <div class="alert alert-block">
-        <h4 class="alert-heading">None of your lists matched this search</h4>
-        <p>Try another search, or click the folders in the sidebar to explore. Removing your search term will take you to your original folder.</p>
-    </div>
-<% end %>
+<td>
+    <span class="icon-list-alt"></span>
+    <a class="list" href="/list/<%= @slug %>"><%= @name %></a>
+</td>
+<td>
+    <%= @folder.path %>
+</td>
