@@ -17,13 +17,8 @@ define [
             # The garbage truck... wroom!
             @views = new Garbage()
 
-            # Re-render itself when the underlying objects (all of them) change.
+            # Re-render itself when the underlying model changes.
             @modelBind 'change', @render
-            # for model in @model.get 'lists'
-            #     model.off 'change', @render, @
-            #     model.on 'change', @render, @
-            # for model in @model.get 'folders'
-            #     model.on 'change', @render, @
 
         # Get the template from here.
         getTemplateFunction: -> JST['folder_objects']

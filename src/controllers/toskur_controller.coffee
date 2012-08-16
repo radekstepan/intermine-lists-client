@@ -15,6 +15,9 @@ define [
 
         historyURL: (params) -> ''
 
+        # Here be `Store`.
+        store: undefined
+
         initialize: ->
             # Storage for objects to be garbage collected.
             @views = new Garbage()
@@ -54,7 +57,7 @@ define [
                 # Filter the collection.
                 re = new RegExp "#{filter}.*", 'i'
                 coll = new Chaplin.Collection @store.filter (list) -> list.get('name').match re
-                
+
                 # Show the filtered lists.
                 @views.push 'filter', new MainFilteredListView 'collection': coll
 

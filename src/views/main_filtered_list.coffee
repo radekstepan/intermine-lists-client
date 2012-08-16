@@ -21,11 +21,11 @@ define [
         getTemplateFunction: -> JST['filtered_list']
 
         # Peek into the data to show msg according to the results.
-        getTemplateData: -> 'length': @options.collection.models.length
+        getTemplateData: -> 'length': @collection.models.length
 
         afterRender: ->
             super
 
             # Render the lists inside.
-            for model in @options.collection.models
+            for model in @collection.models
                 @views.push view = new ListView 'model': model

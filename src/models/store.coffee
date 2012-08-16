@@ -15,11 +15,19 @@ define [
         # Point-less reference just to remember it will be present.
         folders: null
 
-        initialize: (data) ->
-            # Hold folders here and re-initialize.
-            @folders = new Folders()
+        # Hold folders here and re-initialize.
+        initialize: -> @folders = new Folders()
 
-            for row in data
+        # Our custom constructor.
+        constructor: (models, options={}) ->
+            # Backbone.js
+            @model = options.model if options.model
+            @comparator = options.comparator if options.comparator
+            @_reset()
+            @initialize.apply this, arguments
+
+            # Our stuff.
+            for row in models
                 @makeFolder @makeList row
 
         # Extend standard `dispose` by cleaning up `folders` too.
@@ -56,7 +64,7 @@ define [
             data.objects = new ListObjects window.App.data.list
             
             # Create us and return us.
-            @.push data
+            @.push data, 'silent': true
             @.at(@.length - 1)
 
         ###
@@ -70,7 +78,7 @@ define [
                 f[0]
 
         ###
-        For a given path will (create folder and) link to list (and parent folder).
+        For a given path will (create folder and) link to list (and parent folder) (and back...).
         @param {List} list
         ###
         makeFolder: (list) ->
@@ -95,13 +103,16 @@ define [
                     'slug':     slug
                     'selected': false
 
+                # Get the added folder.
+                folder = @folders.at(@folders.length - 1)
+                # Make a back-reference to this folder from the list.
+                list.set 'folder': folder
+                
                 # Do we need to link this folder to a parent folder?
                 parentPath = (p = path.split('/'))[0...p.length - 1].join('/')
                 # Linked to root folder including root folder itself.
                 if parentPath is '' and path isnt '/' then parentPath = '/'
                 if parentPath isnt ''
-                    folder = @folders.at(@folders.length - 1)
-
                     # Does the parent exist already?
                     parent = @findFolder parentPath
                     if parent?
