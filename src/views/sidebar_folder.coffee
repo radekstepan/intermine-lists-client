@@ -8,6 +8,8 @@ define [
 
         tagName: 'li' # a list item
 
+        toggleEl: undefined # points to the toggler element
+
         # Get the template from here.
         getTemplateFunction: -> JST['sidebar_folder']
 
@@ -29,6 +31,15 @@ define [
             # Are we selected?
             if @model.get('selected') then $(@el).addClass('active')
 
+            # Make the folder droppable.
+            $(@el).find('.drop').droppable
+                'over': @over
+                'out':  @out
+                'drop': @out
+
+            # Make a link to toggle element.
+            @toggleEl = $(@el).find('.toggle')
+
             # Render the subviews.
             if @model.get('path') is '/' or @model.get('expanded')
                 # Render our folders.
@@ -44,3 +55,11 @@ define [
 
         # Toggle the folder, the view is listening to Model changes already.
         toggleFolder: -> @model.set 'expanded', isExpanded = !@model.get('expanded')
+
+        over: (e) =>
+            $(e.target).addClass 'hover'
+            @toggleEl.addClass 'hover'
+
+        out: (e) =>
+            $(e.target).removeClass 'hover'
+            @toggleEl.removeClass 'hover'

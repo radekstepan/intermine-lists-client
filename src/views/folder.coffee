@@ -23,6 +23,7 @@ define [
             $(@el).droppable
                 'over': @over
                 'out':  @out
+                'drop': @out
 
         over: => $(@el).addClass 'hover'
 

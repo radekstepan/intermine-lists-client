@@ -1,12 +1,13 @@
 <% if @path isnt '/': %>
     <a class="folder <%= @cid %> toggle"></a>
-    <a href="/folder/<%= @slug %>">
+    <a class="drop" href="/folder/<%= @slug %>">
         <span class="icon-folder-close"></span> <%= @name %>
     </a>
 <% else: %>
-    <a href="/">
+    <a class="drop" href="/">
         <span class="icon-home"></span>
     </a>
 <% end %>
+
 <ul class="nav nav-list lists"></ul>
 <ul class="nav nav-list folders"></ul>
