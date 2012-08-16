@@ -16,13 +16,14 @@ define [
         initialize: ->
             super
 
+            # Create a clone of yourself while being dragged.
             $(@el).draggable
-                'helper': @helper
+                'helper': => (@clone = new ListMovingView('model': @model)).el
+
+            # Make a reference to "us" through `data` although we use ListMovingView.
+            $(@el).data 'view': @
 
         afterRender: ->
             super
 
             $(@el).addClass('list')
-
-        # Create a clone of yourself while being dragged.
-        helper: => (@clone = new ListMovingView('model': @model)).el

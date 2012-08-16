@@ -42,12 +42,15 @@ define ->
             # Delete the key.
             delete @objects[key]
 
-        # Interface for Chaplin calls.
-        dispose: ->
-            # Remove all my internals.
+        # Remove all my internals.
+        dump: ->
             for key, obj of @objects
                 obj?.dispose()
 
+        # Interface for Chaplin calls.
+        dispose: ->
+            @dump()
+            
             # And now the store itself.
             delete @['objects']
 

@@ -1,8 +1,9 @@
 define [
     'chaplin'
+    'core/garbage'
     'core/view'
     'views/sidebar_folder'
-], (Chaplin, View, SidebarListView, SidebarFolderView) ->
+], (Chaplin, Garbage, View, SidebarListView, SidebarFolderView) ->
 
     class SidebarFolderView extends View
 
@@ -16,13 +17,19 @@ define [
         # 'Serialize' our opts and add cid so we can constrain events.
         getTemplateData: -> _.extend { 'cid': @model.cid }, @model.toJSON()
 
+        initialize: ->
+            super
+
+            # The garbage truck... wroom!
+            @views = new Garbage()
+
         # Render the subviews.
         afterRender: ->
             super
 
             # Dispose of previous subviews and clean up events.
             @undelegate()
-            ( view.dispose() for view in @subviews )
+            @views.dump()
 
             # Events only on this folder.
             @delegate 'click', ".folder.#{@model.cid}.toggle", @toggleFolder
@@ -45,7 +52,7 @@ define [
                 # Render our folders.
                 for folder in @model.get 'folders'
                     $(@el).find('ul.folders').first().append (v = new SidebarFolderView('model': folder)).render().el
-                    @subviews.push v
+                    @views.push v
 
             # If we have folders then show a toggler for this folder.
             if @model.get('folders').length isnt 0
