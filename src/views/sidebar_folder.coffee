@@ -32,7 +32,7 @@ define [
             if @model.get('selected') then $(@el).addClass('active')
 
             # Make the folder droppable.
-            $(@el).find('.drop').droppable
+            $(@el).find('.drop:not(.ui-droppable)').droppable
                 'over': @over
                 'out':  @out
                 'drop': @out
@@ -54,7 +54,7 @@ define [
                     else 'active icon-caret-right'
 
         # Toggle the folder, the view is listening to Model changes already.
-        toggleFolder: -> @model.set 'expanded', isExpanded = !@model.get('expanded')
+        toggleFolder: -> @model.set 'expanded', !@model.get('expanded')
 
         over: (e) =>
             $(e.target).addClass 'hover'
