@@ -77,16 +77,18 @@ define [
             $(e.target).removeClass 'hover'
             @toggleEl.removeClass 'hover'
             # Get the list associated.
-            list = $(ui.draggable).data('view').model
+            list = (view = $(ui.draggable).data('view')).model
 
             # The paths.
             newPath = @model.get('path') ; oldPath = list.get('path')
 
-            # Message about it.
-            Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
+            # Are the paths the same?
+            if newPath isnt oldPath
+                # Message about it.
+                Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
 
-            # Update the list path itself.
-            list.set 'path', newPath
+                # Update the list path itself.
+                list.set 'path', newPath
 
-            # Push the list on this folder.
-            @model.addList list
+                # Push the list on this folder.
+                @model.addList list

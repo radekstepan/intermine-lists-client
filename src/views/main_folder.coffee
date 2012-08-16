@@ -8,8 +8,9 @@ define [
     # The folder with other folders and lists.
     class MainFolderView extends View
 
-        container:  '#main'
-        autoRender: true
+        container:       '#main'
+        autoRender:      true
+        containerMethod: 'html'
 
         initialize: ->
             super

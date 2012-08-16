@@ -17,20 +17,23 @@ define [
         addList: (list) ->
             # Get the current lists.
             lists = @.get 'lists'
-            # Push the new one.
-            lists.push list
-            # Unset.
-            @.unset 'lists', 'silent': true
-            # Set
-            @.set 'lists': lists
+            
+            # Only add the list if we do not have it already.
+            if list.cid not in _(lists).pluck('cid')
+                # Push the new one.
+                lists.push list
+                # Unset.
+                @.unset 'lists', 'silent': true
+                # Set
+                @.set 'lists': lists
 
-            # Have we had a reverse refence already?
-            if (folder = list.get('folder'))?
-                # Remove the reference from the folder to the list.
-                folder.removeList list.cid
+                # Have we had a reverse refence already?
+                if (folder = list.get('folder'))?
+                    # Remove the reference from the folder to the list.
+                    folder.removeList list.cid
 
-            # Make a reverse reference.
-            list.set 'folder': @
+                # Make a reverse reference.
+                list.set 'folder': @
 
         ###
         Pasing a cid of a `List` object, remove a reference to this list.

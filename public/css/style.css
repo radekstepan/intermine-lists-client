@@ -19,7 +19,8 @@ ul#breadcrumb li a.home { margin-right:5px; }
 #main table.table tr td [class^="icon-"] { color:#DD4814; }
 
 /* a draggable element when moving */
-.moving { cursor:pointer; box-shadow:2px 2px 3px rgba(50, 50, 50, 0.15); background:#FFF; padding:8px; border:1px solid #DDD; }
+.moving { cursor:pointer; box-shadow:2px 2px 3px rgba(50, 50, 50, 0.15); background:#FFF; padding:8px; border:1px solid #DDD;
+    position:absolute; }
 /* a droppable folder when hovered over (main and sidebar views) */
 .hover, .hover td { background-color:#DD4814 !important; }
 .hover, .hover span, .hover a { color:#FFF !important; text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2) !important; }
