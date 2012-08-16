@@ -42,7 +42,7 @@ define [
             $(@el).find('.drop:not(.ui-droppable)').droppable
                 'over': @over
                 'out':  @out
-                'drop': @out
+                'drop': @drop
 
             # Make a link to toggle element.
             @toggleEl = $(@el).find('.toggle')
@@ -70,3 +70,23 @@ define [
         out: (e) =>
             $(e.target).removeClass 'hover'
             @toggleEl.removeClass 'hover'
+
+        # A dragged list has been dropped on us.
+        drop: (e, ui) =>
+            # Remove the hover sign.
+            $(e.target).removeClass 'hover'
+            @toggleEl.removeClass 'hover'
+            # Get the list associated.
+            list = $(ui.draggable).data('view').model
+
+            # The paths.
+            newPath = @model.get('path') ; oldPath = list.get('path')
+
+            # Message about it.
+            Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
+
+            # Update the list path itself.
+            list.set 'path', newPath
+
+            # Push the list on this folder.
+            @model.addList list

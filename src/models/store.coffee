@@ -80,10 +80,7 @@ define [
             folder = @findFolder path
             if folder?
                 # Append the list reference.
-                lists = folder.get 'lists'
-                lists.push list
-                folder.unset 'lists', 'silent': true
-                folder.set 'lists': lists
+                folder.addList list
             
             else
                 # Make a slug.

@@ -46,4 +46,5 @@ define [
             # Update the list path itself.
             list.set 'path', newPath
 
-            # Update the Folders collection in the store (automatically maybe?).
+            # Push the list on this folder.
+            @model.addList list
