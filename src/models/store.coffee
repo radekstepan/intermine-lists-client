@@ -96,7 +96,7 @@ define [
             
             else
                 # Make a slug.
-                slug = @slugify path[1...].replace /\//g, '-'
+                slug = @folders.slugify path[1...].replace /\//g, '-'
 
                 # No cigar... add a new one linking to this list.
                 @folders.push
@@ -127,6 +127,9 @@ define [
                         parent.set 'folders': folders
                     
                     else
+                        # Create the slug. Bear in mind that for root folder, we do not really need a slug.
+                        slug = @folders.slugify parentPath[1...].replace /\//g, '-'
+
                         # Create a new folder and link to this folder.
                         @folders.push
                             'path':    parentPath

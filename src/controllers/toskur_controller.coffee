@@ -63,7 +63,10 @@ define [
         ###
         index: (params) ->
             # Main view, show the root folder.
-            @views.push 'main', new MainFolderView 'model': @store.findFolder('/')
+            @views.push 'main', new MainFolderView 'model': folder = @store.findFolder('/')
+
+            # Say that we selected this folder.
+            Chaplin.mediator.publish 'activeFolder', folder
 
         ###
         Show an individual list by its `slug`.

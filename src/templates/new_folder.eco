@@ -7,7 +7,7 @@
         
         <div class="modal-body">
             <p>Please enter a name for the new folder:</p>
-            <input type="text" placeholder="New Folder" />
+            <input type="text" class="name" placeholder="New Folder" />
         </div>
         
         <div class="modal-footer">
