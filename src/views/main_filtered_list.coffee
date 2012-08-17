@@ -17,6 +17,9 @@ define [
             # The garbage truck... wroom!
             @views = new Garbage()
 
+            # Re-render itself when the underlying model changes.
+            @modelBind 'change', @render
+
         # Get the template from here.
         getTemplateFunction: -> JST['filtered_lists']
 
@@ -25,6 +28,10 @@ define [
 
         afterRender: ->
             super
+
+            # Thrash the garbage.
+            @undelegate()
+            @views.dump()
 
             # Render the lists inside.
             for model in @collection.models

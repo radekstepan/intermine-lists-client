@@ -5,7 +5,7 @@ cs  = require 'coffee-script'
 eco = require 'eco'
 require 'colors'
 
-task "run", "compile the chaplin.js and eco client code into js then run", ->
+task "client", "compile the chaplin.js and eco client code into js", ->
     config = JSON.parse fs.readFileSync './package.json'
 
     console.log "#{config.name} #{config.version}".bold
