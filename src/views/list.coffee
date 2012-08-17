@@ -16,6 +16,9 @@ define [
         initialize: ->
             super
 
+            # Select this list.
+            @delegate 'click', 'input.check', @checkList
+
             # Create a clone of yourself while being dragged.
             $(@el).draggable
                 'helper': => (@clone = new ListMovingView('model': @model)).el
@@ -27,3 +30,6 @@ define [
             super
 
             $(@el).addClass('list')
+
+        # Check (or uncheck) this list.
+        checkList: -> @model.set 'checked': !@model.get 'checked'

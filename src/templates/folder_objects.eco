@@ -1,3 +1,7 @@
 <table class="table table-striped">
+    <thead>
+        <th class="narrow"></th>
+        <th>Name</th>
+    </thead>
     <tbody></tbody>
 </table>

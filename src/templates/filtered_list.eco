@@ -1,4 +1,7 @@
 <td>
+    <input type="checkbox" class="check" <% if @checked: %>checked="yes"<% end %> />
+</td>
+<td>
     <span class="icon-list-alt"></span>
     <a class="list" href="/list/<%= @slug %>"><%= @name %></a>
 </td>

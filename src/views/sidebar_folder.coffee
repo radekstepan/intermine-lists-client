@@ -35,8 +35,8 @@ define [
             @delegate 'click', ".folder.#{@model.cid}.toggle", @toggleFolder
             @modelBind 'change', @render
 
-            # Are we selected?
-            if @model.get('selected') then $(@el).addClass('active')
+            # Are we set as active?
+            if @model.get('active') then $(@el).addClass('active')
 
             # Make the folder droppable.
             $(@el).find('.drop:not(.ui-droppable)').droppable

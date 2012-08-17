@@ -60,6 +60,9 @@ define [
         makeList: (data) ->
             # Slugify the list name.
             data.slug = @slugify data.name
+
+            # Set all lists as not checked in the UI by default.
+            data.checked = false
             
             # Get the list objects.
             data.objects = new ListObjects window.App.data.list
@@ -97,12 +100,12 @@ define [
 
                 # No cigar... add a new one linking to this list.
                 @folders.push
-                    'path':     path
-                    'name':     path.split('/').pop() # last part of the path.
-                    'lists':    [ list ]
-                    'folders':  []
-                    'slug':     slug
-                    'selected': false
+                    'path':    path
+                    'name':    path.split('/').pop() # last part of the path.
+                    'lists':   [ list ]
+                    'folders': []
+                    'slug':    slug
+                    'active':  false
 
                 # Get the added folder.
                 folder = @folders.at(@folders.length - 1)
@@ -126,12 +129,12 @@ define [
                     else
                         # Create a new folder and link to this folder.
                         @folders.push
-                            'path':     parentPath
-                            'name':     parentPath.split('/').pop() # Last part of the path.
-                            'lists':    []
-                            'folders':  [ folder ]
-                            'slug':     slug
-                            'selected': false
+                            'path':    parentPath
+                            'name':    parentPath.split('/').pop() # Last part of the path.
+                            'lists':   []
+                            'folders': [ folder ]
+                            'slug':    slug
+                            'active':  false
 
                         parent = @folders.at(@folders.length - 1)
 
@@ -159,12 +162,12 @@ define [
         Will select this folder and deselect all others.
         @param {Folder} folder A folder to select
         ###
-        selectFolder: (folder) ->
+        activeFolder: (folder) ->
             # Deselect all others.
-            f.set('selected', false) for f in @folders.models
+            f.set('active', false) for f in @folders.models
 
             # Select this one.
-            folder.set 'selected', true
+            folder.set 'active', true
 
         ###
         Give us a Collection representation of the path.
@@ -187,9 +190,9 @@ define [
             coll
 
         # Get the folder that is set to be selected or return root.
-        getSelectedFolder: ->
+        getActiveFolder: ->
             for folder in @folders.models
-                if folder.get('selected') is true
+                if folder.get('active') is true
                     return folder
             # Catch all return root.
             return @findFolder '/'

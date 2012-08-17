@@ -1,3 +1,4 @@
+<td></td>
 <td>
     <span class="icon-folder-close"></span>
     <a class="folder" href="/folder/<%= @slug %>"><%= @name %></a>

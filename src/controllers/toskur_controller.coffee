@@ -101,8 +101,8 @@ define [
             else
                 Chaplin.mediator.publish 'notification', 'You have asked for this folder', folder.get('name')
 
-                # Set this folder as selected.
-                @store.selectFolder folder
+                # Set this folder as active.
+                @store.activeFolder folder
 
                 # We have the folder, so expand the path towards the folder.
                 @store.expandFolder folder
