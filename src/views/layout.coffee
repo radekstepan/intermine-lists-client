@@ -1,8 +1,10 @@
 define [
     'chaplin'
     'views/notification'
-    'templates/all'           # make all templates globally available
-], (Chaplin, NotificationView) ->
+    'views/filter'
+    'views/actions'
+    'templates/all' # make all templates globally available
+], (Chaplin, NotificationView, FilterView, ActionsView) ->
 
     # Whole body experience.
     class Layout extends Chaplin.Layout
@@ -15,6 +17,10 @@ define [
 
             # Our first message.
             Chaplin.mediator.publish 'notification', 'Welcome to InterMine'
+
+            # Global Views that stick around and do not need to be garbage collected.
+            new FilterView()
+            new ActionsView()
 
         ###
         Create a new notification.

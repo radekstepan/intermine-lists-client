@@ -55,4 +55,9 @@ define [
                 (@clone = new ListMovingView('model': @model)).el
 
         # Check (or uncheck) this list.
-        checkList: -> @model.set 'checked': !@model.get 'checked'
+        checkList: ->
+            # We are OK not re-rendering the View as we need to send a message about the Model Collection.
+            @model.set 'checked': !@model.get 'checked', { 'silent': true }
+
+            # Say to others how many lists are checked.
+            Chaplin.mediator.publish 'checkedLists', @model.collection.where('checked': true).length

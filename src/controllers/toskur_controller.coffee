@@ -3,12 +3,11 @@ define [
     'core/garbage'
     'models/store'
     'views/sidebar_root_folder'
-    'views/filter'
     'views/breadcrumb'
     'views/main_folder'
     'views/main_list'
     'views/main_filtered_list'
-], (Chaplin, Garbage, Store, SidebarRootFolderView, FilterView, BreadcrumbView, MainFolderView, MainListView, MainFilteredListView) ->
+], (Chaplin, Garbage, Store, SidebarRootFolderView, BreadcrumbView, MainFolderView, MainListView, MainFilteredListView) ->
 
     # The main controller of the lists app.
     class TöskurController extends Chaplin.Controller
@@ -27,9 +26,6 @@ define [
 
             # Render the root folder (and onwards) in the sidebar.
             @views.push 'lists', new SidebarRootFolderView 'model': @store.findFolder('/')
-
-            # Lists filtering.
-            @views.push new FilterView()
 
             # Receive filter list messages.
             Chaplin.mediator.subscribe 'filterLists', @filterLists

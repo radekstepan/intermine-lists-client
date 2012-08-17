@@ -1,5 +1,7 @@
 a { cursor:pointer; }
 
+[class^="icon-"] { vertical-align:middle; }
+
 .navbar-inner { border-radius:0; }
 .nav-tabs.nav-stacked > li:last-child > a { border-radius:0; }
 .nav-list { padding:0 0 0 15px; }
