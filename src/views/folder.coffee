@@ -13,14 +13,18 @@ define [
         # Get the template from here.
         getTemplateFunction: -> JST['folder']
 
+        initialize: (options) ->
+            super
+
+            # Set the dad on us.
+            @parent = options.parent
+
         afterRender: ->
             super
 
             $(@el).addClass 'folder'
 
-        initialize: ->
-            super
-
+            # Make droppable.
             $(@el).droppable
                 'over': @over
                 'out':  @out
@@ -34,19 +38,28 @@ define [
         drop: (e, ui) =>
             # Remove the hover sign.
             $(@el).removeClass 'hover'
-            # Get the list associated.
-            list = (view = $(ui.draggable).data('view')).model
 
-            # The paths.
-            newPath = @model.get('path') ; oldPath = list.get('path')
+            # Get the data associated.
+            lists = $(ui.draggable).data('collection')
 
-            # Are the paths the same?
-            if newPath isnt oldPath
-                # Message about it.
-                Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
+            # The new path.
+            newPath = @model.get('path')
 
-                # Update the list path itself.
-                list.set 'path', newPath
+            # Update all the lists that were passed in.
+            lists.each (list) =>
+                # The old path.
+                oldPath = list.get('path')
 
-                # Push the list on this folder.
-                @model.addList list
+                # Are the paths the same?
+                if newPath isnt oldPath
+                    # Message about it.
+                    Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
+
+                    # Update the list path itself.
+                    list.set 'path', newPath
+
+                    # Push the list on this folder.
+                    @model.addList list
+
+            # We have done some actions on a folder in the `MainFolderView`, tell it that it needs to re-render itself.
+            @parent.render()

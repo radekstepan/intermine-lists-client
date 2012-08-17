@@ -18,8 +18,10 @@ define [
             # The garbage truck... wroom!
             @views = new Garbage()
 
-            # Re-render itself when the underlying model changes.
-            @modelBind 'change', @render
+            # We are not re-rendering on change of the underlying `Folder` Model as otherwise when say dropping multiple `Lists`
+            # on a `Folder`, we would re-render too quickly and have access to objects that no longer exist. Thus we need to
+            # manually say to this `Folder` when to re-render after we have done operations on it.
+            # @modelBind 'change', @render
 
         # Get the template from here.
         getTemplateFunction: -> JST['folder_objects']
@@ -37,4 +39,5 @@ define [
             
             # Render the folders.
             for model in @model.get 'folders'
-                @views.push new FolderView 'model': model
+                # Keep reference to us so that children can tell us when to draw ourselves pretty again...
+                @views.push new FolderView 'model': model, parent: @

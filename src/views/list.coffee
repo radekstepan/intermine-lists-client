@@ -26,9 +26,6 @@ define [
             $(@el).draggable
                 'helper': @draggable
 
-            # Make a reference to "us" through `data` although we use ListMovingView.
-            $(@el).data 'view': @
-
         afterRender: ->
             super
 
@@ -44,8 +41,15 @@ define [
 
             # Are we moving just us, or many lists?
             if checked.length > 1
+                # Make a reference to the collection through `data`.
+                $(@el).data 'collection': checked
+
+                # Create a View for the Collection.
                 (@clone = new ListsMovingView('collection': checked)).el
             else
+                # Make a reference to the collection through `data`.
+                $(@el).data 'collection': new Chaplin.Collection [ @model ]
+
                 # We ignore 1 checked list if it isn't this one.
                 # One is the loneliest number there could ever be.
                 (@clone = new ListMovingView('model': @model)).el
