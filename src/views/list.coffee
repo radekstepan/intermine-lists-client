@@ -1,8 +1,11 @@
 define [
+    'chaplin'
     'core/view'
     'views/list_moving'
-], (View, ListMovingView) ->
+    'views/lists_moving'
+], (Chaplin, View, ListMovingView, ListsMovingView) ->
 
+    # A list in the main View.
     class ListView extends View
 
         container:       '#main table tbody'
@@ -21,7 +24,7 @@ define [
 
             # Create a clone of yourself while being dragged.
             $(@el).draggable
-                'helper': => (@clone = new ListMovingView('model': @model)).el
+                'helper': @draggable
 
             # Make a reference to "us" through `data` although we use ListMovingView.
             $(@el).data 'view': @
@@ -30,6 +33,22 @@ define [
             super
 
             $(@el).addClass('list')
+
+        # A UI draggable helper, decides whether we move one or many items.
+        draggable: =>
+            # Clear any previous clone.
+            @clone?.dispose()
+
+            # How many lists are checked?
+            checked = new Chaplin.Collection @model.collection.where('checked': true)
+
+            # Are we moving just us, or many lists?
+            if checked.length > 1
+                (@clone = new ListsMovingView('collection': checked)).el
+            else
+                # We ignore 1 checked list if it isn't this one.
+                # One is the loneliest number there could ever be.
+                (@clone = new ListMovingView('model': @model)).el
 
         # Check (or uncheck) this list.
         checkList: -> @model.set 'checked': !@model.get 'checked'

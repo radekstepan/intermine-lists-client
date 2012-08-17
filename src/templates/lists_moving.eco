@@ -1,0 +1,1 @@
+<a><span class="icon-list-alt"></span></a> <strong>Move <%= @size %> items</strong>

@@ -2,7 +2,7 @@ define [
     'core/view'
 ], (View) ->
 
-    # A list that is being dragged around.
+    # A list being moved around.
     class ListMovingView extends View
 
         autoRender: true
@@ -12,5 +12,5 @@ define [
 
         afterRender: ->
             super
-            
+
             $(@el).addClass 'moving'
