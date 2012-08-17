@@ -1,0 +1,18 @@
+<div class="active">
+    <div class="modal">
+        <div class="modal-header">
+            <a class="close">×</a>
+            <h3>New folder</h3>
+        </div>
+        
+        <div class="modal-body">
+            <p>Please enter a name for the new folder:</p>
+            <input type="text" placeholder="New Folder" />
+        </div>
+        
+        <div class="modal-footer">
+            <a class="cancel btn">Cancel</a>
+            <a class="create btn btn-primary">Create</a>
+        </div>
+    </div>
+</div>

@@ -108,3 +108,6 @@ define [
 
                 # Create a breadcrumb View for this folder.
                 @views.push new BreadcrumbView 'collection': @store.getPath folder
+
+                # Say that we selected this folder.
+                Chaplin.mediator.publish 'activeFolder', folder

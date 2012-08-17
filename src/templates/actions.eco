@@ -1,6 +1,6 @@
 <!-- organise or create a new folder? -->
 <% if @checked isnt 0: %>
-    <a class="btn"><span class="icon-hdd"></span> Organise</a>
+    <a class="organise btn"><span class="icon-hdd"></span> Organise</a>
 <% else: %>
-    <a class="btn btn-primary"><span class="icon-folder-close"></span> New folder</a>
+    <a class="new-folder btn btn-primary"><span class="icon-folder-close"></span> New folder</a>
 <% end %>
