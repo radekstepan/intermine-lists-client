@@ -4,6 +4,8 @@ A client side app maintaining InterMine Lists offering folder/tag organization a
 
 The app is powered by [chaplin](https://github.com/chaplinjs/chaplin) that itself wraps [Backbone.js](http://documentcloud.github.com/backbone/).
 
+![image](https://github.com/radekstepan/intermine-lists-client/raw/master/example.png)
+
 ## Run
 
 Make sure that [node.js](http://nodejs.org/) platform is installed.
@@ -17,7 +19,7 @@ $ npm install -d
 Use cake to compile the client side app.
 
 ```bash
-$ ./node_modules/.bin/cake run
+$ ./node_modules/.bin/cake client
 ```
 
 Then execute the flatiron webserver:

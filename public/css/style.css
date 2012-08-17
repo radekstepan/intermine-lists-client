@@ -1,7 +1,5 @@
 a { cursor:pointer; }
 
-[class^="icon-"] { vertical-align:middle; }
-
 .navbar-inner { border-radius:0; }
 .nav-tabs.nav-stacked > li:last-child > a { border-radius:0; }
 .nav-list { padding:0 0 0 15px; }
@@ -33,6 +31,8 @@ ul#breadcrumb li a.home { margin-right:5px; }
 #toolbar .btn-group { display:block; margin-bottom:10px; }
 
 #filtering input { margin:6px 0 0 10px; }
+
+#actions [class^="icon-"] { vertical-align:middle; }
 
 /* Growl notifications */
 ul#notifications { position:fixed; top:10px; right:20px; z-index:1; color:#000; }
