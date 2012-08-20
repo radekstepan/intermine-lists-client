@@ -20,7 +20,7 @@ module.exports = class TöskurController extends Chaplin.Controller
         @views = new Garbage()
 
         # Give us the Store, inject the API fetched data.
-        @store = new Store window.App.data.lists
+        @store = new Store()
 
         # Render the root folder (and onwards) in the sidebar.
         @views.push 'lists', new SidebarRootFolderView 'model': @store.findFolder('/')

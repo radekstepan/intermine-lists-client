@@ -18,23 +18,11 @@ module.exports = class Töskur extends Chaplin.Application
         @initLayout()
         @initMediator()
 
-        @initData =>
-            # Register all routes and start routing
-            @initRouter routes
+        # Register all routes and start routing
+        @initRouter routes
 
-            # Freeze the application instance to prevent further changes
-            Object.freeze? @
-
-    # Get the data from the API.
-    initData: (done) ->
-        # Lists.
-        $.getJSON '/api/lists', (data) =>
-            @data.lists = data
-
-            # Its contents.
-            $.getJSON '/api/list', (data) =>
-                @data.list = data
-                done()
+        # Freeze the application instance to prevent further changes
+        Object.freeze? @
 
     # Override standard layout initializer.
     initLayout: ->

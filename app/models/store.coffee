@@ -26,7 +26,7 @@ module.exports = class Store extends Chaplin.Collection
         @initialize.apply this, arguments
 
         # Our stuff.
-        for row in models
+        for row in models or @folders.data
             @makeFolder @makeList row
 
     # Extend standard `dispose` by cleaning up `folders` too.
@@ -60,7 +60,7 @@ module.exports = class Store extends Chaplin.Collection
         data.checked = false
         
         # Get the list objects.
-        data.objects = new ListObjects window.App.data.list
+        data.objects = new ListObjects()
 
         # Create us and return us.
         @.push data, 'silent': true
