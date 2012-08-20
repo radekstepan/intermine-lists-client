@@ -54,7 +54,7 @@ module.exports = class Store extends Chaplin.Collection
         data.path = ( part.latinise().slugify() for part in data.path.split('/') ).join('/')
 
         # Slugify the list name.
-        data.slug = data.path.split('/').pop()
+        data.slug = data.name.latinise().slugify()
 
         # Set all lists as not checked in the UI by default.
         data.checked = false
