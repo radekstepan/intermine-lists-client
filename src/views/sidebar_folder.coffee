@@ -98,3 +98,6 @@ define [
 
                     # Push the list on this folder.
                     @model.addList list
+
+            # Tell the main View to update itself.
+            Chaplin.mediator.publish 'renderMain'

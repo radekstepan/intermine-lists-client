@@ -62,4 +62,4 @@ define [
                     @model.addList list
 
             # We have done some actions on a folder in the `MainFolderView`, tell it that it needs to re-render itself.
-            @parent.render()
+            Chaplin.mediator.publish 'renderMain'

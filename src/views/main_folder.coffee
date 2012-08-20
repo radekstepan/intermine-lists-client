@@ -1,9 +1,10 @@
 define [
+    'chaplin'
     'core/garbage'
     'core/view'
     'views/list'
     'views/folder'
-], (Garbage, View, ListView, FolderView) ->
+], (Chaplin, Garbage, View, ListView, FolderView) ->
 
     # The folder with other folders and lists.
     class MainFolderView extends View
@@ -22,6 +23,7 @@ define [
             # on a `Folder`, we would re-render too quickly and have access to objects that no longer exist. Thus we need to
             # manually say to this `Folder` when to re-render after we have done operations on it.
             # @modelBind 'change', @render
+            Chaplin.mediator.subscribe 'renderMain', @render
 
         # Get the template from here.
         getTemplateFunction: -> JST['folder_objects']
