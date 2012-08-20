@@ -26,11 +26,8 @@ define [
 
             # Do we have anything beyond whitespace?
             if (name = $.trim(name)).length isnt 0
-                # Make the name into a slug.
-                @model.slugify(name)
-
                 # Now construct a new path for the created list.
-                path = [ @model.get('path'), @model.slugify(name) ].join('/').replace(/\/\//, '/')
+                path = [ @model.get('path'), name.latinise().slugify() ].join('/').replace(/\/\//, '/')
 
                 # Do we have such a path already?
                 if (@model.collection.where 'path': path).length is 0

@@ -3,3 +3,4 @@ models/
 views/
 templates/
 core/
+lib/

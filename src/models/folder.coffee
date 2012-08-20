@@ -44,9 +44,3 @@ define [
             for list in @.get 'lists'
                 if list.cid isnt cid then lists.push list
             @.set 'lists': lists
-
-        ###
-        Slugify a string.
-        @param {string} text
-        ###
-        slugify: (text) -> text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/\s/gi, "-").toLowerCase()

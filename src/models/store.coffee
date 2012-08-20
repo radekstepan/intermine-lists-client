@@ -39,12 +39,6 @@ define [
             delete @folders
 
         ###
-        Slugify a string.
-        @param {string} text
-        ###
-        slugify: (text) -> text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/\s/gi, "-").toLowerCase()
-
-        ###
         Find a list from this collection by its slug.
         @param {string} slug
         ###
@@ -59,7 +53,7 @@ define [
         ###
         makeList: (data) ->
             # Slugify the path.
-            data.path = ( @slugify(part) for part in data.path.split('/') ).join('/')
+            data.path = ( part.latinise().slugify() for part in data.path.split('/') ).join('/')
 
             # Slugify the list name.
             data.slug = data.path.split('/').pop()

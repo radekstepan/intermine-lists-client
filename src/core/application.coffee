@@ -2,6 +2,7 @@ define [
     'chaplin'
     'views/layout'
     'core/routes'
+    'lib/string' # latinisation, slugification for the rest of us...
 ], (Chaplin, Layout, routes) ->
 
     # The application object
