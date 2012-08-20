@@ -11,11 +11,11 @@ The app is powered by [chaplin](https://github.com/chaplinjs/chaplin) that itsel
 The whole stack is built on top of the [node.js](http://nodejs.org/) platform, make sure it is installed.
 
 ### Brunch
-[Brunch](http://brunch.io/) is a html5 application builder that's agnostic to programming langs and frameworks. In this case, CoffeeScript is used with Stylus, Handlebars.js templates and javascript libs.
+[Brunch](http://brunch.io/) is a html5 application builder that's agnostic to programming langs and frameworks.
 
 `config.coffee` contains brunch configuration, `package.json` contains brunch plugins.
 
-### Chaplin (+ Backbone.js)
+### Chaplin
 [Chaplin](https://github.com/chaplinjs/chaplin) is a framework on top of [Backbone.js](http://backbonejs.org/) that adds some great predefined structure, like `ModelView`, `Controller`, `mediator`, `Application`.
 
 ### Eco
@@ -26,7 +26,7 @@ The whole stack is built on top of the [node.js](http://nodejs.org/) platform, m
 
 ## Getting started
 
-Install the dependencies_
+Install the dependencies:
 
 ```bash
 $ npm install -d
