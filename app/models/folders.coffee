@@ -9,27 +9,27 @@ module.exports = class Folders extends Chaplin.Collection
     data: [
         {
             "name": "UK Cities",
-            "path": "/United Kingdom"
+            "path": "/united-kingdom"
         },
         {
             "name": "UK Towns",
-            "path": "/United Kingdom"
+            "path": "/united-kingdom"
         },
         {
             "name": "UK Lakes",
-            "path": "/United Kingdom"
+            "path": "/united-kingdom"
         },
         {
             "name": "Welsh Lakes",
-            "path": "/United Kingdom/Wales"
+            "path": "/united-kingdom/wales"
         },
         {
             "name": "Czech Ponds",
-            "path": "/Czech Republic"
+            "path": "/czech-republic"
         },
         {
             "name": "Czech Villages",
-            "path": "/Czech Republic"
+            "path": "/czech-republic"
         },
         {
             "name": "World Seas",
