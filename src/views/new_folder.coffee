@@ -19,6 +19,15 @@ define [
             @delegate 'click', 'a.close',  @dispose
             @delegate 'click', 'a.create', @create
 
+            # Additional keypress events.
+            @delegate 'keyup', (e) =>
+                switch e.keyCode
+                    when 27 then @dispose()
+                    when 13 then @create()
+
+            # Give focus to the input field.
+            $(@el).find('input.name').focus()
+
         # Create the folder.
         create: (e) ->
             # Get the name.
