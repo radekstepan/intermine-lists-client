@@ -1,5 +1,7 @@
-<% if @type is 'folder': %>
-    <a href="/folder/<%= @slug %>"><%= @name %></a>
-<% else: %>
-    <%= @name %>
-<% end %>
+<span class="capitalize">
+    <% if @type is 'folder': %>
+        <a href="/folder/<%= @slug %>"><%= @name %></a>
+    <% else: %>
+        <%= @name %>
+    <% end %>
+</span>

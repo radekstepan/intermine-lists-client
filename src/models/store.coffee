@@ -42,7 +42,7 @@ define [
         Slugify a string.
         @param {string} text
         ###
-        slugify: (text) -> text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/-/gi, "_").replace(/\s/gi, "-").toLowerCase()
+        slugify: (text) -> text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/\s/gi, "-").toLowerCase()
 
         ###
         Find a list from this collection by its slug.
@@ -58,15 +58,18 @@ define [
         @param {Object} data A pure dictionary of data to make into a List object.
         ###
         makeList: (data) ->
+            # Slugify the path.
+            data.path = ( @slugify(part) for part in data.path.split('/') ).join('/')
+
             # Slugify the list name.
-            data.slug = @slugify data.name
+            data.slug = data.path.split('/').pop()
 
             # Set all lists as not checked in the UI by default.
             data.checked = false
             
             # Get the list objects.
             data.objects = new ListObjects window.App.data.list
-            
+
             # Create us and return us.
             @.push data, 'silent': true
             @.at(@.length - 1)
@@ -95,16 +98,13 @@ define [
                 folder.addList list
             
             else
-                # Make a slug.
-                slug = @folders.slugify path[1...].replace /\//g, '-'
-
                 # No cigar... add a new one linking to this list.
                 @folders.push
                     'path':    path
-                    'name':    path.split('/').pop() # last part of the path.
+                    'name':    path.split('/').pop().replace(/\-/g, ' ') # last part of the path.
                     'lists':   [ list ]
                     'folders': []
-                    'slug':    slug
+                    'slug':    path[1...] # the path except the leading forward slash
                     'active':  false
 
                 # Get the added folder.
@@ -127,16 +127,13 @@ define [
                         parent.set 'folders': folders
                     
                     else
-                        # Create the slug. Bear in mind that for root folder, we do not really need a slug.
-                        slug = @folders.slugify parentPath[1...].replace /\//g, '-'
-
                         # Create a new folder and link to this folder.
                         @folders.push
                             'path':    parentPath
-                            'name':    parentPath.split('/').pop() # Last part of the path.
+                            'name':    parentPath.split('/').pop().replace(/\-/g, ' ') # last part of the path.
                             'lists':   []
                             'folders': [ folder ]
-                            'slug':    slug
+                            'slug':    parentPath[1...] # the path except the leading forward slash
                             'active':  false
 
                         parent = @folders.at(@folders.length - 1)

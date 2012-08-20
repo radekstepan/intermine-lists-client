@@ -37,6 +37,6 @@ define [
                 @push
                     'cid':      folder.cid
                     'type':     'folder'
-                    'name':     name
+                    'name':     name.replace(/\-/g, ' ')
                     'position': @position++
                     'slug':     folder.get 'slug'

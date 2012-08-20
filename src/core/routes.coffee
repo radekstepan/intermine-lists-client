@@ -7,4 +7,7 @@ define ->
     (match) ->
         match '',             'toskur#index'
         match 'list/:slug',   'toskur#list'
-        match 'folder/:slug', 'toskur#folder'
+        # Generate a 20 level deep 'nice' route for folders.
+        old = 'folder'
+        for i in [0...20]
+            match old = "#{old}/:s#{i}", 'toskur#folder'

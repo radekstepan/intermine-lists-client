@@ -4,6 +4,8 @@ a { cursor:pointer; }
 .nav-tabs.nav-stacked > li:last-child > a { border-radius:0; }
 .nav-list { padding:0 0 0 15px; }
 
+.capitalize { text-transform:capitalize; }
+
 ul#folders { cursor:pointer; padding:0; }
 ul#folders ul.lists { padding-left:16px; }
 ul#folders li { position:relative; }

@@ -94,7 +94,17 @@ define [
         @param {Object} params Passed in properties
         ###
         folder: (params) ->
-            folder = @store.findFolder(params.slug, 'slug')
+            if params.length isnt 1
+                # Do it the good way and merge all the `s*` key values together.
+                slug = []
+                for i in [0...20]
+                    if params[key = "s#{i}"]? then slug.push params[key]
+                    else break
+                folder = @store.folders.where('slug': slug.join('/'))?[0]
+            else
+                folder = @store.folders.where('slug': params.slug)?[0]
+
+            # Did we find the folder?
             unless folder?
                 Chaplin.mediator.publish 'notification', 'This folder has not been found'
             else
