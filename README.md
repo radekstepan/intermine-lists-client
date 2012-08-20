@@ -6,26 +6,36 @@ The app is powered by [chaplin](https://github.com/chaplinjs/chaplin) that itsel
 
 ![image](https://github.com/radekstepan/intermine-lists-client/raw/master/example.png)
 
-## Run
+## Stack
 
-Make sure that [node.js](http://nodejs.org/) platform is installed.
+The whole stack is built on top of the [node.js](http://nodejs.org/) platform, make sure it is installed.
 
-Then install dependencies.
+### Brunch
+[Brunch](http://brunch.io/) is a html5 application builder that's agnostic to programming langs and frameworks. In this case, CoffeeScript is used with Stylus, Handlebars.js templates and javascript libs.
+
+`config.coffee` contains brunch configuration, `package.json` contains brunch plugins.
+
+### Chaplin (+ Backbone.js)
+[Chaplin](https://github.com/chaplinjs/chaplin) is a framework on top of [Backbone.js](http://backbonejs.org/) that adds some great predefined structure, like `ModelView`, `Controller`, `mediator`, `Application`.
+
+### Eco
+[Eco](https://github.com/sstephenson/eco/) lets you embed CoffeeScript logic in your markup. It's like EJS and ERB, but with CoffeeScript inside.
+
+### Flatiron
+[Flatiron](http://flatironjs.org/) is used to serve files and data. Does not play a large role here.
+
+## Getting started
+
+Install the dependencies_
 
 ```bash
 $ npm install -d
 ```
 
-Use cake to compile the client side app.
+Run the server and compile the client watching for changes:
 
 ```bash
-$ ./node_modules/.bin/cake client
-```
-
-Then execute the flatiron webserver:
-
-```bash
-$ ./node_modules/.bin/coffee server.coffee
+$ npm start
 ```
 
 Visit [http://127.0.0.1:1111](http://127.0.0.1:1111).
