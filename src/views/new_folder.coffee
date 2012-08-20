@@ -1,6 +1,7 @@
 define [
+    'chaplin'
     'core/view'
-], (View) ->
+], (Chaplin, View) ->
 
     class NewFolderView extends View
 
@@ -15,7 +16,7 @@ define [
             super
 
             @delegate 'click', 'a.cancel', @dispose
-            @delegate 'click', 'a.close', @dispose
+            @delegate 'click', 'a.close',  @dispose
             @delegate 'click', 'a.create', @create
 
         # Create the folder.
@@ -25,12 +26,40 @@ define [
 
             # Do we have anything beyond whitespace?
             if (name = $.trim(name)).length isnt 0
+                # Make the name into a slug.
+                @model.slugify(name)
+
                 # Now construct a new path for the created list.
-                path = [ @model.get('path'), name ].join('/').replace(/\/\//g, '/') # root folder is just one '/'
+                path = [ @model.get('path'), @model.slugify(name) ].join('/').replace(/\/\//, '/')
 
                 # Do we have such a path already?
                 if (@model.collection.where 'path': path).length is 0
-                    console.log 'good list'
+                    # OK, push the new folder.
+                    @model.collection.push
+                        'path':    path
+                        'name':    path.split('/').pop().replace(/\-/g, ' ') # last part of the path.
+                        'lists':   []
+                        'folders': []
+                        'slug':    path[1...] # the path except the leading forward slash
+                        'active':  false
+
+                    # Get the added folder.
+                    folder = @model.collection.at(@model.collection.length - 1)
+
+                    # Link to this folder from the parent.
+                    folders = @model.get('folders')
+                    folders.push folder
+                    @model.unset 'folders', 'silent': true
+                    @model.set 'folders': folders
+
+                    # Make a back reference to the parent.
+                    folder.set 'parent': @model
+
+                    # Tell the main View to re-render.
+                    Chaplin.mediator.publish 'renderMain'
+
+                    # And say what we just did.
+                    Chaplin.mediator.publish 'notification', 'A new folder has been created', folder.get('name')
             
             # Die either way...
             @dispose()
