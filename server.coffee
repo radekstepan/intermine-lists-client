@@ -5,7 +5,6 @@ union    = require 'union'
 connect  = require 'connect'
 send     = require 'send'
 fs       = require 'fs'
-require 'colors'
 
 # Export for Brunch.
 exports.startServer = (port, dir) ->
