@@ -3,5 +3,5 @@
 </td>
 <td>
     <span class="icon-list-alt"></span>
-    <a class="list" href="/list/<%= @slug %>"><%= @name %></a>
+    <a class="list" href="/toskur/list/<%= @slug %>"><%= @name %></a>
 </td>

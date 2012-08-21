@@ -4,6 +4,8 @@ a { cursor:pointer; }
 .nav-tabs.nav-stacked > li:last-child > a { border-radius:0; }
 .nav-list { padding:0 0 0 15px; }
 
+[class^="icon-"], [class*=" icon-"] { background-image:none; }
+
 .capitalize { text-transform:capitalize; }
 
 ul#folders { cursor:pointer; padding:0; }
@@ -18,21 +20,22 @@ ul#breadcrumb li:not(:last-child) { margin-right:5px; }
 ul#breadcrumb li:not(:last-child):after { content:"/"; display:inline-block; }
 ul#breadcrumb li a.home { margin-right:5px; }
 
-#main table tr td [class^="icon-"] { color:#DD4814; }
+#main table tr td [class^="icon-"] { color:#08C; }
 #main table tr td { vertical-align:bottom; }
 #main table tr th.narrow { width:14px; }
+#main table tr td input[type="checkbox"] { vertical-align:top; }
 
 /* a draggable element when moving */
 .moving { cursor:pointer; box-shadow:2px 2px 3px rgba(50, 50, 50, 0.15); background:#FFF; padding:8px; border:1px solid #DDD;
     position:absolute; }
 /* a droppable folder when hovered over (main and sidebar views) */
-.hover, .hover td { background-color:#DD4814 !important; }
+.hover, .hover td { background-color:#08C !important; }
 .hover, .hover span, .hover a { color:#FFF !important; text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2) !important; }
 
 #toolbar .btn,
 #toolbar .btn-group { display:block; margin-bottom:10px; }
 
-#filtering input { margin:6px 0 0 10px; }
+#filtering input { margin:5px 0 0 10px; }
 
 #actions [class^="icon-"] { vertical-align:middle; }
 
