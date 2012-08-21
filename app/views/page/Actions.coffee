@@ -1,7 +1,9 @@
 Chaplin = require 'chaplin'
-View = require 'core/view'
-Garbage = require 'core/garbage'
-NewFolderView = require 'views/new_folder'
+
+View = require 'core/View'
+Garbage = require 'core/Garbage'
+
+NewFolderView = require 'views/page/NewFolder'
 
 module.exports = class ActionsView extends View
 

@@ -1,6 +1,7 @@
 Chaplin = require 'chaplin'
-Garbage = require 'core/garbage'
-View = require 'core/view'
+
+Garbage = require 'core/Garbage'
+View = require 'core/View'
 
 module.exports = class SidebarFolderView extends View
 

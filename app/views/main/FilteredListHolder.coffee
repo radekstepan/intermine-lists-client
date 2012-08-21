@@ -1,10 +1,12 @@
 Chaplin = require 'chaplin'
-Garbage = require 'core/garbage'
-View = require 'core/view'
-FilteredListView = require 'views/filtered_list'
+
+Garbage = require 'core/Garbage'
+View = require 'core/View'
+
+FilteredListView = require 'views/main/FilteredList'
 
 # The filtered collection of lists.
-module.exports = class MainFilteredListView extends View
+module.exports = class FilteredListHolderView extends View
 
     container:       '#main'
     autoRender:      true

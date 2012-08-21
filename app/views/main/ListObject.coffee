@@ -1,4 +1,4 @@
-View = require 'core/view'
+View = require 'core/View'
 
 module.exports = class ListObjectView extends View
 

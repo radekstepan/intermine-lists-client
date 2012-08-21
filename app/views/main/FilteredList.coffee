@@ -1,5 +1,5 @@
-ListView = require 'views/list'
-ListMovingView = require 'views/list_moving'
+ListView = require 'views/main/List'
+ListMovingView = require 'views/main/ListMoving'
 
 module.exports = class FilteredListView extends ListView
 

@@ -1,4 +1,4 @@
-View = require 'core/view'
+View = require 'core/View'
 
 # A list being moved around.
 module.exports = class ListMovingView extends View

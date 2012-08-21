@@ -1,4 +1,4 @@
-Töskur = require 'core/application'
+Töskur = require 'core/Application'
 
 $ ->
     window.App = new Töskur()

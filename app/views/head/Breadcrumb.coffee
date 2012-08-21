@@ -1,5 +1,6 @@
 Chaplin = require 'chaplin'
-CrumbView = require 'views/crumb'
+
+CrumbView = require 'views/head/Crumb'
 
 module.exports = class BreadcrumbView extends Chaplin.CollectionView
 

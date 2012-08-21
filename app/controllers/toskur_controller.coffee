@@ -1,11 +1,14 @@
 Chaplin = require 'chaplin'
-Garbage = require 'core/garbage'
-Store = require 'models/store'
-SidebarRootFolderView = require 'views/sidebar_root_folder'
-BreadcrumbView = require 'views/breadcrumb'
-MainFolderView = require 'views/main_folder'
-MainListView = require 'views/main_list'
-MainFilteredListView = require 'views/main_filtered_list'
+
+Garbage = require 'core/Garbage'
+Store = require 'models/Store'
+
+# The Views.
+SidebarFolderHolderView = require 'views/sidebar/SidebarFolderHolder'
+BreadcrumbView = require 'views/head/Breadcrumb'
+FolderHolderView = require 'views/main/FolderHolder'
+ListObjectHolderView = require 'views/main/ListObjectHolder'
+FilteredListHolderView = require 'views/main/FilteredListHolder'
 
 # The main controller of the lists app.
 module.exports = class TöskurController extends Chaplin.Controller
@@ -23,7 +26,7 @@ module.exports = class TöskurController extends Chaplin.Controller
         @store = new Store()
 
         # Render the root folder (and onwards) in the sidebar.
-        @views.push 'lists', new SidebarRootFolderView 'model': @store.findFolder('/')
+        @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')
 
         # Receive filter list messages.
         Chaplin.mediator.subscribe 'filterLists', @filterLists
@@ -53,7 +56,7 @@ module.exports = class TöskurController extends Chaplin.Controller
             coll = new Chaplin.Collection @store.filter (list) -> list.get('name').match re
 
             # Show the filtered lists.
-            @views.push 'filter', new MainFilteredListView 'collection': coll
+            @views.push 'filter', new FilteredListHolderView 'collection': coll
 
     ### 
     Show the default index page.
@@ -61,7 +64,7 @@ module.exports = class TöskurController extends Chaplin.Controller
     ###
     index: (params) ->
         # Main view, show the root folder.
-        @views.push 'main', new MainFolderView 'model': folder = @store.findFolder('/')
+        @views.push 'main', new FolderHolderView 'model': folder = @store.findFolder('/')
 
         # Say that we selected this folder.
         Chaplin.mediator.publish 'activeFolder', folder
@@ -82,7 +85,7 @@ module.exports = class TöskurController extends Chaplin.Controller
             @store.expandFolder list.get 'path'
 
             # Main view, show the selected list and its contents.
-            @views.push 'main', new MainListView 'collection': list.get 'objects'
+            @views.push 'main', new ListObjectHolderView 'collection': list.get 'objects'
 
             # Create a breadcrumb View for this list.
             @views.push new BreadcrumbView 'collection': @store.getPath list
@@ -115,7 +118,7 @@ module.exports = class TöskurController extends Chaplin.Controller
             @store.expandFolder folder
 
             # Main view, show the selected folder.
-            @views.push 'main', new MainFolderView 'model': folder
+            @views.push 'main', new FolderHolderView 'model': folder
 
             # Create a breadcrumb View for this folder.
             @views.push new BreadcrumbView 'collection': @store.getPath folder

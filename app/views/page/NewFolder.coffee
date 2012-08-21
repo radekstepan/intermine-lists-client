@@ -1,5 +1,6 @@
 Chaplin = require 'chaplin'
-View = require 'core/view'
+
+View = require 'core/View'
 
 module.exports = class NewFolderView extends View
 

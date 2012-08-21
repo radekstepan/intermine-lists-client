@@ -1,5 +1,5 @@
 Chaplin = require 'chaplin'
-Layout = require 'views/layout'
+Layout = require 'views/page/Layout'
 routes = require 'core/routes'
 require 'lib/string' # latinisation, slugification for the rest of us...
 

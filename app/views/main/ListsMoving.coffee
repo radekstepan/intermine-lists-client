@@ -1,4 +1,4 @@
-View = require 'core/view'
+View = require 'core/View'
 
 # Multiple lists being dragged around.
 module.exports = class ListsMovingView extends View

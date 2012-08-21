@@ -1,8 +1,9 @@
 Chaplin = require 'chaplin'
-NotificationView = require 'views/notification'
-BodyView = require 'views/body'
-FilterView = require 'views/filter'
-ActionsView = require 'views/actions'
+
+NotificationView = require 'views/page/Notification'
+BodyView = require 'views/page/Body'
+FilterView = require 'views/head/Filter'
+ActionsView = require 'views/page/Actions'
 
 # Whole body experience.
 module.exports = class Layout extends Chaplin.Layout

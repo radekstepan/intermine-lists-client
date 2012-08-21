@@ -1,5 +1,4 @@
-View = require 'core/view'
-require 'templates/body'
+View = require 'core/View'
 
 module.exports = class BodyView extends View
 

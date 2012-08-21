@@ -1,11 +1,13 @@
 Chaplin = require 'chaplin'
-Garbage = require 'core/garbage'
-View = require 'core/view'
-ListView = require 'views/list'
-FolderView = require 'views/folder'
+
+Garbage = require 'core/Garbage'
+View = require 'core/View'
+
+ListView = require 'views/main/List'
+FolderView = require 'views/main/Folder'
 
 # The folder with other folders and lists.
-module.exports = class MainFolderView extends View
+module.exports = class FolderHolderView extends View
 
     container:       '#main'
     autoRender:      true

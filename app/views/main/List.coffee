@@ -1,7 +1,9 @@
 Chaplin = require 'chaplin'
-View = require 'core/view'
-ListMovingView = require 'views/list_moving'
-ListsMovingView = require 'views/lists_moving'
+
+View = require 'core/View'
+
+ListMovingView = require 'views/main/ListMoving'
+ListsMovingView = require 'views/main/ListsMoving'
 
 # A list in the main View.
 module.exports = class ListView extends View

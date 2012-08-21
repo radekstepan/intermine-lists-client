@@ -1,8 +1,10 @@
 Chaplin = require 'chaplin'
-List = require 'models/list'
-ListObjects = require 'models/list_objects'
-Folders = require 'models/folders'
-Path = require 'models/path'
+
+ListCollection = require 'models/ListCollection'
+List = require 'models/List'
+ListObjectCollection = require 'models/ListObjectCollection'
+FolderCollection = require 'models/FolderCollection'
+Path = require 'models/Path'
 
 # A flat store of all lists (and folders) on a page.
 module.exports = class Store extends Chaplin.Collection
@@ -14,19 +16,17 @@ module.exports = class Store extends Chaplin.Collection
     folders: null
 
     # Hold folders here and re-initialize.
-    initialize: -> @folders = new Folders()
+    initialize: -> @folders = new FolderCollection()
 
     # Our custom constructor.
     # Alternatively, we could let Backbone init Lists and then retrospectively create Folders and add Obj.
-    constructor: (models, options={}) ->
+    constructor: ->
         # Backbone.js
-        @model = options.model if options.model
-        @comparator = options.comparator if options.comparator
         @_reset()
         @initialize.apply this, arguments
 
         # Our stuff.
-        for row in models or @folders.data
+        for row in ListCollection
             @makeFolder @makeList row
 
     # Extend standard `dispose` by cleaning up `folders` too.
@@ -60,7 +60,7 @@ module.exports = class Store extends Chaplin.Collection
         data.checked = false
         
         # Get the list objects.
-        data.objects = new ListObjects()
+        data.objects = new ListObjectCollection()
 
         # Create us and return us.
         @.push data, 'silent': true

@@ -1,9 +1,10 @@
-Garbage = require 'core/garbage'
-View = require 'core/view'
-ListObjectView = require 'views/list_object'
+Garbage = require 'core/Garbage'
+View = require 'core/View'
+
+ListObjectView = require 'views/main/ListObject'
 
 # The list and its contents.
-module.exports = class MainListView extends View
+module.exports = class ListObjectHolderView extends View
 
     container:  '#main'
     autoRender: true

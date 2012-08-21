@@ -1,6 +1,6 @@
-SidebarFolderView = require 'views/sidebar_folder'
+SidebarFolderView = require 'views/sidebar/SidebarFolder'
 
-module.exports = class SidebarRootFolderView extends SidebarFolderView
+module.exports = class SidebarFolderHolderView extends SidebarFolderView
 
     tagName:         'li'         # a list item
     containerMethod: 'html'       # overriding everything

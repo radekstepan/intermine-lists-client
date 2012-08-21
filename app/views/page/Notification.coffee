@@ -1,4 +1,4 @@
-View = require 'core/view'
+View = require 'core/View'
 
 # An app wide message.
 module.exports = class NotificationView extends View
