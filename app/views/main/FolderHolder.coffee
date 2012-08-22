@@ -77,8 +77,8 @@ module.exports = class FolderHolderView extends View
         for list in @model.get 'lists'
             list.set 'checked': which, { 'silent': true }
 
+        # Say to others how many lists are checked.
+        Chaplin.mediator.publish 'checkedLists', if which is true then yay + nay else 0
+
         # One re-render after all is done.
         @render()
-
-        # Say to others how many lists are checked.
-        Chaplin.mediator.publish 'checkedLists', if which is true then nay else yay
