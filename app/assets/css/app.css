@@ -23,7 +23,7 @@ ul#breadcrumb li a.home { margin-right:5px; }
 #main table tr td [class^="icon-"] { color:#08C; }
 #main table tr td { vertical-align:bottom; }
 #main table tr th.narrow { width:14px; }
-#main table tr td input[type="checkbox"] { vertical-align:top; }
+#main table input[type="checkbox"] { vertical-align:top; }
 
 /* a draggable element when moving */
 .moving { cursor:pointer; box-shadow:2px 2px 3px rgba(50, 50, 50, 0.15); background:#FFF; padding:8px;
