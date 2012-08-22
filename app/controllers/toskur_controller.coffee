@@ -43,6 +43,9 @@ module.exports = class TöskurController extends Chaplin.Controller
     @param {string} filter
     ###
     filterLists: (filter) =>
+        # Trigger a message saying that all Views should deselect their... selections.
+        Chaplin.mediator.publish 'deselectAll'
+
         # Remove existing filtered list.
         @views.disposeOf 'filter'
 

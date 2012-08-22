@@ -25,6 +25,9 @@ module.exports = class FolderHolderView extends View
         # @modelBind 'change', @render
         Chaplin.mediator.subscribe 'renderMain', @render
 
+        # Listen to the inner lists being checked.
+        Chaplin.mediator.subscribe 'checkedLists', @updateCheckbox
+
     # Get the template from here.
     getTemplateFunction: -> require 'templates/folder_objects'
 
@@ -40,8 +43,6 @@ module.exports = class FolderHolderView extends View
 
         # Update main checkbox according to whether all is checked or not.
         @updateCheckbox()
-        # And listen to the inner lists being checked.
-        Chaplin.mediator.subscribe 'checkedLists', @updateCheckbox
 
         # Render the lists.
         for model in @model.get 'lists'
@@ -52,6 +53,13 @@ module.exports = class FolderHolderView extends View
             # Keep reference to us so that children can tell us when to draw ourselves pretty again...
             @views.push new FolderView 'model': model, parent: @
 
+    # Need to dispose of us listening to channels.
+    dispose: ->
+        for channel in [ 'checkedLists', 'renderMain' ]
+            Chaplin.mediator.unsubscribe channel
+
+        super
+
     # Update main checkbox according to whether all is checked or not.
     updateCheckbox: =>
         [ nay, yay ] = @checked()
@@ -59,7 +67,7 @@ module.exports = class FolderHolderView extends View
         $(@el).find('input.check-all').prop 'checked', nay is 0
 
     # Count the number of un-/checked lists on us.
-    checked: ->
+    checked: =>
         r = [ 0, 0 ]
         for list in @model.get('lists')
             r[0 + list.get('checked')] += 1

@@ -35,6 +35,8 @@ module.exports = class ActionsView extends View
     afterRender: ->
         super
 
+        console.log "#{@checked} lists are selected"
+
         @delegate 'click', 'a.new-folder', @newFolder
 
     newFolder: =>

@@ -21,6 +21,9 @@ module.exports = class FilteredListHolderView extends View
         # Re-render itself when others tell us to.
         Chaplin.mediator.subscribe 'renderMain', @render
 
+        # Listen to the inner lists being checked.
+        Chaplin.mediator.subscribe 'checkedLists', @updateCheckbox
+
     # Get the template from here.
     getTemplateFunction: -> require 'templates/filtered_lists'
 
@@ -39,12 +42,17 @@ module.exports = class FilteredListHolderView extends View
 
         # Update main checkbox according to whether all is checked or not.
         @updateCheckbox()
-        # And listen to the inner lists being checked.
-        Chaplin.mediator.subscribe 'checkedLists', @updateCheckbox
 
         # Render the lists inside.
         for model in @collection.models
             @views.push view = new FilteredListView 'model': model
+
+    # Need to dispose of us listening to channels.
+    dispose: ->
+        for channel in [ 'checkedLists', 'renderMain' ]
+            Chaplin.mediator.unsubscribe channel
+
+        super
 
     # Update main checkbox according to whether all is checked or not.
     updateCheckbox: =>
