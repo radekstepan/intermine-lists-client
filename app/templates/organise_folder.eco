@@ -1,10 +1,10 @@
 <% if @path isnt '/': %>
     <a class="folder <%= @cid %> toggle"></a>
-    <a class="drop capitalize" href="/toskur/folder/<%= @slug %>">
+    <a class="select capitalize">
         <span class="icon-folder-close"></span> <%= @name %>
     </a>
 <% else: %>
-    <a class="drop" href="/toskur/index">
+    <a class="select">
         <span class="icon-home"></span>
     </a>
 <% end %>

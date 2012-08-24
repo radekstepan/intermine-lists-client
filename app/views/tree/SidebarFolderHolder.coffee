@@ -1,4 +1,4 @@
-SidebarFolderView = require 'views/sidebar/SidebarFolder'
+SidebarFolderView = require 'views/tree/SidebarFolder'
 
 # A root folder '/' holding all the other content.
 module.exports = class SidebarFolderHolderView extends SidebarFolderView

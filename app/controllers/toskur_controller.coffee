@@ -3,7 +3,7 @@ Chaplin = require 'chaplin'
 Garbage = require 'core/Garbage'
 
 # The Views.
-SidebarFolderHolderView = require 'views/sidebar/SidebarFolderHolder'
+SidebarFolderHolderView = require 'views/tree/SidebarFolderHolder'
 BreadcrumbView = require 'views/head/Breadcrumb'
 FolderHolderView = require 'views/main/FolderHolder'
 ListObjectHolderView = require 'views/main/ListObjectHolder'
@@ -15,11 +15,14 @@ module.exports = class TöskurController extends Chaplin.Controller
     historyURL: (params) -> ''
 
     # Link to main Store.
-    store: window.Store
+    store: null
 
     initialize: ->
         # Storage for objects to be garbage collected.
         @views = new Garbage()
+        
+        # Main Store.
+        @store = window.Store
 
         # Render the root folder (and onwards) in the sidebar.
         @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')

@@ -1,4 +1,4 @@
-<div class="active">
+<div class="box">
     <div class="modal">
         <div class="modal-header">
             <a class="close">×</a>
@@ -10,9 +10,7 @@
 
             <h4>Move to</h4>
 
-            <div class="tree">
-                Tree goes here
-            </div>
+            <ul id="tree" class="folders-tree nav nav-tabs nav-stacked"></ul>
         </div>
         
         <div class="modal-footer">

@@ -2,14 +2,22 @@ Chaplin = require 'chaplin'
 
 View = require 'core/View'
 
+OrganiseFolderHolderView = require 'views/tree/OrganiseFolderHolder'
+
 module.exports = class OrganiseListsView extends View
 
     container:       '#popover'
     containerMethod: 'html'
     autoRender:      true
 
-    # Link to main Store.
-    store: window.Store
+    # Here be Store.
+    store: null
+    
+    initialize: ->
+        super
+
+        # Main Store.
+        @store = window.Store
 
     # Get the template from here.
     getTemplateFunction: -> require 'templates/organise_lists'
@@ -17,6 +25,10 @@ module.exports = class OrganiseListsView extends View
     afterRender: ->
         super
 
+        # Render the Folder tree View.
+        @view = new OrganiseFolderHolderView 'model': @store.findFolder('/')
+
+        # Some events.
         @delegate 'click', 'a.cancel', @dispose
         @delegate 'click', 'a.close',  @dispose
         @delegate 'click', 'a.apply',  @apply
