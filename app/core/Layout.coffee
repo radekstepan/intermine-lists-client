@@ -15,8 +15,6 @@ module.exports = class Layout extends Chaplin.Layout
 
         # Main body of the page.
         new BodyView()
-        # Filter the lists.
-        new FilterView()
 
         # Render Views that need to be reinitialized on each Controller startup.
         @views = new Garbage()
@@ -31,6 +29,7 @@ module.exports = class Layout extends Chaplin.Layout
     # Global Views that due to the nature of messaging need to be re-initialized on each Controller instantiation.
     render: ->
         @views.dump()
+        @views.push new FilterView()
         @views.push new ActionsView()
 
     ###

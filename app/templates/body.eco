@@ -1,7 +1,7 @@
 <!-- navbar -->
 <div class="navbar">
     <div class="navbar-inner">
-        <a class="brand" href="/">InterMine</a>
+        <a class="brand" href="/toskur/index">InterMine Lists</a>
         
         <div class="nav-collapse">
             <ul class="nav">
@@ -30,7 +30,7 @@
         <div id="content" class="span8">            
             <!-- crumbs -->
             <ul id="breadcrumb" class="breadcrumb">
-                <li><a href="/" class="home icon-home"></a></li>
+                <li><a href="/toskur/index" class="home icon-home"></a></li>
             </ul>
 
             <!-- main folder/list view -->

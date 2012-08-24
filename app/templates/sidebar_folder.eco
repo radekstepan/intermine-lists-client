@@ -4,7 +4,7 @@
         <span class="icon-folder-close"></span> <%= @name %>
     </a>
 <% else: %>
-    <a class="drop" href="/">
+    <a class="drop" href="/toskur/index">
         <span class="icon-home"></span>
     </a>
 <% end %>
