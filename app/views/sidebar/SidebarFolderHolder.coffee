@@ -1,5 +1,6 @@
 SidebarFolderView = require 'views/sidebar/SidebarFolder'
 
+# A root folder '/' holding all the other content.
 module.exports = class SidebarFolderHolderView extends SidebarFolderView
 
     tagName:         'li'         # a list item

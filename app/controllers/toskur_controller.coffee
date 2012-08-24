@@ -1,7 +1,6 @@
 Chaplin = require 'chaplin'
 
 Garbage = require 'core/Garbage'
-Store = require 'models/Store'
 
 # The Views.
 SidebarFolderHolderView = require 'views/sidebar/SidebarFolderHolder'
@@ -15,15 +14,12 @@ module.exports = class TöskurController extends Chaplin.Controller
 
     historyURL: (params) -> ''
 
-    # Here be `Store`.
-    store: undefined
+    # Link to main Store.
+    store: window.Store
 
     initialize: ->
         # Storage for objects to be garbage collected.
         @views = new Garbage()
-
-        # Give us the Store, inject the API fetched data.
-        @store = new Store()
 
         # Render the root folder (and onwards) in the sidebar.
         @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')

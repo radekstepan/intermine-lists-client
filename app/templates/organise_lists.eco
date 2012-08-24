@@ -1,0 +1,25 @@
+<div class="active">
+    <div class="modal">
+        <div class="modal-header">
+            <a class="close">×</a>
+            <h3>Organise</h3>
+        </div>
+        
+        <div class="modal-body">
+            <p>Item is currently in <span class="icon-folder-close"></span> Projects</p>
+
+            <h4>Move to</h4>
+
+            <div class="tree">
+                Tree goes here
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <a class="cancel btn">Cancel</a>
+            <a class="apply btn btn-primary">Apply changes</a>
+
+            <small>You can also organise lists by dragging them into a folder.</small>
+        </div>
+    </div>
+</div>

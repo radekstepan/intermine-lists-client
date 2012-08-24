@@ -4,6 +4,7 @@ View = require 'core/View'
 Garbage = require 'core/Garbage'
 
 NewFolderView = require 'views/page/NewFolder'
+OrganiseListsView = require 'views/page/OrganiseLists'
 
 module.exports = class ActionsView extends View
 
@@ -35,8 +36,14 @@ module.exports = class ActionsView extends View
     afterRender: ->
         super
 
+        # Events.
         @delegate 'click', 'a.new-folder', @newFolder
+        @delegate 'click', 'a.organise', @organise
 
     newFolder: =>
         # Create a popover View to handle the interaction.
         @views.push new NewFolderView 'model': @folder
+
+    organise: =>
+        # Create a popover View to handle the interaction.
+        @views.push new OrganiseListsView 'model': @folder
