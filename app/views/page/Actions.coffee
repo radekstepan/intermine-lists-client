@@ -17,6 +17,9 @@ module.exports = class ActionsView extends View
     # The currently active folder.
     folder: undefined
 
+    # Link to main Store.
+    store: null
+
     getTemplateFunction: -> require 'templates/actions'
 
     getTemplateData: ->
@@ -27,14 +30,14 @@ module.exports = class ActionsView extends View
 
         @views = new Garbage()
 
+        # Main Store.
+        @store = window.Store
+
         # Listen to lists being checked.
         Chaplin.mediator.subscribe 'checkedLists', (@checked) => @render()
 
         # Listen to the current active folder.
         Chaplin.mediator.subscribe 'activeFolder', (@folder) =>
-
-    afterRender: ->
-        super
 
         # Events.
         @delegate 'click', 'a.new-folder', @newFolder
@@ -46,4 +49,7 @@ module.exports = class ActionsView extends View
 
     organise: =>
         # Create a popover View to handle the interaction.
-        @views.push new OrganiseListsView 'model': @folder
+        # Pass in a Collection of selected lists.
+        @views.push new OrganiseListsView
+            'collection': new Chaplin.Collection @store.where('checked': true)
+            'model': @folder

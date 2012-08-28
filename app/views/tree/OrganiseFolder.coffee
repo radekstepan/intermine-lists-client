@@ -15,8 +15,16 @@ module.exports = class OrganiseFolderView extends View
     # 'Serialize' our opts and add cid so we can constrain events.
     getTemplateData: -> _.extend { 'cid': @model.cid }, @model.toJSON()
 
-    initialize: ->
+    initialize: (opts) ->
         super
+
+        # Set the selected on us so we can pass it further.
+        @selected = opts.selected
+
+
+
+        # Listen to folders being selected... then deselect us
+        Chaplin.mediator.subscribe 'selectFolder', => $(@el).removeClass('active')
 
         # The garbage truck... wroom!
         @views = new Garbage()
@@ -32,7 +40,11 @@ module.exports = class OrganiseFolderView extends View
         # Events only on this folder.
         @delegate 'click', ".folder.#{@model.cid}.toggle", @toggleFolder
 
+        # Re-render when we get expanded etc.
         @modelBind 'change', @render
+
+        # Are we selecting this folder?
+        @delegate 'click', ".select.#{@model.cid}", @selectFolder
 
         # Are we set as selected?
         if @model.get('selected') then $(@el).addClass('active')
@@ -55,3 +67,9 @@ module.exports = class OrganiseFolderView extends View
 
     # Toggle the folder, the view is listening to Model changes already.
     toggleFolder: -> @model.set 'expanded', !@model.get('expanded')
+
+    selectFolder: ->
+        # First we deselect any folder listening. We pass Model to listening OrganiseListsView
+        Chaplin.mediator.publish 'selectFolder', @model
+        # And then we select us.
+        $(@el).addClass('active')

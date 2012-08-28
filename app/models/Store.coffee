@@ -33,12 +33,8 @@ module.exports = class Store extends Chaplin.Collection
         for row in ListCollection
             @makeFolder @makeList row
 
-    # Extend standard `dispose` by cleaning up `folders` too.
+    # We will never really go away...
     dispose: ->
-        super
-
-        @folders?.dispose()
-        delete @folders
 
     # Deselect all lists held, silently...
     deselectAll: =>

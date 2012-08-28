@@ -15,22 +15,16 @@ module.exports = class Layout extends Chaplin.Layout
 
         # Main body of the page.
         new BodyView()
-
-        # Render Views that need to be reinitialized on each Controller startup.
-        @views = new Garbage()
-        @subscribeEvent 'startupController', @render
+        # List filtering.
+        new FilterView()
+        # Create folder, organise lists etc.
+        new ActionsView()
 
         # App wide notification.
         Chaplin.mediator.subscribe 'notification', @notify
 
         # Our first message.
         Chaplin.mediator.publish 'notification', 'Welcome to InterMine'
-
-    # Global Views that due to the nature of messaging need to be re-initialized on each Controller instantiation.
-    render: ->
-        @views.dump()
-        @views.push new FilterView()
-        @views.push new ActionsView()
 
     ###
     Create a new notification.

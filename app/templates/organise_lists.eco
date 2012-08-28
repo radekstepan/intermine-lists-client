@@ -6,7 +6,15 @@
         </div>
         
         <div class="modal-body">
-            <p>Item is currently in <span class="icon-folder-close"></span> Projects</p>
+            <p>
+                <% if @lists.length > 1: %>
+                    <%= @lists.length %> lists are
+                <% else: %>
+                    List is
+                <% end %> currently in
+                
+                <code><%= @locations %></code>
+            </p>
 
             <h4>Move to</h4>
 

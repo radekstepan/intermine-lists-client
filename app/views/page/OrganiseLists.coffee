@@ -12,23 +12,30 @@ module.exports = class OrganiseListsView extends View
 
     # Here be Store.
     store: null
-    
+
     initialize: ->
         super
 
         # Main Store.
         @store = window.Store
 
+        Chaplin.mediator.subscribe 'selectFolder', (@selectedFolder) =>
+
     # Get the template from here.
     getTemplateFunction: -> require 'templates/organise_lists'
+
+    getTemplateData: ->
+        'lists':    @collection.pluck('name')
+        'locations': _(@collection.pluck('path')).uniq().join(', ')
 
     afterRender: ->
         super
 
-        # Render the Folder tree View.
-        @view = new OrganiseFolderHolderView 'model': @store.findFolder('/')
+        @renderTree()
 
         # Some events.
+        @undelegate()
+
         @delegate 'click', 'a.cancel', @dispose
         @delegate 'click', 'a.close',  @dispose
         @delegate 'click', 'a.apply',  @apply
@@ -39,7 +46,16 @@ module.exports = class OrganiseListsView extends View
                 when 27 then @dispose()
                 when 13 then @apply()
 
+    # Dispose of existing Tree of Folders and render again.
+    renderTree: ->
+        # Render the Folder tree View.
+        @view?.dispose()
+        @view = new OrganiseFolderHolderView 'model': @store.findFolder('/'), 'selected': @selectedFolder
+
     # Apply the folder changes.
-    apply: (e) ->        
-        # Die either way...
-        @dispose()
+    apply: (e) ->
+        if @selectedFolder?
+            console.log @selectedFolder
+
+            # Die either way...
+            @dispose()

@@ -1,4 +1,5 @@
 a { cursor:pointer; }
+code { color:#333; }
 
 .navbar-inner { border-radius:0; }
 .nav-tabs.nav-stacked > li:last-child > a { border-radius:0; }
@@ -12,6 +13,8 @@ a { cursor:pointer; }
 ul.folders-tree { cursor:pointer; padding:0; }
 ul.folders-tree li { position:relative; }
 ul.folders-tree li a { padding:3px 15px; border:0; margin-right:0; }
+ul.folders-tree > li.active:first-child a { color:#08C; }
+ul.folders-tree > li.active:first-child a:hover { border:0; }
 ul.folders-tree .folder.toggle { display:none; }
 ul.folders-tree .folder.toggle.active { display:block; position:absolute; top:4px; left:0; padding:0; }
 ul.folders-tree .folder.toggle.active:hover { cursor:pointer; }
@@ -35,7 +38,7 @@ ul#breadcrumb li a.home { margin-right:5px; }
 #toolbar .btn,
 #toolbar .btn-group { display:block; margin-bottom:10px; }
 
-#filtering { margin-left:151px; }
+#filtering { margin-left:106px; }
 #filtering input { margin:5px 0 0 10px; }
 
 #actions [class^="icon-"] { vertical-align:middle; }

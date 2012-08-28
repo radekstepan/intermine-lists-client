@@ -1,10 +1,10 @@
 <% if @path isnt '/': %>
     <a class="folder <%= @cid %> toggle"></a>
-    <a class="select capitalize">
+    <a class="select <%= @cid %> capitalize">
         <span class="icon-folder-close"></span> <%= @name %>
     </a>
 <% else: %>
-    <a class="select">
+    <a class="select <%= @cid %>">
         <span class="icon-home"></span>
     </a>
 <% end %>

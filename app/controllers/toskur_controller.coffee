@@ -24,9 +24,6 @@ module.exports = class TöskurController extends Chaplin.Controller
         # Main Store.
         @store = window.Store
 
-        # Render the root folder (and onwards) in the sidebar.
-        @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')
-
         # Receive filter list messages.
         Chaplin.mediator.subscribe 'filterLists', @filterLists
 
@@ -65,17 +62,29 @@ module.exports = class TöskurController extends Chaplin.Controller
     @param {Object} params Passed in properties
     ###
     index: (params) ->
+        # Get the root folder.
+        root = @store.findFolder('/')
+
+        # Set this folder as active.
+        @store.activeFolder root
+
+        # Render the root folder (and onwards) in the sidebar.
+        @views.push 'lists', new SidebarFolderHolderView 'model': root
+
         # Main view, show the root folder.
-        @views.push 'main', new FolderHolderView 'model': folder = @store.findFolder('/')
+        @views.push 'main', new FolderHolderView 'model': root
 
         # Say that we selected this folder.
-        Chaplin.mediator.publish 'activeFolder', folder
+        Chaplin.mediator.publish 'activeFolder', root
 
     ###
     Show an individual list by its `slug`.
     @param {Object} params Passed in properties
     ###
     list: (params) ->
+        # Render the root folder (and onwards) in the sidebar.
+        @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')
+
         # Retrieve the list in question.
         list = @store.findList params.slug
         unless list?
@@ -127,3 +136,6 @@ module.exports = class TöskurController extends Chaplin.Controller
 
             # Say that we selected this folder.
             Chaplin.mediator.publish 'activeFolder', folder
+
+        # Render the root folder (and onwards) in the sidebar.
+        @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')
