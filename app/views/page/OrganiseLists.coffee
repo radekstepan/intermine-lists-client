@@ -16,6 +16,8 @@ module.exports = class OrganiseListsView extends View
     initialize: ->
         super
 
+        assert window.Store? and @collection? and @model?, 'OrganiseLists::initialize'
+
         # Main Store.
         @store = window.Store
 
@@ -23,6 +25,10 @@ module.exports = class OrganiseListsView extends View
         Chaplin.mediator.subscribe 'selectFolder', (@selectedFolder) =>
             # Is at least one list in a different folder from this one?
             disable = true
+
+            # Bug 125.
+            assert @collection?, 'Collection of selected lists needs to be provided'
+
             @collection.each (list) => if list.get('path') isnt @selectedFolder.get('path') then ( disable = false ; return {} )
 
             if disable

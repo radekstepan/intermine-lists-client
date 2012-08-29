@@ -1,7 +1,9 @@
 Chaplin = require 'chaplin'
 
 routes = require 'core/routes'
+
 require 'lib/string' # latinisation, slugification for the rest of us...
+require 'lib/assert' # assertions
 
 # The application object.
 module.exports = class Töskur extends Chaplin.Application
