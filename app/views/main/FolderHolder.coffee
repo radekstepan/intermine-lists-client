@@ -29,7 +29,12 @@ module.exports = class FolderHolderView extends View
         Chaplin.mediator.subscribe 'checkedLists', @updateCheckbox
 
     # Get the template from here.
-    getTemplateFunction: -> require 'templates/folder_objects'
+    getTemplateFunction: ->
+        # Check if this holder is empty.
+        if @model.get('folders').length is 0 and @model.get('lists').length is 0
+            require 'templates/empty_folder'
+        else
+            require 'templates/folder_objects'
 
     afterRender: ->
         super

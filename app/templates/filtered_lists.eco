@@ -1,6 +1,6 @@
 <% if @length isnt 0: %>
     <div class="alert alert-success">
-        <h4 class="alert-heading">Search results</h4>
+        Search results
     </div>
 
     <table class="table table-striped">
