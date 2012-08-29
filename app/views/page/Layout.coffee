@@ -1,5 +1,6 @@
 Chaplin = require 'chaplin'
 
+View = require '/core/View'
 Garbage = require '/core/Garbage'
 
 NotificationView = require 'views/page/Notification'
@@ -8,23 +9,30 @@ FilterView = require 'views/head/Filter'
 ActionsView = require 'views/page/Actions'
 
 # Whole body experience.
-module.exports = class Layout extends Chaplin.Layout
+module.exports = class LayoutView extends View
+
+    autoRender: true
 
     initialize: ->
         super
 
-        # Main body of the page.
-        new BodyView()
-        # List filtering.
-        new FilterView()
-        # Create folder, organise lists etc.
-        new ActionsView()
-
         # App wide notification.
         Chaplin.mediator.subscribe 'notification', @notify
 
-        # Our first message.
-        Chaplin.mediator.publish 'notification', 'Welcome to InterMine'
+    # (Re-)init all core Views.
+    # Actually, as we are on a Controller, we will die every time we change the Action.
+    render: ->
+        # Store all Views here.
+        @views ?= new Garbage()
+        # Clear any previous.
+        @views.dump()
+
+        # Main body of the page.
+        @views.push new BodyView()
+        # List filtering.
+        @views.push new FilterView()
+        # Create folder, organise lists etc.
+        @views.push new ActionsView()
 
     ###
     Create a new notification.

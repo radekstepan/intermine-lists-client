@@ -3,6 +3,7 @@ Chaplin = require 'chaplin'
 Garbage = require 'core/Garbage'
 
 # The Views.
+LayoutView = require 'views/page/Layout'
 SidebarFolderHolderView = require 'views/tree/SidebarFolderHolder'
 BreadcrumbView = require 'views/head/Breadcrumb'
 FolderHolderView = require 'views/main/FolderHolder'
@@ -20,7 +21,8 @@ module.exports = class TöskurController extends Chaplin.Controller
     initialize: ->
         # Storage for objects to be garbage collected.
         @views = new Garbage()
-        
+        @views.push new LayoutView()
+
         # Main Store.
         @store = window.Store
 

@@ -22,8 +22,7 @@ module.exports = class ActionsView extends View
 
     getTemplateFunction: -> require 'templates/actions'
 
-    getTemplateData: ->
-        'checked': @checked
+    getTemplateData: -> 'checked': @checked
 
     initialize: ->
         super

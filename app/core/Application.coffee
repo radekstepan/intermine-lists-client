@@ -1,5 +1,5 @@
 Chaplin = require 'chaplin'
-Layout = require 'core/Layout'
+
 routes = require 'core/routes'
 require 'lib/string' # latinisation, slugification for the rest of us...
 
@@ -15,20 +15,16 @@ module.exports = class Töskur extends Chaplin.Application
 
         # Initialize core components
         @initDispatcher()
-        @initLayout()
         @initMediator()
+
+        # So that nice Controller switching works...
+        @layout = new Chaplin.Layout {@title}
 
         # Register all routes and start routing
         @initRouter routes
 
         # Freeze the application instance to prevent further changes
         Object.freeze? @
-
-    # Override standard layout initializer.
-    initLayout: ->
-        # Use an application-specific Layout class. Currently this adds
-        # no features to the standard Chaplin Layout, it’s an empty placeholder.
-        @layout = new Layout {@title}
 
     # Create additional mediator properties.
     initMediator: ->

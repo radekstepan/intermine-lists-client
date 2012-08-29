@@ -7,3 +7,5 @@ module.exports = class BodyView extends View
     autoRender:      true
 
     getTemplateFunction: -> require 'templates/body'
+
+    dispose: -> 'You no kill `Body`'
