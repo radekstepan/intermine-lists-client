@@ -23,7 +23,7 @@
         
         <div class="modal-footer">
             <a class="cancel btn">Cancel</a>
-            <a class="apply btn btn-primary">Apply changes</a>
+            <a class="apply btn btn-primary disabled">Apply changes</a>
 
             <small>You can also organise lists by dragging them into a folder.</small>
         </div>

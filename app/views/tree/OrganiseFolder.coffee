@@ -21,10 +21,16 @@ module.exports = class OrganiseFolderView extends View
         # Set the selected on us so we can pass it further.
         @selected = opts.selected
 
+        # Listen to folders being selected... then deselect or select us
+        Chaplin.mediator.subscribe 'selectFolder', (model) =>
+            # Is this me?
+            if model is @model
+                $(@el).addClass('active')
+            else
+                $(@el).removeClass('active')
 
-
-        # Listen to folders being selected... then deselect us
-        Chaplin.mediator.subscribe 'selectFolder', => $(@el).removeClass('active')
+        # Say that we have been born.
+        Chaplin.mediator.publish 'treeFolderRendered'
 
         # The garbage truck... wroom!
         @views = new Garbage()
@@ -68,8 +74,5 @@ module.exports = class OrganiseFolderView extends View
     # Toggle the folder, the view is listening to Model changes already.
     toggleFolder: -> @model.set 'expanded', !@model.get('expanded')
 
-    selectFolder: ->
-        # First we deselect any folder listening. We pass Model to listening OrganiseListsView
-        Chaplin.mediator.publish 'selectFolder', @model
-        # And then we select us.
-        $(@el).addClass('active')
+    # Say that we need to be selected, ass backwards :)
+    selectFolder: ->  Chaplin.mediator.publish 'selectFolder', @model
