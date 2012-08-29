@@ -19,6 +19,12 @@ module.exports = class LayoutView extends View
         # App wide notification.
         Chaplin.mediator.subscribe 'notification', @notify
 
+    # Need to dispose of us listening to channels.
+    dispose: ->
+        Chaplin.mediator.unsubscribe 'notification'
+
+        super
+
     # (Re-)init all core Views.
     # Actually, as we are on a Controller, we will die every time we change the Action.
     render: ->
