@@ -36,6 +36,12 @@ module.exports = class OrganiseListsView extends View
             if @selectedFolder?
                 Chaplin.mediator.publish 'selectFolder', @selectedFolder
 
+    dispose: ->
+        # Stop listening to the music...
+        Chaplin.mediator.off(channel) for channel in [ 'selectedFolder', 'treeFolderRendered' ]
+
+        super
+
     # Get the template from here.
     getTemplateFunction: -> require 'templates/organise_lists'
 
