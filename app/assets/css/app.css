@@ -3,18 +3,19 @@ code { color:#333; }
 
 .navbar-inner { border-radius:0; }
 .nav-tabs.nav-stacked > li:last-child > a { border-radius:0; }
-.nav-tabs.nav-stacked > li > a { border:0; }
+.nav-tabs.nav-stacked li a,
+.nav-tabs.nav-stacked li a:hover { border:0; }
 .nav-list { padding:0 0 0 15px; }
 
-[class^="icon-"], [class*=" icon-"] { background-image:none; }
+[class^="icon-"], [class*=" icon-"] { background-image:none !important; }
 
 .capitalize { text-transform:capitalize; }
 
 ul.folders-tree { cursor:pointer; padding:0; }
 ul.folders-tree li { position:relative; }
 ul.folders-tree li a { padding:3px 15px; border:0; margin-right:0; }
-ul.folders-tree > li.active:first-child a { color:#08C; }
-ul.folders-tree > li.active:first-child a:hover { border:0; }
+ul.folders-tree .active > a,
+ul.folders-tree .active > a:hover { background:#08C; color:#FFF; cursor:default; }
 ul.folders-tree .folder.toggle { display:none; }
 ul.folders-tree .folder.toggle.active { display:block; position:absolute; top:4px; left:0; padding:0; }
 ul.folders-tree .folder.toggle.active:hover { cursor:pointer; }
