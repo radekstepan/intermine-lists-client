@@ -6,4 +6,4 @@ String::latinise = ->
 
 String::isLatin = -> @ is @latinise()
 
-String::slugify = -> @replace(/[^-a-zA-Z0-9,&\s]+/ig, '').replace(/\s/gi, "-").toLowerCase()
+String::slugify = -> @replace(/[^-a-zA-Z0-9,&\s]+/g, '').replace(/\s{1,}/g, '-').toLowerCase()
