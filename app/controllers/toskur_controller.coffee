@@ -26,6 +26,9 @@ module.exports = class TöskurController extends Chaplin.Controller
         # Main Store.
         @store = window.Store
 
+        # Make sure that no lists are selected.
+        Chaplin.mediator.publish 'deselectAll'
+
         # Receive filter list messages.
         Chaplin.mediator.subscribe 'filterLists', @filterLists
 
