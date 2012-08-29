@@ -20,7 +20,15 @@ module.exports = class OrganiseListsView extends View
         @store = window.Store
 
         # When a folder gets selected we can enable the apply button.
-        Chaplin.mediator.subscribe 'selectFolder', (@selectedFolder) => $(@el).find('a.apply').removeClass 'disabled'
+        Chaplin.mediator.subscribe 'selectFolder', (@selectedFolder) =>
+            # Is at least one list in a different folder from this one?
+            disable = true
+            @collection.each (list) => if list.get('path') isnt @selectedFolder.get('path') then ( disable = false ; return {} )
+
+            if disable
+                $(@el).find('a.apply').addClass 'disabled'
+            else
+                $(@el).find('a.apply').removeClass 'disabled'
 
         # When a tree folder gets rendered we can tell them who the selected folder is.
         Chaplin.mediator.subscribe 'treeFolderRendered', =>
@@ -62,7 +70,26 @@ module.exports = class OrganiseListsView extends View
     # Apply the folder changes.
     apply: (e) ->
         if @selectedFolder?
-            console.log @selectedFolder
+            # The new path.
+            newPath = @selectedFolder.get('path')
+
+            # For each list in a Collection...
+            @collection.each (list) =>
+                # The old path.
+                oldPath = list.get('path')
+
+                # Are the paths the same?
+                if newPath isnt oldPath
+                    # Message about it.
+                    Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
+
+                    # Update the list path itself.
+                    list.set 'path', newPath
+
+                    # Push the list on the selected folder.
+                    @selectedFolder.addList list
+
+            Chaplin.mediator.publish 'renderMain'
 
             # Die either way...
             @dispose()
