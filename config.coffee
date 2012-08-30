@@ -1,10 +1,9 @@
 exports.config =
     files:
         javascripts:
-            defaultExtension: 'coffee'
             joinTo:
                 'js/app.js': /^app/
-                'js/vendor.js': /^vendor/
+                'js/vendor.js': /^vendor\/js/
             order:
                 before: [
                     'vendor/js/jquery-1.7.2.js',
@@ -13,15 +12,17 @@ exports.config =
                 ]
 
         stylesheets:
-            defaultExtension: 'css'
             joinTo:
-                'css/app.css': /^assets/
-                'css/vendor.css': /^vendor/
+                'css/app.css': /^app\/styles/
+                'css/vendor.css': /^vendor\/css/
             order:
-                before: [ 'vendor/css/bootstrap.css' ]
+                before: [
+                    'vendor/css/bootstrap.css'
+                    'app/styles/app.css'
+                    'app/styles/theme.styl'
+                ]
 
         templates:
-            defaultExtension: 'eco'
             joinTo: 'js/app.js'
 
     server:

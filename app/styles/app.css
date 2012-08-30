@@ -7,6 +7,7 @@ code { color:#333; }
 .nav-tabs.nav-stacked li a:hover { border:0; }
 .nav-list { padding:0 0 0 15px; }
 
+.btn [class^="icon-"], .btn [class*=" icon-"] { margin-right:2px; }
 [class^="icon-"], [class*=" icon-"] { background-image:none !important; }
 
 .capitalize { text-transform:capitalize; }
