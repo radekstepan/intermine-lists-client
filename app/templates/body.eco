@@ -23,7 +23,7 @@
             </ul>
 
             <!-- groups, lists -->
-            <ul id="folders" class="folders-tree nav nav-tabs nav-stacked"></ul>
+            <ul id="folders" class="folders-tree nav nav-list nav-stacked"></ul>
         </div>
     
         <!-- content -->

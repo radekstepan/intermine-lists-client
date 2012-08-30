@@ -1,0 +1,87 @@
+/* http://themepixels.com/themes/demo/webpage/amanda/typography.html */
+
+@font-face { font-family:'RobotoRegular'; src:url('../fonts/roboto-regular-webfont.woff') format('woff'); font-weight:normal; }
+@font-face { font-family:'RobotoBold'; src:url('../fonts/roboto-bold-webfont.woff') format('woff'); font-weight:bold; }
+
+a.brand { font-family:'RobotoRegular'; }
+h1, h2, h3, h4, h5, .nav-tabs, .nav-list, .btn { font-family:'RobotoBold'; }
+
+a, a:hover,
+#main table tr td [class^="icon-"] { color:#485b79; }
+
+/* modal */
+.modal-footer { background:#f7f7f7; }
+
+/* form elements */
+select, textarea, input[type="text"] { border-radius:2px; }
+input[type="text"]:focus { border-color:#fb9337; box-shadow:inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(251,147,55,0.6) }
+.btn { -webkit-appearance:none; border-radius:2px; }
+.btn.btn-primary { background:#435673; background-image:-webkit-linear-gradient(top,#435673,#32415a); text-shadow:1px 1px 1px #2b384e; }
+
+/* notifications */
+.alert { border-radius:2px; box-shadow:inset 0 1px 0 rgba(250,250,250,0.8); border:1px solid #eac572; background:#ffe9ad; }
+.alert-success { border:1px solid #c1d779; background:#effeb9; }
+.alert-info { border:1px solid #99c4ea; background:#d1e4f3; }
+
+/* table */
+.table { border:1px solid #DDD; }
+.table th { border-color:#DDD; }
+.table td { border-color:#EEE; }
+.table thead tr th { border-bottom:1px solid #DDD; }
+.table tr th:not(:last-child) { border-right:1px solid #DDD; }
+.table tr td:not(:last-child) { border-right:1px solid #EEE; }
+.table tbody tr:first-child td { border-top:0; }
+.table tbody tr:nth-child(even) td { background:#f7f7f7 }
+
+/* nav tabs */
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover,
+.nav-tabs > li > a { border-radius:2px 2px 0 0; border-color:#CCC; border-bottom:0; }
+
+.nav-tabs > li > a { background:#CCC; color:#FFF; }
+.nav-tabs > li > a:hover { background:#BBB; border-color:#AAA; }
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover { color:#FB9337; }
+
+/* nav list */
+.nav-list > .active > a { text-shadow:none; color:#fb9337; }
+.nav-list > .active > a:hover { text-shadow:none; color:#fb9337; background:#efefef; }
+
+ul.folders-tree .active > a,
+ul.folders-tree .active > a:hover { background:#485b79; }
+ul.folders-tree > li > a { margin-left:0px; }
+
+.nav-list [class^="icon-"] { color:#DDD; }
+.nav-list > li > a:hover { background:#FFF; color:#485b79; }
+.nav-list a:hover [class^="icon-"] { color:#BBB; }
+.nav-list .active > a [class^="icon-"] { color:#fb9337; }
+
+ul.folders-tree a.folder.toggle.active { color:#DDD; }
+ul.folders-tree a.folder.toggle.active:hover { color:#BBB; }
+ul.folders-tree .active > a.folder.toggle.active,
+ul.folders-tree .active > a.folder.toggle.active:hover { color:#fb9337; }
+
+/* navbar */
+.navbar { border-bottom:5px solid #fb9337; }
+.navbar .navbar-inner { background: -moz-linear-gradient(left, rgb(68,87,115) 0%, rgb(60,78,108) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgb(68,87,115)), color-stop(100%,rgb(60,78,108)));
+    background: -webkit-linear-gradient(left, rgb(68,87,115) 0%,rgb(60,78,108) 100%);
+    background: -o-linear-gradient(left, rgb(68,87,115) 0%,rgb(60,78,108) 100%);
+    background: -ms-linear-gradient(left, rgb(68,87,115) 0%,rgb(60,78,108) 100%);
+    background: linear-gradient(to right, rgb(68,87,115) 0%,rgb(60,78,108) 100%); padding:10px 20px; border:0; }
+.navbar .navbar-inner a.brand { color:#FFF; text-shadow:1px 1px 1px #2b384e; font-weight:bold; }
+
+/* navbar search */
+.navbar input[type="text"] { border:1px solid #445775; border-radius:2px; background:#32415a; padding:4px 14px;
+    box-shadow:inset 1px 1px 2px #2b384e; }
+.navbar input[type="text"]:focus { color:#6a778d; }
+.navbar input[type="text"]::-webkit-input-placeholder { color:#4a5b78; }
+
+/* breadcrumb */
+.breadcrumb { background:#32415A; color:#FB9337; border-radius:0; }
+.breadcrumb li { text-shadow:none; }
+.breadcrumb li a { color:#FB9337; }
+
+/* hovered over element */
+.hover, .hover td  { background-color:#32415A !important; }
+.hover, .hover span, .hover a { color:#FB9337 !important; text-shadow:none !important; }

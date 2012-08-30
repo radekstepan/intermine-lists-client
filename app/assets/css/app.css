@@ -17,13 +17,15 @@ ul.folders-tree li a { padding:3px 15px; border:0; margin-right:0; }
 ul.folders-tree .active > a,
 ul.folders-tree .active > a:hover { background:#08C; color:#FFF; cursor:default; }
 ul.folders-tree .folder.toggle { display:none; }
-ul.folders-tree .folder.toggle.active { display:block; position:absolute; top:4px; left:0; padding:0; }
+ul.folders-tree .folder.toggle.active { display:block; position:absolute; top:5px; left:0; padding:0; }
 ul.folders-tree .folder.toggle.active:hover { cursor:pointer; }
 
 ul#breadcrumb li:not(:last-child) { margin-right:5px; }
 ul#breadcrumb li:not(:last-child):after { content:"/"; display:inline-block; }
 ul#breadcrumb li a.home { margin-right:5px; }
 
+#main table { font-size:13px; }
+#main table a { font-weight:bold; }
 #main table tr td [class^="icon-"] { color:#08C; }
 #main table tr td { vertical-align:bottom; }
 #main table tr th.narrow { width:14px; }
@@ -39,7 +41,7 @@ ul#breadcrumb li a.home { margin-right:5px; }
 #toolbar .btn,
 #toolbar .btn-group { display:block; margin-bottom:10px; }
 
-#filtering { margin-left:106px; }
+#filtering { margin-left:34px; }
 #filtering input { margin:5px 0 0 10px; }
 
 #actions [class^="icon-"] { vertical-align:middle; }
