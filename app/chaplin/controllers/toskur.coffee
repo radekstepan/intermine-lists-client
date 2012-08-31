@@ -35,9 +35,10 @@ module.exports = class TöskurController extends Chaplin.Controller
 
     # Need to dispose of us listening to `filterLists`.
     dispose: ->
-        Mediator.unsubscribe null, null, @
-
         super
+
+        # Clear all channels after everyone else is dead.
+        Mediator.reset()
 
     ###
     The user wants to filter the lists.

@@ -19,3 +19,6 @@ mediator.unsubscribe = (opts...) ->
 
 # List all existing channels.
 mediator.channels = -> Object.keys Backbone.Events._callbacks
+
+# Reset all channels.
+mediator.reset = -> Backbone.Events._callbacks = null
