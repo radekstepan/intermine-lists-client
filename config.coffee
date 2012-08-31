@@ -16,11 +16,8 @@ exports.config =
                 'css/app.css': /^app\/styles/
                 'css/vendor.css': /^vendor\/css/
             order:
-                before: [
-                    'vendor/css/bootstrap.css'
-                    'app/styles/app.css'
-                    'app/styles/theme.styl'
-                ]
+                before: [ 'vendor/css/bootstrap.css' ]
+                after: [ 'app/styles/theme.styl' ]
 
         templates:
             joinTo: 'js/app.js'

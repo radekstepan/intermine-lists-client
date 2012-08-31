@@ -27,6 +27,9 @@ All `View` objects, when instantiated, will publish a message on the `notificati
 ### Eco
 [Eco](https://github.com/sstephenson/eco/) lets you embed CoffeeScript logic in your markup. It's like EJS and ERB, but with CoffeeScript inside.
 
+### Stylus
+[Stylus](http://learnboost.github.com/stylus/) is a CSS preprocessor with flexible syntax that looks similar to CoffeeScript, mixins, variables and utility functions for color manipulations that make it easy(-ier) to develop themes.
+
 ### Flatiron
 [Flatiron](http://flatironjs.org/) is used to serve files and data. Does not play a large role here.
 

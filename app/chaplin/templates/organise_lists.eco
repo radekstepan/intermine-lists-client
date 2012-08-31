@@ -18,7 +18,7 @@
 
             <h4>Move to</h4>
 
-            <ul id="tree" class="folders-tree nav nav-tabs nav-stacked"></ul>
+            <ul id="tree" class="folders-tree nav nav-list nav-stacked"></ul>
         </div>
         
         <div class="modal-footer">

@@ -1,16 +1,16 @@
 <!-- navbar -->
-<div class="navbar">
-    <div class="navbar-inner">
-        <a class="brand" href="/toskur/index">InterMine Lists</a>
+<header id="navbar" class="navbar">
+    <div class="row-fluid">
+        <a class="brand span2" href="/toskur/index">InterMine Lists</a>
         
-        <div class="nav-collapse">
+        <div class="nav-collapse span10">
             <ul class="nav">
                 <!-- lists filter -->
                 <li><div id="filtering"></div></li>
             </ul>
         </div>
     </div>
-</div>
+</header>
 
 <!-- flexible page structure -->
 <div class="container-fluid">
