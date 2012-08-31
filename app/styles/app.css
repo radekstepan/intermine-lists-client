@@ -9,7 +9,6 @@ code { color:#333; }
 
 .btn [class^="icon-"], .btn [class*=" icon-"] { margin-right:2px; }
 [class^="icon-"], [class*=" icon-"] { background-image:none !important; }
-
 .capitalize { text-transform:capitalize; }
 
 ul.folders-tree { cursor:pointer; padding:0; }

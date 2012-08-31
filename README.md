@@ -77,7 +77,7 @@ Following is a list of high level architectural, design and feature requirements
 
 1. ~~Client side JavaScript architecture~~. Using Chaplin wrapped around Backbone
 1. ~~Maintainable templating language~~. Eco lets us use CoffeeScript inside HTML
-1. CSS preprocessor for easy theming. Stylus?
+1. ~~CSS preprocessor for easy theming~~. Stylus as it looks closest to CoffeeScript and has coolio features like Color operations `darken()` and clear cut functions.
 1. ~~Automagically package resources~~. Brunch
 1. ~~Make JS files required through CommonJS/AMD~~. Brunch
 1. ~~Automagically reload the client on changes~~. Brunch
@@ -85,3 +85,9 @@ Following is a list of high level architectural, design and feature requirements
 1. ~~CSS based off of a library~~. Twitter Bootstrap
 1. ~~Manage resource usage of a client side app~~. Chaplin `dispose()` and our `class Garbage`
 1. ~~Implement assertions especially on init of methods/classes to catch the unexpected~~. our `class AssertException`
+1. ~~Cross-module communication using the Mediator and Publish/Subscribe patterns~~. Chaplin
+1. ~~Make local links accessible from the outside~~. Lists and Folders map through routes and Flatiron always serves the `index.html` regardless of the route requested and the Chaplin instantiates the appropriate controller method.
+
+### Design
+
+1. classify list objects so that they can be custom styled by the different mines.
