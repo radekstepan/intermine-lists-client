@@ -1,7 +1,6 @@
 Chaplin = require 'chaplin'
 
-View = require 'chaplin//core/View'
-Garbage = require 'chaplin//core/Garbage'
+View = require 'chaplin/core/View'
 
 NotificationView = require 'chaplin/views/page/Notification'
 BodyView = require 'chaplin/views/page/Body'
@@ -25,20 +24,14 @@ module.exports = class LayoutView extends View
 
         super
 
-    # (Re-)init all core Views.
-    # Actually, as we are on a Controller, we will die every time we change the Action.
+    # Init all core Views.
     render: ->
-        # Store all Views here.
-        @views ?= new Garbage()
-        # Clear any previous.
-        @views.dump()
-
         # Main body of the page.
-        @views.push new BodyView()
+        @subview 'Body', new BodyView()
         # List filtering.
-        @views.push new FilterView()
+        @subview 'Filter', new FilterView()
         # Create folder, organise lists etc.
-        @views.push new ActionsView()
+        @subview 'Actions', new ActionsView()
 
     ###
     Create a new notification.
