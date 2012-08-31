@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 Garbage = require 'chaplin/core/Garbage'
 View = require 'chaplin/core/View'
 
@@ -19,10 +18,10 @@ module.exports = class FilteredListHolderView extends View
         @views = new Garbage()
 
         # Re-render itself when others tell us to.
-        Chaplin.mediator.subscribe 'renderMain', @render
+        Mediator.subscribe 'renderMain', @render, @
 
         # Listen to the inner lists being checked.
-        Chaplin.mediator.subscribe 'checkedLists', @updateCheckbox
+        Mediator.subscribe 'checkedLists', @updateCheckbox, @
 
     # Get the template from here.
     getTemplateFunction: -> require 'chaplin/templates/filtered_lists'
@@ -47,15 +46,8 @@ module.exports = class FilteredListHolderView extends View
         for model in @collection.models
             @views.push view = new FilteredListView 'model': model
 
-    # Need to dispose of us listening to channels.
-    dispose: ->
-        for channel in [ 'checkedLists', 'renderMain' ]
-            Chaplin.mediator.unsubscribe channel
-
-        super
-
     # Update main checkbox according to whether all is checked or not.
-    updateCheckbox: =>
+    updateCheckbox: ->
         [ nay, yay ] = @checked()
 
         $(@el).find('input.check-all').prop 'checked', nay is 0
@@ -80,7 +72,7 @@ module.exports = class FilteredListHolderView extends View
             list.set 'checked': which, { 'silent': true }
 
         # Say to others how many lists are checked.
-        Chaplin.mediator.publish 'checkedLists', if which is true then yay + nay else 0
+        Mediator.publish 'checkedLists', if which is true then yay + nay else 0
 
         # One re-render after all is done.
         @render()

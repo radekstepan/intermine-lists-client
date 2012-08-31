@@ -1,5 +1,6 @@
 Chaplin = require 'chaplin'
 
+Mediator = require 'chaplin/core/Mediator'
 Garbage = require 'chaplin/core/Garbage'
 
 # The Views.
@@ -27,15 +28,14 @@ module.exports = class TöskurController extends Chaplin.Controller
         @store = window.Store
 
         # Make sure that no lists are selected.
-        Chaplin.mediator.publish 'deselectAll'
+        Mediator.publish 'deselectAll'
 
         # Receive filter list messages.
-        Chaplin.mediator.subscribe 'filterLists', @filterLists
+        Mediator.subscribe 'filterLists', @filterLists, @
 
     # Need to dispose of us listening to `filterLists`.
     dispose: ->
-        for channel in [ 'filterLists' ]
-            Chaplin.mediator.unsubscribe channel
+        Mediator.unsubscribe null, null, @
 
         super
 
@@ -43,9 +43,9 @@ module.exports = class TöskurController extends Chaplin.Controller
     The user wants to filter the lists.
     @param {string} filter
     ###
-    filterLists: (filter) =>
+    filterLists: (filter) ->
         # Trigger a message saying that all Views should deselect their... selections.
-        Chaplin.mediator.publish 'deselectAll'
+        Mediator.publish 'deselectAll'
 
         # Remove existing filtered list.
         @views.disposeOf 'filter'
@@ -80,7 +80,7 @@ module.exports = class TöskurController extends Chaplin.Controller
         @views.push 'main', new FolderHolderView 'model': root
 
         # Say that we selected this folder.
-        Chaplin.mediator.publish 'activeFolder', root
+        Mediator.publish 'activeFolder', root
 
     ###
     Show an individual list by its `slug`.
@@ -93,9 +93,9 @@ module.exports = class TöskurController extends Chaplin.Controller
         # Retrieve the list in question.
         list = @store.findList params.slug
         unless list?
-            Chaplin.mediator.publish 'notification', 'This list has not been found'
+            Mediator.publish 'notification', 'This list has not been found'
         else
-            Chaplin.mediator.publish 'notification', 'You have asked for this list', list.get('name')
+            Mediator.publish 'notification', 'You have asked for this list', list.get('name')
 
             # We have the list, so expand the path towards the list.
             @store.expandFolder list.get 'path'
@@ -123,9 +123,9 @@ module.exports = class TöskurController extends Chaplin.Controller
 
         # Did we find the folder?
         unless folder?
-            Chaplin.mediator.publish 'notification', 'This folder has not been found'
+            Mediator.publish 'notification', 'This folder has not been found'
         else
-            Chaplin.mediator.publish 'notification', 'You have asked for this folder', folder.get('name')
+            Mediator.publish 'notification', 'You have asked for this folder', folder.get('name')
 
             # Set this folder as active.
             @store.activeFolder folder
@@ -140,7 +140,7 @@ module.exports = class TöskurController extends Chaplin.Controller
             @views.push new BreadcrumbView 'collection': @store.getPath folder
 
             # Say that we selected this folder.
-            Chaplin.mediator.publish 'activeFolder', folder
+            Mediator.publish 'activeFolder', folder
 
         # Render the root folder (and onwards) in the sidebar.
         @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')

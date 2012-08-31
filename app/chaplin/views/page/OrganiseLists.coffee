@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 View = require 'chaplin/core/View'
 
 OrganiseFolderHolderView = require 'chaplin/views/tree/OrganiseFolderHolder'
@@ -13,7 +12,7 @@ module.exports = class OrganiseListsView extends View
     # Here be Store.
     store: null
 
-    initialize: ->
+    initialize: (opts...) ->
         super
 
         assert window.Store? and @collection? and @model?, 'OrganiseLists::initialize'
@@ -22,11 +21,11 @@ module.exports = class OrganiseListsView extends View
         @store = window.Store
 
         # When a folder gets selected we can enable the apply button.
-        Chaplin.mediator.subscribe 'selectFolder', (@selectedFolder) =>
+        Mediator.subscribe 'selectFolder', (@selectedFolder) ->
             # Is at least one list in a different folder from this one?
             disable = true
 
-            # Bug 125.
+            # Bug 125, 132.
             assert @collection?, 'Collection of selected lists needs to be provided'
 
             @collection.each (list) => if list.get('path') isnt @selectedFolder.get('path') then ( disable = false ; return {} )
@@ -35,18 +34,14 @@ module.exports = class OrganiseListsView extends View
                 $(@el).find('a.apply').addClass 'disabled'
             else
                 $(@el).find('a.apply').removeClass 'disabled'
+        , @
 
         # When a tree folder gets rendered we can tell them who the selected folder is.
-        Chaplin.mediator.subscribe 'treeFolderRendered', =>
+        Mediator.subscribe 'treeFolderRendered', ->
             # If we actually have a selected folder...
             if @selectedFolder?
-                Chaplin.mediator.publish 'selectFolder', @selectedFolder
-
-    dispose: ->
-        # Stop listening to the music...
-        Chaplin.mediator.off(channel) for channel in [ 'selectedFolder', 'treeFolderRendered' ]
-
-        super
+                Mediator.publish 'selectFolder', @selectedFolder
+        , @
 
     # Get the template from here.
     getTemplateFunction: -> require 'chaplin/templates/organise_lists'
@@ -93,7 +88,7 @@ module.exports = class OrganiseListsView extends View
                 # Are the paths the same?
                 if newPath isnt oldPath
                     # Message about it.
-                    Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
+                    Mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
 
                     # Update the list path itself.
                     list.set 'path', newPath
@@ -101,7 +96,7 @@ module.exports = class OrganiseListsView extends View
                     # Push the list on the selected folder.
                     @selectedFolder.addList list
 
-            Chaplin.mediator.publish 'renderMain'
+            Mediator.publish 'renderMain'
 
             # Die either way...
             @dispose()

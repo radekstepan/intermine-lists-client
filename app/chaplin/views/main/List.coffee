@@ -1,5 +1,6 @@
 Chaplin = require 'chaplin'
 
+Mediator = require 'chaplin/core/Mediator'
 View = require 'chaplin/core/View'
 
 ListMovingView = require 'chaplin/views/main/ListMoving'
@@ -60,4 +61,4 @@ module.exports = class ListView extends View
         @model.set 'checked': !@model.get 'checked', { 'silent': true }
 
         # Say to others how many lists are checked.
-        Chaplin.mediator.publish 'checkedLists', @model.collection.where('checked': true).length
+        Mediator.publish 'checkedLists', @model.collection.where('checked': true).length

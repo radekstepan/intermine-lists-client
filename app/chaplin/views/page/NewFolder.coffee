@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 View = require 'chaplin/core/View'
 
 module.exports = class NewFolderView extends View
@@ -61,10 +60,10 @@ module.exports = class NewFolderView extends View
                 folder.set 'parent': @model
 
                 # Tell the main View to re-render.
-                Chaplin.mediator.publish 'renderMain'
+                Mediator.publish 'renderMain'
 
                 # And say what we just did.
-                Chaplin.mediator.publish 'notification', 'A new folder has been created', folder.get('name')
+                Mediator.publish 'notification', 'A new folder has been created', folder.get('name')
         
         # Die either way...
         @dispose()

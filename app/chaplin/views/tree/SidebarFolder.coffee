@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 Garbage = require 'chaplin/core/Garbage'
 View = require 'chaplin/core/View'
 
@@ -89,7 +88,7 @@ module.exports = class SidebarFolderView extends View
             # Are the paths the same?
             if newPath isnt oldPath
                 # Message about it.
-                Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
+                Mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
 
                 # Update the list path itself.
                 list.set 'path', newPath
@@ -98,4 +97,4 @@ module.exports = class SidebarFolderView extends View
                 @model.addList list
 
         # Tell the main View to update itself.
-        Chaplin.mediator.publish 'renderMain'
+        Mediator.publish 'renderMain'

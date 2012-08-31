@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 View = require 'chaplin/core/View'
 
 module.exports = class FilterView extends View
@@ -36,5 +35,5 @@ module.exports = class FilterView extends View
             query = $(e.target).val()
             if query isnt @query
                 # Trigger a message to other components to do their bidding.
-                Chaplin.mediator.publish 'filterLists', @query = query
+                Mediator.publish 'filterLists', @query = query
         ), 500

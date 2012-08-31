@@ -1,5 +1,6 @@
 Chaplin = require 'chaplin'
 
+Mediator = require 'chaplin/core/Mediator'
 View = require 'chaplin/core/View'
 Garbage = require 'chaplin/core/Garbage'
 
@@ -33,10 +34,10 @@ module.exports = class ActionsView extends View
         @store = window.Store
 
         # Listen to lists being checked.
-        Chaplin.mediator.subscribe 'checkedLists', (@checked) => @render()
+        Mediator.subscribe 'checkedLists', (@checked) => @render()
 
         # Listen to the current active folder.
-        Chaplin.mediator.subscribe 'activeFolder', (@folder) =>
+        Mediator.subscribe 'activeFolder', (@folder) =>
 
         # Events.
         @delegate 'click', 'a.new-folder', @newFolder

@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 Garbage = require 'chaplin/core/Garbage'
 View = require 'chaplin/core/View'
 
@@ -22,7 +21,7 @@ module.exports = class OrganiseFolderView extends View
         @selected = opts.selected
 
         # Listen to folders being selected... then deselect or select us
-        Chaplin.mediator.subscribe 'selectFolder', (model) =>
+        Mediator.subscribe 'selectFolder', (model) =>
             # Is this me?
             if model is @model
                 $(@el).addClass('active')
@@ -30,7 +29,7 @@ module.exports = class OrganiseFolderView extends View
                 $(@el).removeClass('active')
 
         # Say that we have been born.
-        Chaplin.mediator.publish 'treeFolderRendered'
+        Mediator.publish 'treeFolderRendered'
 
         # The garbage truck... wroom!
         @views = new Garbage()
@@ -75,4 +74,4 @@ module.exports = class OrganiseFolderView extends View
     toggleFolder: -> @model.set 'expanded', !@model.get('expanded')
 
     # Say that we need to be selected, ass backwards :)
-    selectFolder: ->  Chaplin.mediator.publish 'selectFolder', @model
+    selectFolder: ->  Mediator.publish 'selectFolder', @model

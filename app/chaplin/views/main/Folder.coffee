@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 View = require 'chaplin/core/View'
 
 module.exports = class FolderView extends View
@@ -52,7 +51,7 @@ module.exports = class FolderView extends View
             # Are the paths the same?
             if newPath isnt oldPath
                 # Message about it.
-                Chaplin.mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
+                Mediator.publish 'notification', "Has been moved from \"#{oldPath}\" to \"#{newPath}\"", list.get('name')
 
                 # Update the list path itself.
                 list.set 'path', newPath
@@ -61,4 +60,4 @@ module.exports = class FolderView extends View
                 @model.addList list
 
         # We have done some actions on a folder in the `MainFolderView`, tell it that it needs to re-render itself.
-        Chaplin.mediator.publish 'renderMain'
+        Mediator.publish 'renderMain'

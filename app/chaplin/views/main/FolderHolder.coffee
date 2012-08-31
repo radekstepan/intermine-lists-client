@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 Garbage = require 'chaplin/core/Garbage'
 View = require 'chaplin/core/View'
 
@@ -23,10 +22,10 @@ module.exports = class FolderHolderView extends View
         # on a `Folder`, we would re-render too quickly and have access to objects that no longer exist. Thus we need to
         # manually say to this `Folder` when to re-render after we have done operations on it.
         # @modelBind 'change', @render
-        Chaplin.mediator.subscribe 'renderMain', @render
+        Mediator.subscribe 'renderMain', @render, @
 
         # Listen to the inner lists being checked.
-        Chaplin.mediator.subscribe 'checkedLists', @updateCheckbox
+        Mediator.subscribe 'checkedLists', @updateCheckbox, @
 
     # Get the template from here.
     getTemplateFunction: ->
@@ -58,15 +57,8 @@ module.exports = class FolderHolderView extends View
             # Keep reference to us so that children can tell us when to draw ourselves pretty again...
             @views.push new FolderView 'model': model, parent: @
 
-    # Need to dispose of us listening to channels.
-    dispose: ->
-        for channel in [ 'checkedLists', 'renderMain' ]
-            Chaplin.mediator.unsubscribe channel
-
-        super
-
     # Update main checkbox according to whether all is checked or not.
-    updateCheckbox: =>
+    updateCheckbox: ->
         [ nay, yay ] = @checked()
 
         $(@el).find('input.check-all').prop 'checked', nay is 0
@@ -91,7 +83,7 @@ module.exports = class FolderHolderView extends View
             list.set 'checked': which, { 'silent': true }
 
         # Say to others how many lists are checked.
-        Chaplin.mediator.publish 'checkedLists', if which is true then yay + nay else 0
+        Mediator.publish 'checkedLists', if which is true then yay + nay else 0
 
         # One re-render after all is done.
         @render()

@@ -1,5 +1,4 @@
-Chaplin = require 'chaplin'
-
+Mediator = require 'chaplin/core/Mediator'
 View = require 'chaplin/core/View'
 
 NotificationView = require 'chaplin/views/page/Notification'
@@ -16,13 +15,7 @@ module.exports = class LayoutView extends View
         super
 
         # App wide notification.
-        Chaplin.mediator.subscribe 'notification', @notify
-
-    # Need to dispose of us listening to channels.
-    dispose: ->
-        Chaplin.mediator.unsubscribe 'notification'
-
-        super
+        Mediator.subscribe 'notification', @notify
 
     # Init all core Views.
     render: ->
