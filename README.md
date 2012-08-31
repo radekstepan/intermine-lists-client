@@ -53,3 +53,35 @@ To build the files for production, execute the process with the minify `option`:
 ```bash
 $ node_modules/.bin/brunch build --minify
 ```
+
+## [Requirements](https://github.com/radekstepan/intermine-lists-client/issues)
+
+Following is a list of high level architectural, design and feature requirements as is/will be implemented/not. ~~Strikethrough~~ are implemented.
+
+### Features
+
+1. Have folders and subfolders for lists (*Boris*, *Enrico*)
+    1. ~~Drag & drop lists~~. Like in Google Docs
+    1. ~~Organize lists into a folder~~. Like in Google Docs
+    1. ~~Create a new folder~~. Like in Google Docs
+    1. Drag & drop folders.
+1. Venn diagrams showing overlap between multiple lists selected (*Jie*)
+1. Order lists by date, name, number of objects and have this setting stick around (*Simon*, *Enrico*)
+1. Have tags that can be searched to filter lists (*Enrico*)
+1. ~~Filter lists by their name~~ (*Enrico*)
+1. Export lists.
+1. Edit list description and date (*Hilde*)
+1. When upgrading a list say how big it is and how long the upgrade process will probably take (*Sergio*)
+
+### Architecture
+
+1. ~~Client side JavaScript architecture~~. Using Chaplin wrapped around Backbone
+1. ~~Maintainable templating language~~. Eco lets us use CoffeeScript inside HTML
+1. CSS preprocessor for easy theming. Stylus?
+1. ~~Automagically package resources~~. Brunch
+1. ~~Make JS files required through CommonJS/AMD~~. Brunch
+1. ~~Automagically reload the client on changes~~. Brunch
+1. ~~A nicer more readable language for classes~~. CoffeeScript
+1. ~~CSS based off of a library~~. Twitter Bootstrap
+1. ~~Manage resource usage of a client side app~~. Chaplin `dispose()` and our `class Garbage`
+1. ~~Implement assertions especially on init of methods/classes to catch the unexpected~~. our `class AssertException`
