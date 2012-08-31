@@ -70,6 +70,8 @@ module.exports = class SidebarFolderView extends View
 
     # A dragged list has been dropped on us.
     drop: (e, ui) =>
+        assert @model?, "Folder Model is not attached"
+
         # Remove the hover sign.
         $(e.target).removeClass 'hover'
         @toggleEl.removeClass 'hover'

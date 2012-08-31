@@ -37,8 +37,10 @@ module.exports = class TöskurController extends Chaplin.Controller
     dispose: ->
         super
 
-        # Clear all channels after everyone else is dead.
-        Mediator.reset()
+        # Clear the filterLists channel only. If we reset the whole Mediator, Store will be left out (Bug 139).
+        Mediator.unsubscribe 'filterLists', null, @
+        # But at the same time unsubscribe all from `notification` messages.
+        Mediator.unsubscribe 'notification', null, null
 
     ###
     The user wants to filter the lists.

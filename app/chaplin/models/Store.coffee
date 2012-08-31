@@ -22,7 +22,7 @@ module.exports = class Store extends Chaplin.Collection
         @folders = new FolderCollection()
 
         # Listen to others telling us to deselect all lists.
-        Mediator.subscribe 'deselectAll', @deselectAll
+        Mediator.subscribe 'deselectAll', @deselectAll, @
 
     # Our custom constructor.
     # Alternatively, we could let Backbone init Lists and then retrospectively create Folders and add Obj.
@@ -39,7 +39,7 @@ module.exports = class Store extends Chaplin.Collection
     dispose: ->
 
     # Deselect all lists held, silently...
-    deselectAll: =>
+    deselectAll: ->
         list.set('checked': false, { 'silent': true }) for list in @.where('checked': true)
 
         # Say that 0 many lists are selected.
