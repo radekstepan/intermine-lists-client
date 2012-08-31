@@ -9,6 +9,8 @@
         "connect": "1.9.2",
         "send": "0.0.4",
 
+        "brunch": "1.4.2",
+
         "javascript-brunch": ">= 1.0 < 1.5",
         "coffee-script-brunch": ">= 1.0 < 1.5",
 
