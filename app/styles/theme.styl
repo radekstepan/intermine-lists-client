@@ -24,6 +24,8 @@ $tableEvenRow =       #F7F7F7 // Alabaster
 $tableOddRow =        #FFF    // White...
 $tableBorder =        #EEE    // Gallery
 
+$tabBorder =          #CCC    // Silver
+
 /* fonts */
 @font-face
     font-family: 'RobotoRegular'
@@ -44,6 +46,13 @@ h1, h2, h3, h4, h5, .nav-tabs, .nav-list, .btn
 a, a:hover,
 #main table tr td [class^="icon-"]
     color: $primaryColor
+
+/* page title */
+header#title
+    h1
+        color: $primaryColor
+    p
+        color: #666
 
 /* modal */
 .modal-footer
@@ -107,9 +116,9 @@ input[type="text"]:focus
         background: $tableOddRow
     > li > a
         border-radius: 2px 2px 0 0
-        border-color: #CCC
+        border-color: $tabBorder
         border-bottom: 0
-        background: #CCC
+        background: $tabBorder
         color: $tableOddRow
 
         &:hover

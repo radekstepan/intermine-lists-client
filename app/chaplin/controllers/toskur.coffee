@@ -65,11 +65,16 @@ module.exports = class TöskurController extends Chaplin.Controller
             # Show the filtered lists.
             @views.push 'filter', new FilteredListHolderView 'collection': coll
 
+            Mediator.publish 'pageTitle', 'title': "Lists with \"#{filter}\""
+
     ### 
     Show the default index page.
     @param {Object} params Passed in properties
     ###
     index: (params) ->
+        # Show this title.
+        Mediator.publish 'pageTitle', 'title': 'C:\\>'
+
         # Get the root folder.
         root = @store.findFolder('/')
 
@@ -90,15 +95,18 @@ module.exports = class TöskurController extends Chaplin.Controller
     @param {Object} params Passed in properties
     ###
     list: (params) ->
+        # Show this title.
+        Mediator.publish 'pageTitle', 'title': 'List details'
+
         # Render the root folder (and onwards) in the sidebar.
         @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')
 
         # Retrieve the list in question.
         list = @store.findList params.slug
         unless list?
-            Mediator.publish 'notification', 'This list has not been found'
+            Mediator.publish 'pageTitle', 'title': '404', 'subtitle': 'This list has not been found'
         else
-            Mediator.publish 'notification', 'You have asked for this list', list.get('name')
+            Mediator.publish 'pageTitle', 'title': list.get('name')
 
             # We have the list, so expand the path towards the list.
             @store.expandFolder list.get 'path'
@@ -126,9 +134,9 @@ module.exports = class TöskurController extends Chaplin.Controller
 
         # Did we find the folder?
         unless folder?
-            Mediator.publish 'notification', 'This folder has not been found'
+            Mediator.publish 'pageTitle', 'title': '404', 'subtitle': 'This folder has not been found'
         else
-            Mediator.publish 'notification', 'You have asked for this folder', folder.get('name')
+            Mediator.publish 'pageTitle', 'title': folder.get('name')
 
             # Set this folder as active.
             @store.activeFolder folder

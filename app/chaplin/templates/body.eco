@@ -1,7 +1,7 @@
 <!-- navbar -->
 <header id="navbar" class="navbar">
     <div class="row-fluid">
-        <a class="brand span2" href="/toskur/index">InterMine Lists</a>
+        <a class="brand span2" href="/toskur/index">InterMine</a>
         
         <div class="nav-collapse span10">
             <ul class="nav">
@@ -27,15 +27,18 @@
         </div>
     
         <!-- content -->
-        <div id="content" class="span8">            
+        <article id="content" class="span8">
             <!-- crumbs -->
             <ul id="breadcrumb" class="breadcrumb">
                 <li><a href="/toskur/index" class="home icon-home"></a></li>
             </ul>
 
+            <!-- header of this section -->
+            <header id="title"></header>
+
             <!-- main folder/list view -->
             <div id="main"></div>
-        </div>
+        </article>
 
         <!-- right sidebar, actions -->
         <div id="actions" class="span2"></div>
