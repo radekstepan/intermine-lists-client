@@ -98,5 +98,8 @@ module.exports = class SidebarFolderView extends View
                 # Push the list on this folder.
                 @model.addList list
 
+        # Deselect all lists.
+        Mediator.publish 'deselectAll'
+
         # Tell the main View to update itself.
         Mediator.publish 'renderMain'

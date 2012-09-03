@@ -50,7 +50,7 @@ module.exports = class FilteredListHolderView extends View
     updateCheckbox: ->
         [ nay, yay ] = @checked()
 
-        $(@el).find('input.check-all').prop 'checked', nay is 0
+        $(@el).find('input.check-all').prop 'checked', nay is 0 and yay isnt 0
 
     # Count the number of un-/checked lists on us.
     checked: ->

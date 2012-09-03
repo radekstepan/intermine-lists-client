@@ -17,6 +17,14 @@ module.exports = [
         "path": "/united-kingdom/wales"
     },
     {
+        "name": "Dyfed County National Parks",
+        "path": "/united-kingdom/wales/dyfed"
+    },
+    {
+        "name": "South Glamorgan County Thieves",
+        "path": "/united-kingdom/wales/south-glamorgan"
+    },
+    {
         "name": "Czech Ponds",
         "path": "/czech-republic"
     },

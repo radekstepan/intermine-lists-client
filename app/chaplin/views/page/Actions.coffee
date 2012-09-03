@@ -33,8 +33,9 @@ module.exports = class ActionsView extends View
         # Main Store.
         @store = window.Store
 
-        # Listen to lists being checked.
+        # Listen to lists being checked or completely unchecked.
         Mediator.subscribe 'checkedLists', (@checked) => @render()
+        Mediator.subscribe 'deselectAll', @uncheckAll, @
 
         # Listen to the current active folder.
         Mediator.subscribe 'activeFolder', (@folder) =>
@@ -42,6 +43,11 @@ module.exports = class ActionsView extends View
         # Events.
         @delegate 'click', 'a.new-folder', @newFolder
         @delegate 'click', 'a.organise', @organise
+
+    # Set all list to not be checked at all.
+    uncheckAll: ->
+        @checked = 0
+        @render()
 
     newFolder: =>
         # Create a popover View to handle the interaction.

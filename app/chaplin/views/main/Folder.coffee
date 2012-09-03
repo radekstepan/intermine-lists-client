@@ -61,3 +61,6 @@ module.exports = class FolderView extends View
 
         # We have done some actions on a folder in the `MainFolderView`, tell it that it needs to re-render itself.
         Mediator.publish 'renderMain'
+
+        # Deselect all if there were any selected.
+        Mediator.publish 'deselectAll'

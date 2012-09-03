@@ -1,7 +1,7 @@
 <!-- navbar -->
 <header id="navbar" class="navbar">
     <div class="row-fluid">
-        <a class="brand span2" href="/toskur/index">InterMine</a>
+        <a class="brand span2" href="/toskur/index">InterMine MyMine</a>
         
         <div class="nav-collapse span10">
             <ul class="nav">

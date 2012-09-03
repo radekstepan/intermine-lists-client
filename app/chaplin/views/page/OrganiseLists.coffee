@@ -96,6 +96,10 @@ module.exports = class OrganiseListsView extends View
                     # Push the list on the selected folder.
                     @selectedFolder.addList list
 
+            # Deselect all lists.
+            Mediator.publish 'deselectAll'
+
+            # Re-render the main Views.
             Mediator.publish 'renderMain'
 
             # Die either way...
