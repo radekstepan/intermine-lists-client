@@ -16,8 +16,11 @@ exports.config =
                 'css/app.css': /^app\/styles/
                 'css/vendor.css': /^vendor\/css/
             order:
-                before: [ 'vendor/css/bootstrap.css' ]
-                after: [ 'app/styles/theme.styl' ]
+                before: [
+                    'vendor/css/bootstrap.css' # Twitter Bootstrap
+                    'vendor/css/app.styl'      # app styles
+                ]
+                after: [ 'app/styles/theme.styl' ] # theming
 
         templates:
             joinTo: 'js/app.js'

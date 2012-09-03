@@ -1,0 +1,118 @@
+/* general */
+a
+    cursor: pointer
+
+.btn [class^="icon-"], .btn [class*=" icon-"]
+    margin-right: 2px
+[class^="icon-"], [class*=" icon-"]
+    background-image: none !important
+.capitalize
+    text-transform: capitalize
+
+#actions [class^="icon-"]
+    vertical-align: middle
+
+/* nav */
+.nav-tabs.nav-stacked
+    > li:last-child > a
+        border-radius: 0
+    li a,
+    li a:hover
+        border: 0
+
+.nav-list
+    padding: 0 0 0 15px
+
+/* tree of folders */
+ul.folders-tree
+    cursor: pointer
+    padding: 0
+    
+    li
+        position: relative
+        
+        a
+            padding: 3px 15px
+            border: 0
+            margin-right: 0
+    .active > a,
+    .active > a:hover
+        cursor: default
+    .folder.toggle
+        display: none
+        
+        &.active
+            display: block
+            position: absolute
+            top: 5px
+            left: 0
+            padding: 0
+            
+            &:hover
+                cursor: pointer
+
+/* breadcrumbs */
+ul#breadcrumb
+    li:not(:last-child)
+        margin-right: 5px
+        
+        &:after
+            content: "/"
+            display: inline-block
+    li a.home
+        margin-right: 5px
+
+/* main table */
+#main table
+    font-size: 13px
+    
+    a
+        font-weight: bold
+    tr td
+        vertical-align: bottom
+    tr th.narrow
+        width: 14px
+    input[type="checkbox"]
+        vertical-align: top
+
+/* a draggable element when moving */
+.moving
+    cursor: pointer
+    box-shadow: 2px 2px 3px rgba(50, 50, 50, 0.15)
+    background: #FFF
+    padding: 8px
+    border: 1px solid #DDD
+    position: absolute
+
+#filtering input
+    margin-top: 5px
+
+/* popover */
+#popover
+    .box
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background: rgba(255,255,255,0.8)
+    .modal
+        position: relative
+        top: 50px
+        left: auto
+        margin: 0 auto
+        z-index: 1
+        max-width: 100%
+        
+        small
+            display: block
+            color: #777
+            font-size: 11px
+            margin-top: 5px
+
+        code
+            color: #333
+
+/* form elements */
+select, textarea, input[type="text"]
+    border-radius: 2px
