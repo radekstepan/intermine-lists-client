@@ -55,8 +55,15 @@ module.exports = class TöskurController extends Chaplin.Controller
 
         # Is this a 'clearing' query?
         if filter is ''
+            assert @views? and @views.objects? and @views.objects.main?, 'Main View does not exist, nothing to return to'
             # Show the original...
-            @views.objects?.main.render()
+            @views.objects.main.render()
+            # Based on the class of the View, say which page we are on... and more ellipsis...
+            switch @views.objects.main.constructor.name
+                when 'FolderHolderView' then Mediator.publish 'page', 'folder'
+                when 'ListObjectHolderView' then Mediator.publish 'page', 'list'
+                # Catch all.
+                else assert false, 'Unrecognized View Class, do not know which page we are coming to'
         else
             # Filter the collection.
             re = new RegExp "#{filter}.*", 'i'
