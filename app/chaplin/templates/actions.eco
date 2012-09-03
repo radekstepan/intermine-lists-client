@@ -1,6 +1,10 @@
 <!-- organise or create a new folder? -->
 <% if @checked isnt 0: %>
-    <a class="organise btn"><span class="icon-hdd"></span> Organise</a>
+    <% if @show.organiseLists: %>
+        <a class="organise btn"><span class="icon-hdd"></span> Organise</a>
+    <% end %>
 <% else: %>
-    <a class="new-folder btn btn-primary"><span class="icon-folder-close"></span> New folder</a>
+    <% if @show.newFolder: %>
+        <a class="new-folder btn btn-primary"><span class="icon-folder-close"></span> New folder</a>
+    <% end %>
 <% end %>

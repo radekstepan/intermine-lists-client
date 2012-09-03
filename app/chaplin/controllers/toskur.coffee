@@ -67,6 +67,9 @@ module.exports = class TöskurController extends Chaplin.Controller
 
             Mediator.publish 'pageTitle', 'title': "Lists with \"#{filter}\""
 
+            # The current layout.
+            Mediator.publish 'page', 'filter'
+
     ### 
     Show the default index page.
     @param {Object} params Passed in properties
@@ -90,14 +93,14 @@ module.exports = class TöskurController extends Chaplin.Controller
         # Say that we selected this folder.
         Mediator.publish 'activeFolder', root
 
+        # The current layout.
+        Mediator.publish 'page', 'folder'
+
     ###
     Show an individual list by its `slug`.
     @param {Object} params Passed in properties
     ###
     list: (params) ->
-        # Show this title.
-        Mediator.publish 'pageTitle', 'title': 'List details'
-
         # Render the root folder (and onwards) in the sidebar.
         @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')
 
@@ -105,6 +108,8 @@ module.exports = class TöskurController extends Chaplin.Controller
         list = @store.findList params.slug
         unless list?
             Mediator.publish 'pageTitle', 'title': '404', 'subtitle': 'This list has not been found'
+            # The current layout.
+            Mediator.publish 'page', '404'
         else
             Mediator.publish 'pageTitle', 'title': list.get('name')
 
@@ -116,6 +121,9 @@ module.exports = class TöskurController extends Chaplin.Controller
 
             # Create a breadcrumb View for this list.
             @views.push new BreadcrumbView 'collection': @store.getPath list
+
+            # The current layout.
+            Mediator.publish 'page', 'list'
 
     ###
     Show an individual folder by its `slug`.
@@ -135,6 +143,8 @@ module.exports = class TöskurController extends Chaplin.Controller
         # Did we find the folder?
         unless folder?
             Mediator.publish 'pageTitle', 'title': '404', 'subtitle': 'This folder has not been found'
+            # The current layout.
+            Mediator.publish 'page', '404'
         else
             Mediator.publish 'pageTitle', 'title': folder.get('name')
 
@@ -152,6 +162,9 @@ module.exports = class TöskurController extends Chaplin.Controller
 
             # Say that we selected this folder.
             Mediator.publish 'activeFolder', folder
+            
+            # The current layout.
+            Mediator.publish 'page', 'folder'
 
         # Render the root folder (and onwards) in the sidebar.
         @views.push 'lists', new SidebarFolderHolderView 'model': @store.findFolder('/')

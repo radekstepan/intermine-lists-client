@@ -21,9 +21,16 @@ module.exports = class ActionsView extends View
     # Link to main Store.
     store: null
 
+    # Which buttons to show?
+    show:
+        'newFolder':     true # create a new folder
+        'organiseLists': true # organise lists into a folder
+
     getTemplateFunction: -> require 'chaplin/templates/actions'
 
-    getTemplateData: -> 'checked': @checked
+    getTemplateData: ->
+        'checked': @checked
+        'show':    @show # the permissions for buttons...
 
     initialize: ->
         super
@@ -40,9 +47,37 @@ module.exports = class ActionsView extends View
         # Listen to the current active folder.
         Mediator.subscribe 'activeFolder', (@folder) =>
 
+        # Listen to page layouts.
+        Mediator.subscribe 'page', @change, @
+
         # Events.
         @delegate 'click', 'a.new-folder', @newFolder
-        @delegate 'click', 'a.organise', @organise
+        @delegate 'click', 'a.organise',   @organise
+
+    # Depending on the page layout now active, render us.
+    change: (page) ->
+        switch page
+            # 404 on a folder or a list.
+            when '404'
+                @show.newFolder =     false
+                @show.organiseLists = false
+            # List objects.
+            when 'list'
+                @show.newFolder =     false
+                @show.organiseLists = false
+            # Folder holder.
+            when 'folder'
+                @show.newFolder =     true
+                @show.organiseLists = true
+            # Filter lists.
+            when 'filter'
+                @show.newFolder =     false
+                @show.organiseLists = true
+
+        #console.log JSON.stringify @show
+
+        # Apply apply...
+        @render()
 
     # Set all list to not be checked at all.
     uncheckAll: ->
