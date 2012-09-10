@@ -75,7 +75,6 @@ Following is a list of high level architectural, design and feature requirements
 1. Export lists.
 1. Edit list description and date (*Hilde*)
 1. When upgrading a list say how big it is and how long the upgrade process will probably take (*Sergio*)
-1. Share lists with others (new functionality added by *
 1. Share lists with others (new functionality added by *Daniela*)
 
 ### Architecture
